@@ -1,0 +1,7 @@
+
+
+Реализуем принцып MV:
+
+Model - Dedux
+View - React
+
