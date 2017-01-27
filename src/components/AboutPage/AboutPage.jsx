@@ -22,9 +22,9 @@ class AboutPage extends Component {
                         <MenuItem />
                     </Menu>
                 </Header>
-                About page.
+                About page. Hello.
                 <Footer>
-                    Footer content
+                    Footer content wqe
                 </Footer>
             </div>
         );

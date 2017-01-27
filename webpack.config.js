@@ -1,21 +1,13 @@
 var webpack = require('webpack');
-var path = require('path');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 
 module.exports = {
-    devtool: 'inline-source-map',
-    context: path.resolve(__dirname, '.'),
-    entry: path.resolve('./src/main.js'),
-    watch: true,
-    watchOptions: {
-        aggrigateTimeout : 300
-    },
+    entry: "./src/main.js",
     output: {
-        path: path.normalize('./public/build/'),
-        publicPath: "./",
+        path: __dirname + '/public/build/',
+        publicPath: "build/",
         filename: "bundle.js"
     },
-    progress: true,
     resolve: {
         modulesDirectories: [
             'src',
@@ -24,24 +16,20 @@ module.exports = {
         extensions: ['', '.json', '.js', '.jsx']
     },
     module: {
-        loaders: [{
-                test: /\.jsx?$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ["react", "es2015", "stage-0"],
-                    plugins: [
-                        "transform-decorators-legacy"
-                    ]
-                }
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: "babel",
+                exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer-loader'),
+                loader: "style-loader!css-loader!autoprefixer-loader",
                 exclude: [/node_modules/, /public/]
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer-loader!less-loader'),
+                loader: "style-loader!css-loader!autoprefixer-loader!less",
                 exclude: [/node_modules/, /public/]
             },
             {
@@ -61,20 +49,18 @@ module.exports = {
                 loader: "url-loader?limit=26000&mimetype=image/svg+xml"
             },
             {
+                test: /\.jsx$/,
+                loader: "react-hot!babel",
+                exclude: [/node_modules/, /public/]
+            },
+            {
                 test: /\.json$/,
                 loader: "json-loader"
             },
             {
                 test: /\.(woff|woff2|eot|ttf|svg)$/i,
                 loader: "file-loader?name=build/fonts/[name]-[hash].[ext]"
-            },
-            {
-                test: /\.(jpe?g|png|gif)$/i,
-                loader: "file-loader?name=build/images/[name]-[hash].[ext]"
             }
         ]
-    },
-    plugins: [
-        new ExtractTextPlugin('style.css')
-    ]
+    }
 };
