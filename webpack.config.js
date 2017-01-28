@@ -7,6 +7,7 @@ var isProd = lifecycleEvent === 'build';
 
 var config = {
     entry: "./src/main.js",
+    devtool: 'inline-source-map',
     context: __dirname,
     output: {
         path: __dirname + '/public/build/',

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devserver": "webpack-dev-server --debug --hot --devtool eval-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0",
+    "devserver": "webpack-dev-server --debug --hot --devtool inline-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0",
     "build": "webpack -p --display-error-details"
   },
   "author": "Pavel Kondrik",
@@ -18,7 +18,7 @@
     "keymirror": "^0.1.1",
     "less": "^2.6.0",
     "material-ui": "^0.14.4",
-    "moment": "^2.13.0",
+    "moment": "^2.17.1",
     "react": "0.14.8",
     "react-bootstrap": "^0.",
     "react-dom": "0.14.8",

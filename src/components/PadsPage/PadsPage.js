@@ -9,15 +9,16 @@ import {
     MenuItem,
     Footer,
     ContentLayout
-} from '../';
+} from 'components';
 
-import { CalendarButton } from '../../containers';
+import {
+    CalendarButton,
+    FileCalendar
+} from 'containers';
 
 class PadsPage extends Component {
 
-
     render() {
-        /* <CalendarButton /> */
         return (
             <div>
                 <Header>
@@ -31,6 +32,7 @@ class PadsPage extends Component {
                     </Menu>
                 </Header>
                 <ContentLayout>
+                    <FileCalendar />
                     Pads
                 </ContentLayout>
                 <Footer>

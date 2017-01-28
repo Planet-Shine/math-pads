@@ -1,0 +1,88 @@
+
+@import '../../styles/palette';
+
+.Calendar {
+  width : 308px;
+}
+
+.Calendar__slider {
+  text-align: center;
+  height : 36px;
+  color : @textColor;
+}
+
+.Calendar__month-name,
+.Calendar__slider-next,
+.Calendar__slider-previous {
+  display: inline-block;
+  vertical-align: top;
+  height : 36px;
+}
+
+.Calendar__slider-next,
+.Calendar__slider-previous {
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: 8px;
+  cursor: pointer;
+  border-radius : 18px;
+  width: 36px;
+  &:hover {
+    box-shadow : 0 -1px 8px @shadowColor;
+  }
+  &:active {
+    box-shadow : 0 -1px 4px @shadowColor;
+  }
+  &:before {
+    display: block;
+    margin-top: 10px;
+  }
+}
+
+.Calendar__month-name {
+  text-transform: uppercase;
+  box-sizing : border-box;
+  width : 102px;
+  font-size: 14px;
+  line-height: 36px;
+  text-align: center;
+}
+
+.Calendar__slider-next {
+  content: '>';
+}
+
+.Calendar__slider-previous {
+  content: '<';
+}
+
+.Calendar__header {
+  text-transform: uppercase;
+  font-size: 12px;
+  color : @textColor;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 4px 0 3px;
+}
+
+.Calendar__header-item {
+  display: inline-block;
+  vertical-align: top;
+  height: 40px;
+  line-height: 34px;
+  width: 43px;
+  text-align: center;
+}
+
+.Calendar__header-separator {
+  display: block;
+  margin: 0 auto;
+  background: @almostWhite;
+  width : 278px;
+  height: 2px;
+}
+
+.Calendar__dates {
+  padding: 0 4px 0 3px;
+}
+

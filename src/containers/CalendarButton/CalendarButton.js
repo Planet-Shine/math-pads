@@ -1,8 +1,8 @@
 
-import React, { Component } from 'react';
-import { HeaderButton } from '../../components';
+import React, { Component, PropTypes } from 'react';
+import { HeaderButton } from 'components';
 import { connect } from 'react-redux';
-import { switchCalendarDisplay } from 'reducers/viewState';
+import { switchCalendarDisplay } from 'reducers/fileCalendar';
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -15,18 +15,24 @@ const mapDispatchToProps = (dispatch) => {
 @connect(null, mapDispatchToProps)
 class CalendarButton extends Component {
 
+    static propTypes = {
+        onSwitchCalendarDisplay: PropTypes.func
+    };
+
     constructor() {
         super();
-        this.onClick = this.onClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    onClick() {
+    handleClick() {
         this.props.onSwitchCalendarDisplay();
     }
 
     render() {
         return (
-            <HeaderButton decorClass="glyphicon glyphicon-calendar" onClick={this.onClick} />
+            <HeaderButton
+                decorClass="glyphicon glyphicon-calendar"
+                onClick={this.handleClick} />
         );
     }
 }

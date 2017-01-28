@@ -1,0 +1,60 @@
+
+@import '../../styles/palette';
+
+.Calendar__dates-item {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  vertical-align: top;
+  height: 41px;
+  line-height: 34px;
+  width: 43px;
+  text-align: center;
+}
+.Calendar__dates-item:not(.Calendar__dates-item_other-month):hover {
+  .Calendar__dates-item-circle {
+    background-color: lighten(@currentDatePickerColor, 5%);
+  }
+}
+.Calendar__dates-item:not(.Calendar__dates-item_other-month):active {
+  .Calendar__dates-item-circle {
+    background-color: lighten(@currentDatePickerColor, -5%);
+  }
+}
+.Calendar__dates-item-circle {
+  display: block;
+  text-align: center;
+  margin : 10px auto 0 auto;
+  line-height: 24px;
+  width : 24px;
+  height : 24px;
+  border-radius: 12px;
+}
+.Calendar__dates-item-indicator {
+  position: absolute;
+  top : 36px;
+  left : 20px;
+  width: 4px;
+  height: 4px;
+  border-radius : 2px;
+}
+.Calendar__dates-item_selected:not(.Calendar__dates-item_other-month) {
+  .Calendar__dates-item-circle {
+    background-color: @currentDatePickerColor;
+  }
+}
+.Calendar__dates-item_today:not(.Calendar__dates-item_other-month) {
+  .Calendar__dates-item-circle {
+    background-color: @secondThemeColor;
+  }
+}
+.Calendar__dates-item_content:not(.Calendar__dates-item_other-month) {
+  .Calendar__dates-item-indicator {
+    background-color: @existedIndicatorColor;
+  }
+}
+.Calendar__dates-item_other-month {
+  cursor: default;
+  color : @otherMonthDateColor;
+}
