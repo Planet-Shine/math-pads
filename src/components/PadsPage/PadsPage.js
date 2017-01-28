@@ -1,5 +1,7 @@
-
 import React, { Component } from 'react';
+
+import './PadsPage.less';
+
 import {
     Header,
     Logo,
@@ -9,22 +11,27 @@ import {
     ContentLayout
 } from '../';
 
-class AboutPage extends Component {
+import { CalendarButton } from '../../containers';
+
+class PadsPage extends Component {
+
 
     render() {
+        /* <CalendarButton /> */
         return (
             <div>
                 <Header>
                     <div className="navbar-header">
                         <Logo />
+                        <CalendarButton />
                     </div>
                     <Menu>
-                        <MenuItem to="/pads/"
-                                  caption="Pads"  />
+                        <MenuItem to="/about/"
+                                  caption="About"  />
                     </Menu>
                 </Header>
                 <ContentLayout>
-                    This is great application for quick calculations.
+                    Pads
                 </ContentLayout>
                 <Footer>
                     © 2017-today
@@ -34,5 +41,4 @@ class AboutPage extends Component {
     }
 }
 
-
-export default AboutPage;
+export default PadsPage;

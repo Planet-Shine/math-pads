@@ -14,3 +14,5 @@ export NoteList from './NoteList/NoteList';
 export Pad from './Pad/Pad';
 export Pads from './Pads/Pads';
 export SearchForm from './SearchForm/SearchForm';
+export PadsPage from './PadsPage/PadsPage';
+export HeaderButton from './HeaderButton/HeaderButton';

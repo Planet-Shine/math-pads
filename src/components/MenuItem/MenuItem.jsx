@@ -1,14 +1,23 @@
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
+import './MenuItem.less';
 
 class MenuItem extends Component {
 
+    static propTypes = {
+        to: PropTypes.string,
+        caption: PropTypes.string
+    };
+
     render() {
         return (
-            <div>
-                MenuItem
-            </div>
+            <Link className="MenuItem" to={this.props.to}>
+                <div>
+                    {this.props.caption}
+                </div>
+            </Link>
         )
     }
 }

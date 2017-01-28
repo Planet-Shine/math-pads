@@ -3,4 +3,13 @@
 
 .Header.navbar-default {
   background: @header-background;
+  border: none;
+  border-radius: 0px;
+  &:after {
+    margin-top: 2px;
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: @shadow-color;
+  }
 }

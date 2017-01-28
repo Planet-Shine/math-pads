@@ -1,11 +1,16 @@
 var webpack = require('webpack');
 
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var lifecycleEvent = process.env.npm_lifecycle_event;
+var isDev = lifecycleEvent === 'devserver';
+var isProd = lifecycleEvent === 'build';
 
-module.exports = {
+var config = {
     entry: "./src/main.js",
+    context: __dirname,
     output: {
         path: __dirname + '/public/build/',
-        publicPath: "build/",
+        publicPath: "/build/", // Обязательно для devserver, чтобы знал куда привязываться к bundle.js.
         filename: "bundle.js"
     },
     resolve: {
@@ -20,16 +25,6 @@ module.exports = {
             {
                 test: /\.js$/,
                 loader: "babel",
-                exclude: [/node_modules/, /public/]
-            },
-            {
-                test: /\.css$/,
-                loader: "style-loader!css-loader!autoprefixer-loader",
-                exclude: [/node_modules/, /public/]
-            },
-            {
-                test: /\.less$/,
-                loader: "style-loader!css-loader!autoprefixer-loader!less",
                 exclude: [/node_modules/, /public/]
             },
             {
@@ -59,8 +54,35 @@ module.exports = {
             },
             {
                 test: /\.(woff|woff2|eot|ttf|svg)$/i,
-                loader: "file-loader?name=build/fonts/[name]-[hash].[ext]"
+                loader: "file-loader?name=fonts/[name]-[hash].[ext]"
             }
         ]
     }
 };
+
+if (isDev) {
+    config.module.loaders.push({
+        test: /\.css$/,
+        loader: "style-loader!css-loader!autoprefixer-loader",
+        exclude: [/node_modules/, /public/]
+    },
+    {
+        test: /\.less$/,
+        loader: "style-loader!css-loader!autoprefixer-loader!less",
+        exclude: [/node_modules/, /public/]
+    });
+} else if (isProd) {
+    config.module.loaders.push({
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer-loader'),
+        exclude: [/node_modules/, /public/]
+    },
+    {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer-loader!less-loader'),
+        exclude: [/node_modules/, /public/]
+    });
+    config.plugins = [new ExtractTextPlugin('style.css')];
+}
+
+module.exports = config;

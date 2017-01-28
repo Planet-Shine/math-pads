@@ -8,11 +8,10 @@ class Logo extends Component {
 
     render() {
         return (
-            <div className="navbar-header">
-                <div className="navbar-brand Logo__caption">
-                    Math pads
-                </div>
+            <div className="navbar-brand Logo__caption">
+                Math pads
             </div>
+
         );
     }
 }

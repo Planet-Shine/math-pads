@@ -1,30 +1,34 @@
 
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { Router, Route, Redirect, hashHistory } from 'react-router';
-import { MathPadsLayout, AboutPage } from './components';
+import { Router, hashHistory} from 'react-router';
+import getRoutes from 'routes';
+import { routerMiddleware } from 'react-router-redux';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducers from 'reducers'
+import { syncHistoryWithStore } from 'react-router-redux';
 
-/* component={PadsPage} */
-/* component={PadPage} */
-/* component={PadPrintPage} */
+// Создание хранилища и истории.
+const preloadedState = {};
+const reduxRouterMiddleware = routerMiddleware(hashHistory);
+const middleware = [reduxRouterMiddleware];
+const finalCreateStore = applyMiddleware(...middleware)(createStore);
+const store = finalCreateStore(reducers, preloadedState);
 
-// import MathPadsLayout from 'components/MathPadsLayout/MathPadsLayout';
-// import AboutPage from 'components/AboutPage/AboutPage';
 
+const component = (
+    <Router history={hashHistory}>
+        {getRoutes()}
+    </Router>
+);
 
 function renderApp() {
     ReactDOM.render(
-        <Router history={hashHistory}>
-            <Redirect from="/" to="/pads" />
-            <Route path="/" component={MathPadsLayout}>
-                <Route path="/about" component={AboutPage} />
-                <Route path="/pads" />
-                <Route path='/pads/:id' />
-                <Route path='/pads/:id/print' />
-            </Route>
-        </Router>,
+        <Provider store={store} key="provider">
+            {component}
+        </Provider>,
         document.getElementById('mount-point')
     );
 }
-
 renderApp();

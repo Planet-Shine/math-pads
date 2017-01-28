@@ -1,0 +1,25 @@
+
+@import '../../styles/palette.less';
+
+.Menu__button {
+  height: 50px;
+  width: 50px;
+  outline: none;
+  background: transparent;
+  border: none;
+  &:hover {
+    background: @header-icon-hover-bg;
+  }
+  &:before {
+    font-size: 25px;
+    color: @header-icon;
+  }
+}
+
+.Menu__items {
+  position: absolute;
+  right: 0;
+  background: @header-background;
+  box-shadow: 2px 2px 0px @shadow-color;
+}
+
