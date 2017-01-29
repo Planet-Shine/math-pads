@@ -13,7 +13,8 @@ import {
 
 import {
     CalendarButton,
-    FileCalendar
+    FileCalendar,
+    MathPadFileList
 } from 'containers';
 
 class PadsPage extends Component {
@@ -33,7 +34,7 @@ class PadsPage extends Component {
                 </Header>
                 <ContentLayout>
                     <FileCalendar />
-                    Pads
+                    <MathPadFileList />
                 </ContentLayout>
                 <Footer>
                     © 2017-today

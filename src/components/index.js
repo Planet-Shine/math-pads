@@ -17,3 +17,5 @@ export SearchForm from './SearchForm/SearchForm';
 export PadsPage from './PadsPage/PadsPage';
 export HeaderButton from './HeaderButton/HeaderButton';
 export Calendar from './Calendar/Calendar';
+export File from './File/File';
+export FileList from './FileList/FileList';
