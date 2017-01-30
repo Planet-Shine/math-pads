@@ -11,7 +11,7 @@ function fileCalendar (state, action) {
         case appConstants.SET_CURRENT_DATE:
             return state.set('currentDate', action.value);
         default:
-            return Immutable.fromJS({
+            return state || Immutable.fromJS({
                 'displaied': false,
                 'currentDate': new Date(),
                 'currentMonth': new Date()

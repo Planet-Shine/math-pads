@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 
 function applyFileToState(state, fileOptions, isPending = false) {
     var newFiles;
-    const { id, name } = fileOptions;
+    const { id, name, createDate } = fileOptions;
     if (!id) {
         return state;
     }
@@ -15,12 +15,15 @@ function applyFileToState(state, fileOptions, isPending = false) {
     const newFile = Immutable.fromJS({
         id: id || 0,
         name: name,
+        createDate: createDate,
         isPending: isPending
     });
     if (~fileIndex) {
         newFiles = files.update(fileIndex, function (file) {
             if (isPending) {
-                return newFile.set('oldFile', file);
+                state.set('cachedFiles',
+                    state.get('cachedFiles').push(file)
+                );
             }
             return newFile;
         });
@@ -37,15 +40,43 @@ function revertFileIfNeeded(state, id) {
         const fileIndex = files.findIndex(function (file) {
             return file.get('id') === id;
         });
-        if (~fileIndex) {
-            const newFiles = files.update(fileIndex, function (file) {
-                return file.get('oldFile');
-            });
-            newState = newState.set('files', newFiles);
+        const cachedFiles = state.get('cachedFiles');
+        const cachedFileIndex = cachedFiles.findIndex(function (file) {
+            return file.get('id') === id;
+        });
+        if (~cachedFileIndex) {
+            if (~fileIndex) {
+                let newFiles = files.update(fileIndex, function (file) {
+                    return cachedFiles.get(cachedFileIndex);
+                });
+                newState = newState.set('files', newFiles);
+            } else {
+                let newFiles = files.push(cachedFiles.get(cachedFileIndex));
+                newState = newState.set('files', newFiles);
+            }
         }
     }
     return newState;
 }
+
+function deleteFileToState(state, id) {
+    var newState = state;
+    if (id) {
+        const files = state.get('files');
+        const fileIndex = files.findIndex(function (file) {
+            return file.get('id') === id;
+        });
+        if (~fileIndex) {
+            let newFiles = files.splice(fileIndex, 1);
+            newState = newState.set('files', newFiles);
+            state.set('cachedFiles',
+                state.get('cachedFiles').push(files.get(fileIndex))
+            );
+        }
+    }
+    return newState;
+}
+
 
 function file (state, action) {
     switch (action.type) {
@@ -54,11 +85,17 @@ function file (state, action) {
         case appConstants.APPLY_FILE_SUCCESS:
             return applyFileToState(state, action.result);
         case appConstants.APPLY_FILE_FAIL:
-            return revertFileIfNeeded(state, action.error.fileId);
+            return revertFileIfNeeded(state, action.fileOptions.id);
+        case appConstants.DELETE_FILE:
+            return deleteFileToState(state, action.fileOptions.id);
+        case appConstants.DELETE_FILE_SUCCESS:
+            return state;
+        case appConstants.DELETE_FILE_FAIL:
+            return revertFileIfNeeded(state, action.fileOptions.id);
         default:
             return state || Immutable.fromJS({
                 'files': [],
-                'contentMarks': []
+                'cachedFiles': []
             });
     }
 }
@@ -73,6 +110,18 @@ export function applyFile(fileOptions) {
             appConstants.APPLY_FILE_FAIL
         ],
         promise: (api) => api.applyFile(fileOptions),
+        fileOptions: fileOptions
+    };
+}
+
+export function deleteFile(fileOptions) {
+    return {
+        types: [
+            appConstants.DELETE_FILE,
+            appConstants.DELETE_FILE_SUCCESS,
+            appConstants.DELETE_FILE_FAIL
+        ],
+        promise: (api) => api.deleteFile(fileOptions),
         fileOptions: fileOptions
     };
 }

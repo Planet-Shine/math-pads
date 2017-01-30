@@ -4,26 +4,21 @@ import React, { Component, PropTypes } from 'react';
 import './FileList.less';
 
 class FileList extends Component {
-    static propTypes = {
-        onAddNewFile: PropTypes.func,
-        addButtonDisplaied: PropTypes.bool
-    };
     render() {
         return (
             <div>
-                <h2>
+                <h2 className="FileList__header">
                     Файлы
                 </h2>
-                <span>
+                <div className="FileList__info">
                     Файлы хранятся в локальном хранилище брайзера.
-                    Объем хранимой информации браузера ограничен.
+                    Объем хранимой информации ограничен.
                     Обычно около 5 МБ. Не забывайте удалять файлы, чтобы записать новые.
-                    Если хотите сохранить вычисления, то воспользуйтесь кнопокй экспота.
-                </span>
-                <ul>
+                    Если хотите сохранить вычисления, то воспользуйтесь кнопокой экспота.
+                </div>
+                <ul className="FileList__list">
                     {this.props.children}
                 </ul>
-                {this.props.addButtonDisplaied && <button onClick={this.props.onAddNewFile}>Add</button>}
             </div>
         );
     }

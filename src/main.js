@@ -17,7 +17,7 @@ import fileStore from 'store/fileStore';
 const preloadedState = {
     file: Immutable.fromJS({
         'files': fileStore.getAll(),
-        'contentMarks': []
+        'cachedFiles': []
     })
 };
 const reduxRouterMiddleware = routerMiddleware(hashHistory);

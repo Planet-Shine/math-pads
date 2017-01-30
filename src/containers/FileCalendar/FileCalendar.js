@@ -18,9 +18,15 @@ const mapStateToProps = (state) => {
             displaied : state.fileCalendar.get('displaied')
         };
     }
-    if (state.files) {
+    if (state.file) {
+        let contentMarks = [];
+        state.file
+            .get('files')
+            .map(file => {
+                contentMarks.push(file.get('createDate'))
+            });
         result = Object.assign({
-            contentMarks: state.files.get('contentMarks')
+            contentMarks: contentMarks
         }, result);
     }
     return result;

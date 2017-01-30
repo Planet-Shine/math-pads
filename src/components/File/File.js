@@ -1,6 +1,5 @@
 
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 
 import './File.less';
 
@@ -8,7 +7,9 @@ class File extends Component {
     static propTypes = {
         path: PropTypes.string,
         id: PropTypes.number,
-        onApply: PropTypes.func
+        onApply: PropTypes.func,
+        onEdit: PropTypes.func,
+        onDelete: PropTypes.func
     };
     state = {
         isEditing: false
@@ -16,6 +17,7 @@ class File extends Component {
     constructor() {
         super();
         this.onEditingApply = this.onEditingApply.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
     onEditingApply(event) {
         var name = this.nameInput.value;
@@ -25,13 +27,13 @@ class File extends Component {
             name: name
         });
     }
+    handleDelete() {
+        this.props.onDelete({
+            id: this.props.id
+        });
+    }
     render() {
         const { path,  name, isEditing } = this.props;
-
-        /*
-             <Link to={path}>
-             </Link>
-         */
 
         return (
             isEditing
@@ -41,7 +43,7 @@ class File extends Component {
                         <input type="text"
                                defaultValue={name}
                                ref={c => this.nameInput = c} />
-                        <button type="button">
+                        <button type="button" onClick={this.props.onApplyCancel}>
                             Cancel
                         </button>
                         <button type="submit">
@@ -52,9 +54,8 @@ class File extends Component {
             :
                 <li>
                     {name}
-
-                    <button>Edit</button>
-                    <button>Del</button>
+                    <button onClick={this.props.onEdit}>Edit</button>
+                    <button onClick={this.handleDelete}>Del</button>
                 </li>
         );
     }

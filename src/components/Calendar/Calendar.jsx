@@ -14,7 +14,7 @@ class Calendar extends Component {
         date: PropTypes.object,
         month: PropTypes.object,
         today: PropTypes.object,
-        contentMarks: PropTypes.arrayOf(PropTypes.date)
+        contentMarks: PropTypes.arrayOf(PropTypes.number)
     };
 
     weekCount  = 6;
@@ -43,7 +43,7 @@ class Calendar extends Component {
         currentDate = firstDate;
         for (let i = 0; i < this.weekCount * this.dateOfWeek; i += 1) {
             dates.push(new Date(currentDate.getTime()));
-            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 1);
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1, 0, 0, 0);
         }
         return dates;
     }
@@ -78,7 +78,7 @@ class Calendar extends Component {
                 var isOtherMonth = !timing.isEqualMonths(date, currentMonth),
                     isCurrentDate = timing.isEqualDates(date, currentDate),
                     isToday = timing.isEqualDates(date, today),
-                    isThereContent = !!contentMarks && contentMarks.indexOf(date.getTime());
+                    isThereContent = !!contentMarks && !!~contentMarks.indexOf(timing.getDateString(date));
                 return (
                     <DateItem key={index}
                               date={date}

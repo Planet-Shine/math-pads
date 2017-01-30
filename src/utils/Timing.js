@@ -31,6 +31,19 @@ class Timing {
             return previousValue + (this.millisecondsMap[currentValue] * options[currentValue]);
         }, 0);
     }
+    getDateString(date) {
+        date = date || (new Date());
+        function getTwoDigits(num) {
+            return String(num + 100).slice(-2);
+        }
+        date = `${date.getFullYear()} ${getTwoDigits(date.getMonth() + 1)} ${getTwoDigits(date.getDate())}`;
+        return date;
+    }
+    getNowDateTimestamp() {
+        var date = (new Date());
+        date = (new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0));
+        return date.getTime();
+    }
 };
 
 export default new Timing();

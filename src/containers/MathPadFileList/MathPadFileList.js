@@ -27,21 +27,28 @@ class MathPadFileList extends Component {
     constructor() {
         super();
         this.handleAddNewFile = this.handleAddNewFile.bind(this);
+        this.handleCancelApply = this.handleCancelApply.bind(this);
     }
     handleAddNewFile() {
         this.setState({
             addFileFormDisplayed: true
         });
     }
-    componentWillReceiveProps(nextProps) {
+    handleCancelApply() {
+        this.resetStateToProps();
+    }
+    resetStateToProps(props = this.props) {
         this.setState({
-            list : nextProps.list,
+            list: props.list,
             addFileFormDisplayed: false
         });
     }
+    componentWillReceiveProps(nextProps) {
+        this.resetStateToProps(nextProps);
+    }
     componentWillMount() {
         this.setState({
-            list : this.props.list,
+            list: this.props.list,
             addFileFormDisplayed: false
         });
     }
@@ -54,10 +61,13 @@ class MathPadFileList extends Component {
         });
 
         return (
-            <FileList addButtonDisplaied={!this.state.addFileFormDisplayed} onAddNewFile={this.handleAddNewFile}>
-                {nodes}
-                {this.state.addFileFormDisplayed && <MathPadFile key={'createForm'} isCreateNew={true} />}
-            </FileList>
+            <div>
+                <FileList onAddNewFile={this.handleAddNewFile}>
+                    {nodes}
+                    {this.state.addFileFormDisplayed && <MathPadFile onCancelApply={this.handleCancelApply} key={'createForm'} isCreateNew={true} />}
+                </FileList>
+                {!this.state.addFileFormDisplayed && <button onClick={this.handleAddNewFile}>Add</button>}
+            </div>
         );
     }
 }
