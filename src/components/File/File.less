@@ -1,0 +1,56 @@
+
+@import '../../styles/palette.less';
+
+.File__item {
+  position: relative;
+  height: 50px;
+  padding: 10px 175px 10px 10px;
+  min-width: 300px;
+  border-bottom: 1px solid @divider-color;
+  cursor: pointer;
+  &:hover {
+    background: @shadow-color;
+  }
+}
+.File__item:last-child {
+  border-bottom: none;
+}
+.File__item-caption {
+  display: block;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 30px;
+}
+
+.File__buttons {
+  position: absolute;
+  padding-top: 7px;
+  top: 0;
+  right: 0;
+  width: 165px;
+}
+
+.File__button {
+  margin-right: 10px;
+}
+
+.File__input {
+  outline: none;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+
+.File__item-caption {
+
+}
+
+.File__input {
+
+}
+

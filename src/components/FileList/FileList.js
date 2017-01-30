@@ -1,5 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
+import { SearchFileForm } from 'containers';
 
 import './FileList.less';
 
@@ -16,6 +17,7 @@ class FileList extends Component {
                     Обычно около 5 МБ. Не забывайте удалять файлы, чтобы записать новые.
                     Если хотите сохранить вычисления, то воспользуйтесь кнопокой экспота.
                 </div>
+                <SearchFileForm />
                 <ul className="FileList__list">
                     {this.props.children}
                 </ul>

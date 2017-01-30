@@ -19,3 +19,6 @@ export HeaderButton from './HeaderButton/HeaderButton';
 export Calendar from './Calendar/Calendar';
 export File from './File/File';
 export FileList from './FileList/FileList';
+export AddButton from './AddButton/AddButton';
+export NoFilesCaption from './NoFilesCaption/NoFilesCaption';
+export CalendarClearButton from './CalendarClearButton/CalendarClearButton';

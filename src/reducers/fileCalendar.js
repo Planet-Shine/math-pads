@@ -13,7 +13,7 @@ function fileCalendar (state, action) {
         default:
             return state || Immutable.fromJS({
                 'displaied': false,
-                'currentDate': new Date(),
+                'currentDate': '',
                 'currentMonth': new Date()
             });
     }

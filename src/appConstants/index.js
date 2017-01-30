@@ -9,5 +9,7 @@ export default keyMirror({
     APPLY_FILE_FAIL:  null,
     DELETE_FILE: null,
     DELETE_FILE_SUCCESS: null,
-    DELETE_FILE_FAIL: null
+    DELETE_FILE_FAIL: null,
+    NEW_SEARCH_QUERY: null,
+    SET_SELECTED_DATE: null
 });

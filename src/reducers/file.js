@@ -2,6 +2,8 @@
 import appConstants from 'appConstants';
 import Immutable from 'immutable';
 
+var _isStateFilesFiltered = false;
+
 function applyFileToState(state, fileOptions, isPending = false) {
     var newFiles;
     const { id, name, createDate } = fileOptions;
@@ -77,27 +79,61 @@ function deleteFileToState(state, id) {
     return newState;
 }
 
+function culcFiltredFiles(state) {
+    var selectedDate = state.get('selectedDate') || null,
+        query = (state.get('searchQuery') || '').toLowerCase(),
+        filteredFiles = state.get('files');
+    if (selectedDate) {
+        filteredFiles = filteredFiles.filter((item) => {
+            return item.get('createDate') === selectedDate;
+        });
+    }
+    if (query) {
+        filteredFiles = filteredFiles.filter((item) => {
+            const name = (item.get('name') || '').toLowerCase();
+            return ~name.indexOf(query);
+        });
+    }
+    return state.set('filteredFiles', filteredFiles);
+}
+
 
 function file (state, action) {
+    var newState;
     switch (action.type) {
         case appConstants.APPLY_FILE:
-            return applyFileToState(state, action.fileOptions, true);
+            return culcFiltredFiles(applyFileToState(state, action.fileOptions, true));
         case appConstants.APPLY_FILE_SUCCESS:
-            return applyFileToState(state, action.result);
+            return culcFiltredFiles(applyFileToState(state, action.result));
         case appConstants.APPLY_FILE_FAIL:
-            return revertFileIfNeeded(state, action.fileOptions.id);
+            return culcFiltredFiles(revertFileIfNeeded(state, action.fileOptions.id));
         case appConstants.DELETE_FILE:
-            return deleteFileToState(state, action.fileOptions.id);
+            return culcFiltredFiles(deleteFileToState(state, action.fileOptions.id));
         case appConstants.DELETE_FILE_SUCCESS:
             return state;
         case appConstants.DELETE_FILE_FAIL:
-            return revertFileIfNeeded(state, action.fileOptions.id);
+            return culcFiltredFiles(revertFileIfNeeded(state, action.fileOptions.id));
+        case appConstants.NEW_SEARCH_QUERY:
+            return culcFiltredFiles(state.set('searchQuery', action.query));
+        case appConstants.SET_SELECTED_DATE:
+            return culcFiltredFiles(state.set('selectedDate', action.selectedDate));
         default:
-            return state || Immutable.fromJS({
-                'files': [],
-                'cachedFiles': []
-            });
+            if (state && !_isStateFilesFiltered) {
+                _isStateFilesFiltered = true;
+                state = culcFiltredFiles(state);
+            }
+            return state || getDefaultState();
     }
+}
+
+export function getDefaultState() {
+    return Immutable.fromJS({
+        'files': [],
+        'cachedFiles': [],
+        'filteredFiles': [],
+        'searchQuery': '',
+        'selectedDate': ''
+    });
 }
 
 export default file;
@@ -124,4 +160,18 @@ export function deleteFile(fileOptions) {
         promise: (api) => api.deleteFile(fileOptions),
         fileOptions: fileOptions
     };
+}
+
+export function searchQuery(newSearchQuery) {
+    return {
+        type: appConstants.NEW_SEARCH_QUERY,
+        query: newSearchQuery
+    };
+}
+
+export function selectedDate(selectedDate) {
+    return {
+        type: appConstants.SET_SELECTED_DATE,
+        selectedDate: selectedDate
+    }
 }

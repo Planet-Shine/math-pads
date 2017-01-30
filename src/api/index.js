@@ -8,7 +8,7 @@ const api = {
         var oldItem;
         if (!fileOptions.id) {
             fileOptions.id = fileStore.getNextId();
-            fileOptions.createDate = timing.getDateString();
+            fileOptions.createDate = timing.toDateString(new Date());
         }
         oldItem = fileStore.getItem(fileOptions.id);
         if (!oldItem) {

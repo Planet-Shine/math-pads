@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import DateItem from './DateItem';
 import timing from 'utils/timing';
+import { CalendarClearButton } from 'components';
 
 import './Calendar.less';
 
@@ -11,6 +12,7 @@ class Calendar extends Component {
         onPreviousMonth: PropTypes.func,
         onNextMonth: PropTypes.func,
         onDateClick: PropTypes.func,
+        onClear: PropTypes.func,
         date: PropTypes.object,
         month: PropTypes.object,
         today: PropTypes.object,
@@ -76,9 +78,9 @@ class Calendar extends Component {
             dates = this.getMonthDates(currentMonth);
             nodes = dates.map((date, index) => {
                 var isOtherMonth = !timing.isEqualMonths(date, currentMonth),
-                    isCurrentDate = timing.isEqualDates(date, currentDate),
+                    isCurrentDate = !!currentDate && timing.isEqualDates(date, currentDate),
                     isToday = timing.isEqualDates(date, today),
-                    isThereContent = !!contentMarks && !!~contentMarks.indexOf(timing.getDateString(date));
+                    isThereContent = !!contentMarks && !!~contentMarks.indexOf(timing.toDateString(date));
                 return (
                     <DateItem key={index}
                               date={date}
@@ -117,6 +119,7 @@ class Calendar extends Component {
                         {nodes}
                     </div>
                 </div>
+                <CalendarClearButton onClick={this.props.onClear} />
             </div>
         );
     }

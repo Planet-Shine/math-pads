@@ -12,13 +12,11 @@ import Immutable from 'immutable';
 import { syncHistoryWithStore } from 'react-router-redux';
 import clientMiddleware from 'redux/clientMiddleware';
 import fileStore from 'store/fileStore';
+import { getDefaultState } from 'reducers/file';
 
 // Создание хранилища и истории.
 const preloadedState = {
-    file: Immutable.fromJS({
-        'files': fileStore.getAll(),
-        'cachedFiles': []
-    })
+    file: getDefaultState().set('files', Immutable.fromJS(fileStore.getAll()))
 };
 const reduxRouterMiddleware = routerMiddleware(hashHistory);
 const middleware = [reduxRouterMiddleware, clientMiddleware(api)];

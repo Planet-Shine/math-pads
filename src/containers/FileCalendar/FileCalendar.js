@@ -1,13 +1,17 @@
 
 import React, { Component, PropTypes } from 'react';
 import { Calendar } from 'components';
-import { HeaderButton } from 'components';
+import { CalendarClearButton } from 'components';
 import { connect } from 'react-redux';
 import timing from 'utils/timing';
 import {
     currentDate,
     currentMonth
 } from 'reducers/fileCalendar';
+
+import {
+    selectedDate
+} from 'reducers/file';
 
 const mapStateToProps = (state) => {
     var result = {};
@@ -28,6 +32,12 @@ const mapStateToProps = (state) => {
         result = Object.assign({
             contentMarks: contentMarks
         }, result);
+        let date = timing.toDate(state.file.get('files').get('selectedDate'));
+        if (date) {
+            result = Object.assign({
+                date: date
+            }, result);
+        }
     }
     return result;
 };
@@ -35,6 +45,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onNewDate(date) {
             dispatch(currentDate(date));
+            dispatch(selectedDate(timing.toDateString(date)));
         },
         onNextMonth(month) {
             dispatch(currentMonth(timing.addMonths(month, 1)));
@@ -48,7 +59,10 @@ const mapDispatchToProps = (dispatch) => {
 class FileCalendar extends Component {
 
     static propTypes = {
-        date: PropTypes.object,
+        date: PropTypes.oneOfType([
+            PropTypes.object,
+            PropTypes.string
+        ]),
         month: PropTypes.object,
         displaied: PropTypes.bool
     };
@@ -78,6 +92,7 @@ class FileCalendar extends Component {
         this.handlePreviousMonth = this.handlePreviousMonth.bind(this);
         this.handleNextMonth = this.handleNextMonth.bind(this);
         this.handleDateClick = this.handleDateClick.bind(this);
+        this.handleClear = this.handleClear.bind(this);
     }
 
     handlePreviousMonth() {
@@ -92,6 +107,10 @@ class FileCalendar extends Component {
         this.props.onNewDate(date);
     }
 
+    handleClear() {
+        this.props.onNewDate('');
+    }
+
     render() {
         return (
             <div style={this.props.displaied ? {} : {display:'none'}}>
@@ -101,7 +120,8 @@ class FileCalendar extends Component {
                           date={this.props.date}
                           month={this.props.month}
                           today={this.state.today}
-                          contentMarks={this.props.contentMarks} />
+                          contentMarks={this.props.contentMarks}
+                          onClear={this.handleClear} />
             </div>
         );
     }

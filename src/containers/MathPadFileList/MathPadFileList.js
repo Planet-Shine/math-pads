@@ -4,12 +4,16 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { File } from 'components';
 import { applyFile } from 'reducers/file';
-import { FileList } from 'components';
-import { MathPadFile } from 'containers';
+import { FileList, AddButton, NoFilesCaption } from 'components';
+import {
+    MathPadFile,
+    SearchForm
+} from 'containers';
 
 function mapStateToProps(state) {
     return {
-        list : state.file.get('files')
+        sourceList: state.file.get('files'),
+        list: state.file.get('filteredFiles')
     };
 }
 function mapDispatchToProps(dispatch) {
@@ -62,11 +66,17 @@ class MathPadFileList extends Component {
 
         return (
             <div>
-                <FileList onAddNewFile={this.handleAddNewFile}>
-                    {nodes}
+                <FileList>
+                    {
+                        nodes.length 
+                            ?
+                        nodes 
+                            :
+                        <NoFilesCaption />
+                    }
                     {this.state.addFileFormDisplayed && <MathPadFile onCancelApply={this.handleCancelApply} key={'createForm'} isCreateNew={true} />}
                 </FileList>
-                {!this.state.addFileFormDisplayed && <button onClick={this.handleAddNewFile}>Add</button>}
+                {!this.state.addFileFormDisplayed && <AddButton onClick={this.handleAddNewFile} />}
             </div>
         );
     }
