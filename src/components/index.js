@@ -1,7 +1,7 @@
 
 export AboutPage from './AboutPage/AboutPage';
-export AddNote from './AddNote/AddNote';
-export AddNoteList from './AddNoteList/AddNoteList';
+export AddNoteButton from './AddNoteButton/AddNoteButton';
+export AddNoteButtonList from './AddNoteButtonList/AddNoteButtonList';
 export ContentLayout from './ContentLayout/ContentLayout';
 export Footer from './Footer/Footer';
 export Header from './Header/Header';
@@ -22,3 +22,4 @@ export FileList from './FileList/FileList';
 export AddButton from './AddButton/AddButton';
 export NoFilesCaption from './NoFilesCaption/NoFilesCaption';
 export CalendarClearButton from './CalendarClearButton/CalendarClearButton';
+export PadPage from './PadPage/PadPage';

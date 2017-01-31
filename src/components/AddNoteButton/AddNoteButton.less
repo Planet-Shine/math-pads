@@ -1,0 +1,46 @@
+
+@import '../../styles/palette';
+
+.AddNoteButton {
+  display: inline-block;
+  width: 200px;
+  height: 150px;
+  background: white;
+  border: 1px solid @hint-text-color;
+  border-radius: 10px;
+  outline: none;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  &:hover {
+    background:@calendarHeaderLine;
+  }
+  &:active {
+    background:@calendarOtherMonthDate;
+  }
+}
+
+.AddNoteButton__icon {
+  display: block;
+  margin: 10px auto 10px auto;
+  width: 150px;
+  height: 100px;
+  background-repeat: no-repeat;
+}
+
+.AddNoteButton__caption {
+  display: block;
+  font-size: 12px;
+  color: @font-color;
+}
+
+.AddNoteButton__icon_sum {
+  background-image: url('./sum.png');
+}
+
+.AddNoteButton__icon_sumOfPow {
+  background-image: url('./sumOfPow.png');
+}
+
+.AddNoteButton__icon_wasComeLeaveBecome {
+  background-image: url('./wasComeLeaveBecome.png');
+}

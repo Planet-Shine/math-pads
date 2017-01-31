@@ -2,11 +2,11 @@
 import React, { Component, PropTypes } from 'react';
 
 import './File.less';
-import { Link } from 'react-redux';
+import { Link } from 'react-router';
 
 class File extends Component {
     static propTypes = {
-        path: PropTypes.string,
+        routeName: PropTypes.string,
         id: PropTypes.number,
         onApply: PropTypes.func,
         onEdit: PropTypes.func,
@@ -82,8 +82,9 @@ class File extends Component {
     }
     render() {
         const {
-            path,
-            name
+            routeName,
+            name,
+            id
         } = this.props;
         const { isEditing } = this.state;
 
@@ -108,9 +109,11 @@ class File extends Component {
                 </li>
             :
                 <li className="File__item">
-                    <span className="File__item-caption">
-                        {name}
-                    </span>
+                    <Link to={`${this.props.routeName}${id}`}>
+                        <span className="File__item-caption">
+                            {name}
+                        </span>
+                    </Link>
                     <span className="File__buttons">
                         <button className="File__button btn btn-default" onClick={this.handleEditClick}>
                             Edit

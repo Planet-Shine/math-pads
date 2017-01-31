@@ -84,6 +84,7 @@ class MathPadFileList extends Component {
         this.props.list.forEach((item) => {
             nodes.push(
                 <File key={item.get('id')}
+                      routeName={'/pads/'}
                       id={item.get('id')}
                       currentEditingId={this.state.currentEditingId}
                       onEditingStart={this.handleEditingStart}
@@ -91,7 +92,6 @@ class MathPadFileList extends Component {
                       isCreateNew={false}
                       onApply={this.props.onApplyFile}
                       onDelete={this.props.onDeleteFile}
-                      path={'/pads'}
                 />
             );
         });
