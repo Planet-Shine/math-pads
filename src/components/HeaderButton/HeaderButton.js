@@ -1,23 +1,20 @@
 
-import React, {Component} from 'react';
+import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 
 import './HeaderButton.less';
 
 class HeaderButton extends Component {
 
-    constructor() {
-        super();
-        this.onClick = this.onClick.bind(this);
-    }
-
-    onClick() {
-        this.props.onClick();
-    }
+    static propTypes = {
+        decorClass: PropTypes.string,
+        onClick: PropTypes.func
+    };
 
     render() {
         return (
-            <button onClick={this.onClick} className={classNames('HeaderButton', this.props.decorClass)}>
+            <button onClick={this.props.onClick}
+                    className={classNames('HeaderButton', this.props.decorClass)}>
             </button>
         );
     }

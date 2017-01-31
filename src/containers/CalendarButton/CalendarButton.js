@@ -19,20 +19,11 @@ class CalendarButton extends Component {
         onSwitchCalendarDisplay: PropTypes.func
     };
 
-    constructor() {
-        super();
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick() {
-        this.props.onSwitchCalendarDisplay();
-    }
-
     render() {
         return (
             <HeaderButton
                 decorClass="glyphicon glyphicon-calendar"
-                onClick={this.handleClick} />
+                onClick={this.props.onSwitchCalendarDisplay} />
         );
     }
 }

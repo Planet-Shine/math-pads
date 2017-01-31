@@ -11,7 +11,7 @@ const api = {
             fileOptions.createDate = timing.toDateString(new Date());
         }
         oldItem = fileStore.getItem(fileOptions.id);
-        if (!oldItem) {
+        if (oldItem) {
             // Перезаписываем fileOptions.
             fileOptions = Object.assign({}, oldItem, fileOptions);
         }

@@ -31,12 +31,24 @@ class Timing {
             return previousValue + (this.millisecondsMap[currentValue] * options[currentValue]);
         }, 0);
     }
-    getDateString(date) {
-        date = date || (new Date());
-        function getTwoDigits(num) {
-            return String(num + 100).slice(-2);
+    toDate(date) {
+        if (typeof date === 'string') {
+            date = date.split(' ').map(item => parseInt(item, 10));
+            date = new Date(date[0], date[1] - 1, date[2]);
+        } else {
+            date = null;
         }
-        date = `${date.getFullYear()} ${getTwoDigits(date.getMonth() + 1)} ${getTwoDigits(date.getDate())}`;
+        return date;
+    }
+    toDateString(date) {
+        if (date) {
+            function getTwoDigits(num) {
+                return String(num + 100).slice(-2);
+            }
+            date = `${date.getFullYear()} ${getTwoDigits(date.getMonth() + 1)} ${getTwoDigits(date.getDate())}`;
+        } else {
+            date = null;
+        }
         return date;
     }
     getNowDateTimestamp() {

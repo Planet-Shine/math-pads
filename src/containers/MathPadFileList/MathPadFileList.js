@@ -1,14 +1,25 @@
 
 import Immutable from 'immutable';
-import React, { Component, PropTypes } from 'react';
+import React, {
+    Component,
+    PropTypes
+} from 'react';
 import { connect } from 'react-redux';
-import { File } from 'components';
-import { applyFile } from 'reducers/file';
-import { FileList, AddButton, NoFilesCaption } from 'components';
 import {
-    MathPadFile,
+    applyFile,
+    deleteFile
+} from 'reducers/file';
+import {
+    File,
+    FileList,
+    AddButton,
+    NoFilesCaption
+} from 'components';
+import {
     SearchForm
 } from 'containers';
+
+const CREATE_NEW_FILE_ID = 0;
 
 function mapStateToProps(state) {
     return {
@@ -17,7 +28,14 @@ function mapStateToProps(state) {
     };
 }
 function mapDispatchToProps(dispatch) {
-    return {};
+    return {
+        onApplyFile: function(fileOptions) {
+            dispatch(applyFile(fileOptions));
+        },
+        onDeleteFile: function(fileOptions) {
+            dispatch(deleteFile(fileOptions));
+        }
+    };
 }
 @connect(mapStateToProps, mapDispatchToProps)
 class MathPadFileList extends Component {
@@ -26,55 +44,77 @@ class MathPadFileList extends Component {
     };
     state = {
         addFileFormDisplayed: false,
-        list: Immutable.fromJS([])
+        list: Immutable.fromJS([]),
+        currentEditingId: null
     };
     constructor() {
         super();
-        this.handleAddNewFile = this.handleAddNewFile.bind(this);
-        this.handleCancelApply = this.handleCancelApply.bind(this);
+        this.handleAddNewFile   = this.handleAddNewFile.bind(this);
+        this.handleCancelApply  = this.handleCancelApply.bind(this);
+        this.handleEditingStart = this.handleEditingStart.bind(this);
     }
     handleAddNewFile() {
         this.setState({
+            currentEditingId: CREATE_NEW_FILE_ID,
             addFileFormDisplayed: true
         });
     }
-    handleCancelApply() {
-        this.resetStateToProps();
-    }
-    resetStateToProps(props = this.props) {
+    handleEditingStart(fileOptions) {
         this.setState({
-            list: props.list,
+            currentEditingId: fileOptions.id
+        });
+    }
+    resetState() {
+        this.setState({
+            currentEditingId: CREATE_NEW_FILE_ID,
             addFileFormDisplayed: false
         });
     }
-    componentWillReceiveProps(nextProps) {
-        this.resetStateToProps(nextProps);
+    componentWillReceiveProps() {
+        this.resetState();
     }
     componentWillMount() {
-        this.setState({
-            list: this.props.list,
-            addFileFormDisplayed: false
-        });
+        this.resetState();
     }
-    render() {
-        var nodes = [];
-        this.state.list.map((item) => {
+    handleCancelApply() {
+        this.resetState();
+    }
+    renderFiles() {
+        const nodes = [];
+        this.props.list.forEach((item) => {
             nodes.push(
-                <MathPadFile key={item.get('id')} id={item.get('id')} name={item.get('name')} isCreateNew={item.get('isCreateNew')} />
+                <File key={item.get('id')}
+                      id={item.get('id')}
+                      currentEditingId={this.state.currentEditingId}
+                      onEditingStart={this.handleEditingStart}
+                      name={item.get('name')}
+                      isCreateNew={false}
+                      onApply={this.props.onApplyFile}
+                      onDelete={this.props.onDeleteFile}
+                      path={'/pads'}
+                />
             );
         });
-
+        return nodes;
+    }
+    render() {
         return (
             <div>
                 <FileList>
                     {
-                        nodes.length 
+                        this.props.list.count()
                             ?
-                        nodes 
+                        this.renderFiles()
                             :
                         <NoFilesCaption />
                     }
-                    {this.state.addFileFormDisplayed && <MathPadFile onCancelApply={this.handleCancelApply} key={'createForm'} isCreateNew={true} />}
+                    {this.state.addFileFormDisplayed &&
+                        <File key={'createFileForm'}
+                              id={CREATE_NEW_FILE_ID}
+                              onCancelApply={this.handleCancelApply}
+                              isCreateNew={true}
+                              onApply={this.props.onApplyFile} />
+                    }
                 </FileList>
                 {!this.state.addFileFormDisplayed && <AddButton onClick={this.handleAddNewFile} />}
             </div>
