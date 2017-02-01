@@ -1,5 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
+import appConstants from 'appConstants';
 import {
     AddNoteButton
 } from 'components';
@@ -11,7 +12,7 @@ class AddNoteButtonList extends Component {
     static propTypes = {
         onAddNote: PropTypes.func
     };
-
+    
     render() {
         return (
             <div>
@@ -19,15 +20,15 @@ class AddNoteButtonList extends Component {
                     — Выберите нужную вам форму расчета:
                 </span>
                 <AddNoteButton
-                    name="sum"
+                    name={appConstants.NOTE_SUM_TYPE}
                     caption="Сумма"
                     onClick={this.props.onAddNote} />
                 <AddNoteButton
-                    name="sumOfPow"
+                    name={appConstants.NOTE_SUM_OF_PRODUCTS_TYPE}
                     caption="Сумма произведений"
                     onClick={this.props.onAddNote} />
                 <AddNoteButton
-                    name="wasComeLeaveBecome"
+                    name={appConstants.NOTE_WAS_COME_LEAVE_BECOME_TYPE}
                     caption="Было/Пришло/Ушло/Стало"
                     onClick={this.props.onAddNote} />
             </div>

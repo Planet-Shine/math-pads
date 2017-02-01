@@ -24,18 +24,24 @@ function mapStateToProps(state, ownProps) {
         fileContent: content || Immutable.fromJS({})
     };
 }
-function mapDispatchToProps(dispatch, ownProps) {
+function mapDispatchToProps(dispatch, ownProps, newProps, goodProps) {
 
     return {
-        onHeaderBlur(targetOptions) {
-            var keys = ['header'],
+        onFieldBlur(targetOptions) {
+            var keys = [targetOptions.name],
                 value = targetOptions.newValue;
             dispatch(applyFileContent(ownProps.id, keys, value));
         },
-        onDescriptionBlur(targetOptions) {
-            var keys = ['description'],
-                value = targetOptions.newValue;
-            dispatch(applyFileContent(ownProps.id, keys, value));
+        onNoteApply({ keys, newValue } = {}) {
+            dispatch(applyFileContent(ownProps.id, keys, newValue));
+        },
+        onDelete({ orderNumber, fileContent }) {
+            if (isFinite(orderNumber)) {
+                let keys = ['notes'];
+                let notes = fileContent.get('notes');
+                notes = notes.splice(orderNumber, 1);
+                dispatch(applyFileContent(ownProps.id, keys, notes));
+            }
         }
     };
 }
@@ -44,25 +50,42 @@ function mapDispatchToProps(dispatch, ownProps) {
 class MathPadNoteList extends Component {
 
     static propTypes = {
-        onHeaderBlur : PropTypes.func,
-        onDescriptionBlur : PropTypes.func
+        onFieldBlur : PropTypes.func,
+        onNoteApply : PropTypes.func
     };
 
     constructor() {
         super();
         this.handleAddNode = this.handleAddNode.bind(this);
+        this.handleDeleteNote = this.handleDeleteNote.bind(this);
     }
 
-    handleAddNode(name) {
-        console.log('add to name: ' + name);
+    handleDeleteNote({ orderNumber } = {}) {
+        this.props.onDelete({
+            orderNumber,
+            fileContent : this.props.fileContent
+        });
+    }
+
+    handleAddNode(nodeType) {
+        const fileContent = this.props.fileContent;
+        const notes = fileContent.get('notes') || Immutable.fromJS([]);
+        const keys = ['notes', notes.count()];
+        const newValue = Immutable.fromJS({ type: nodeType });
+        this.props.onNoteApply({
+            keys,
+            newValue
+        });
     }
 
     render() {
         return (
             <div>
                 <NoteList fileContent={this.props.fileContent}
-                          onHeaderBlur={this.props.onHeaderBlur}
-                          onDescriptionBlur={this.props.onDescriptionBlur}  />
+                          onHeaderBlur={this.props.onFieldBlur}
+                          onDescriptionBlur={this.props.onFieldBlur}
+                          onNoteApply={this.props.onNoteApply}
+                          onDelete={this.handleDeleteNote} />
                 <AddNoteButtonList onAddNote={this.handleAddNode} />
             </div>
         );

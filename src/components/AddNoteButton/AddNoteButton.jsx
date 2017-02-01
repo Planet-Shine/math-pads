@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
+import escape from 'html-escape';
 
 import './AddNoteButton.less';
 

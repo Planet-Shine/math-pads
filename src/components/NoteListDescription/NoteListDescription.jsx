@@ -5,6 +5,10 @@ import escape from 'html-escape';
 import './NoteListDescription.less';
 
 class NoteListDescription extends Component {
+    static propTypes = {
+        name: PropTypes.string,
+        value: PropTypes.string
+    };
 
     constructor() {
         super();
@@ -13,7 +17,8 @@ class NoteListDescription extends Component {
 
     handleBlur(event) {
         this.props.onBlur({
-            newValue : event.target.innerText
+            name: this.props.name,
+            newValue: event.target.innerText
         });
     }
 

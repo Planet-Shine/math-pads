@@ -124,6 +124,22 @@ function file (state, action) {
             return culcFiltredFiles(state.set('searchQuery', action.query));
         case appConstants.SET_SELECTED_DATE:
             return culcFiltredFiles(state.set('selectedDate', action.selectedDate));
+        case appConstants.DELETE_NOTE:
+            newState = state;
+            (function () {
+                const fileIndex = state.get('files').findIndex(function (file) {
+                    return file.get('id') === action.fileId;
+                });
+                if (~fileIndex) {
+                    let file = state.get('files').get(fileIndex);
+                    let content = file.get('content');
+                    const notes = file.get('notes').splice(action.orderNumber, 1);
+                    file = file.set('notes', notes);
+                    let files = state.get('files').set(fileIndex, file);
+                    newState = state.set('files', files);
+                }
+            }());
+            return newState;
         default:
             if (state && !_isStateFilesFiltered) {
                 _isStateFilesFiltered = true;
@@ -198,4 +214,12 @@ export function selectedDate(selectedDate) {
         type: appConstants.SET_SELECTED_DATE,
         selectedDate: selectedDate
     }
+}
+
+export function deleteNote(fileId, orderNumber) {
+    return {
+        type: appConstants.DELETE_NOTE,
+        fileId,
+        orderNumber
+    };
 }

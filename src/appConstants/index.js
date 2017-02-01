@@ -14,5 +14,9 @@ export default keyMirror({
     SET_SELECTED_DATE: null,
     APPLY_FILE_CONTENT: null,
     APPLY_FILE_CONTENT_SUCCESS: null,
-    APPLY_FILE_CONTENT_FAIL: null
+    APPLY_FILE_CONTENT_FAIL: null,
+    DELETE_NOTE: null,
+    NOTE_SUM_TYPE: null,
+    NOTE_SUM_OF_PRODUCTS_TYPE: null,
+    NOTE_WAS_COME_LEAVE_BECOME_TYPE: null
 });

@@ -6,6 +6,11 @@ import './NoteListHeader.less';
 
 class NoteListHeader extends Component {
 
+    static propTypes = {
+        name: PropTypes.string,
+        value: PropTypes.string
+    };
+
     constructor() {
         super();
         this.handleBlur = this.handleBlur.bind(this);
@@ -13,7 +18,8 @@ class NoteListHeader extends Component {
 
     handleBlur(event) {
         this.props.onBlur({
-            newValue : event.target.innerText
+            name: this.props.name,
+            newValue: event.target.innerText
         });
     }
 

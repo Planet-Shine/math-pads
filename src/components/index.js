@@ -26,3 +26,4 @@ export PadPage from './PadPage/PadPage';
 export NoteListDescription from './NoteListDescription/NoteListDescription';
 export NoteListHeader from './NoteListHeader/NoteListHeader';
 export PageErrorMessage from './PageErrorMessage/PageErrorMessage';
+export NoteBox from './NoteBox/NoteBox';

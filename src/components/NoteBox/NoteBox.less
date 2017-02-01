@@ -1,0 +1,69 @@
+
+@import '../../styles/palette';
+
+.NoteBox {
+  background: @calendarHeaderLine;
+  border: 1px solid @divider-color;
+  padding: 0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0 @shadow-color;
+}
+
+.NoteBox__header {
+  position: relative;
+  height: 30px;
+  border-bottom: 1px solid @divider-color;
+  background: @currentDatePickerColor;
+}
+
+.NoteBox__order-number {
+  position: absolute;
+  color: @secondary-text-color;
+  z-index: 1;
+  left: 15px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.NoteBox__caption {
+  position: absolute;
+  font-size: 16px;
+  width: 60%;
+  min-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 1;
+  height: 30px;
+  line-height: 30px;
+  left: 70px;
+}
+
+.NoteBox__ribbed-handle {
+  position: absolute;
+  cursor: move;
+  z-index: 0;
+  height: 30px;
+  width: 150px;
+  right: 0;
+  border-radius: 0 5px 0 30px;
+  background: url('./ribbed-handle.png');
+}
+
+.NoteBox__date {
+  font-size: 14px;
+  padding-left: 20px;
+  color: @secondary-text-color;
+}
+
+.NoteBox__delete {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+}
+
+.btn-sm.NoteBox__delete {
+  outline: none;
+  border-radius: 0 5px 0 0;
+}
