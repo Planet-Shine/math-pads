@@ -6,7 +6,8 @@ import {
     Menu,
     MenuItem,
     Footer,
-    ContentLayout
+    ContentLayout,
+    PageErrorMessage
 } from 'components';
 
 import {
@@ -18,6 +19,7 @@ import './PadPage.less';
 class PadPage extends Component {
 
     render() {
+        var id = parseInt(this.props.params.id, 10);
         return (
             <div>
                 <Header>
@@ -32,7 +34,15 @@ class PadPage extends Component {
                     </Menu>
                 </Header>
                 <ContentLayout>
-                    <MathPadNoteList />
+                    {
+                            isFinite(id)
+                        ?
+                            <MathPadNoteList id={id} />
+                        :
+                            <PageErrorMessage>
+                                 Идентификатор файла должен быть числом.
+                            </PageErrorMessage>
+                    }
                 </ContentLayout>
                 <Footer>
                     © 2017-today

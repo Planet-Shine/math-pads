@@ -6,7 +6,7 @@ var _isStateFilesFiltered = false;
 
 function applyFileToState(state, fileOptions, isPending = false) {
     var newFiles;
-    const { id, name, createDate } = fileOptions;
+    const { id, name, createDate, content } = fileOptions;
     if (!id) {
         return state;
     }
@@ -18,6 +18,7 @@ function applyFileToState(state, fileOptions, isPending = false) {
         id: id || 0,
         name: name,
         createDate: createDate,
+        content : Immutable.fromJS(content),
         isPending: isPending
     });
     if (~fileIndex) {
@@ -113,6 +114,12 @@ function file (state, action) {
             return state;
         case appConstants.DELETE_FILE_FAIL:
             return culcFiltredFiles(revertFileIfNeeded(state, action.fileOptions.id));
+        case appConstants.APPLY_FILE_CONTENT:
+            return state; // culcFiltredFiles(applyFileToState(state, action.fileOptions, true)); // todo : Заглушка, чтобы не накатывал 2 раза.
+        case appConstants.APPLY_FILE_CONTENT_SUCCESS:
+            return culcFiltredFiles(applyFileToState(state, action.result));
+        case appConstants.APPLY_FILE_CONTENT_FAIL:
+            return culcFiltredFiles(revertFileIfNeeded(state, action.fileOptions.id));
         case appConstants.NEW_SEARCH_QUERY:
             return culcFiltredFiles(state.set('searchQuery', action.query));
         case appConstants.SET_SELECTED_DATE:
@@ -160,6 +167,23 @@ export function deleteFile(fileOptions) {
         promise: (api) => api.deleteFile(fileOptions),
         fileOptions: fileOptions
     };
+}
+
+export function applyFileContent(id, keys, value) {
+    return {
+        types: [
+            appConstants.APPLY_FILE_CONTENT,
+            appConstants.APPLY_FILE_CONTENT_SUCCESS,
+            appConstants.APPLY_FILE_CONTENT_FAIL
+        ],
+        promise: (api) => api.applyFileContent(id, keys, value),
+        keys, 
+        value,
+        id,
+        fileOptions: {
+            id
+        }
+};
 }
 
 export function searchQuery(newSearchQuery) {

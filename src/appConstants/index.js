@@ -11,5 +11,8 @@ export default keyMirror({
     DELETE_FILE_SUCCESS: null,
     DELETE_FILE_FAIL: null,
     NEW_SEARCH_QUERY: null,
-    SET_SELECTED_DATE: null
+    SET_SELECTED_DATE: null,
+    APPLY_FILE_CONTENT: null,
+    APPLY_FILE_CONTENT_SUCCESS: null,
+    APPLY_FILE_CONTENT_FAIL: null
 });

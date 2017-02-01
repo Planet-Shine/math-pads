@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 
 import './File.less';
 import { Link } from 'react-router';
+import escape from 'html-escape';
 
 class File extends Component {
     static propTypes = {
@@ -95,7 +96,7 @@ class File extends Component {
                     <form onSubmit={this.handleEditingApply}>
                         <input className="File__input"
                                type="text"
-                               defaultValue={name}
+                               defaultValue={escape(name)}
                                ref={c => this.nameInput = c} />
                         <span className="File__buttons">
                             <button className="File__button btn btn-default" type="button" onClick={this.handleApplyCancel}>
@@ -111,7 +112,7 @@ class File extends Component {
                 <li className="File__item">
                     <Link to={`${this.props.routeName}${id}`}>
                         <span className="File__item-caption">
-                            {name}
+                            {escape(name)}
                         </span>
                     </Link>
                     <span className="File__buttons">

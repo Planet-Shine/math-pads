@@ -1,0 +1,54 @@
+
+@import '../../styles/palette';
+
+.NoteListDescription {
+  position: relative;
+  background: @calendarHeaderLine;
+  &:hover {
+    background: @light-green-color;
+  }
+}
+
+.NoteListDescription__field {
+  position: relative;
+  outline: none;
+  z-index: 1;
+  display: block;
+  border: 1px solid @calendarOtherMonthDate;
+  font-size: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  &:hover {
+    border-color: @header-background;
+  }
+  &:empty:after {
+    cursor: pointer;
+    content: attr(data-placeholder);
+    color: @placeholder-color;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  &:focus {
+    cursor: text;
+    background: @white;
+    border: 1px solid @font-color;
+    &:empty:after {
+      cursor: text;
+    }
+  }
+}
+
+.NoteListDescription__edit-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 0;
+  color: @placeholder-color;
+  font-size: 20px;
+  margin-left: -35px;
+}
+
+
+
+

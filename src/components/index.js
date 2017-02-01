@@ -23,3 +23,6 @@ export AddButton from './AddButton/AddButton';
 export NoFilesCaption from './NoFilesCaption/NoFilesCaption';
 export CalendarClearButton from './CalendarClearButton/CalendarClearButton';
 export PadPage from './PadPage/PadPage';
+export NoteListDescription from './NoteListDescription/NoteListDescription';
+export NoteListHeader from './NoteListHeader/NoteListHeader';
+export PageErrorMessage from './PageErrorMessage/PageErrorMessage';

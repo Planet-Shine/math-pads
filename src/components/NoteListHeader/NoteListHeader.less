@@ -1,0 +1,47 @@
+
+@import '../../styles/palette';
+
+.NoteListHeader {
+  position: relative;
+  z-index: 1;
+  font-size: 30px;
+  padding: 10px 50px 10px 10px;
+  margin-bottom: 20px;
+  display: inline-block;
+  min-width: 200px;
+  outline: none;
+  white-space: pre-wrap;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover:empty:after {
+    color: @header-icon-hover-bg;
+  }
+  &:focus:hover:empty:after {
+    color: @placeholder-color;
+  }
+  &:empty:after {
+    cursor: pointer;
+    content: attr(data-placeholder);
+    color: @placeholder-color;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  &:focus {
+    cursor: text;
+    background: @white;
+    border: 1px solid @font-color;
+    padding: 9px 49px 9px 9px;
+    &:empty:after {
+      cursor: text;
+    }
+  }
+}
+
+.NoteListHeader__edit-icon {
+  position: relative;
+  z-index: 0;
+  color: @placeholder-color;
+  font-size: 20px;
+  margin-left: -35px;
+}
