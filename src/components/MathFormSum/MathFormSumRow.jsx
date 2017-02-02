@@ -1,6 +1,9 @@
 
 import React, { Component, PropTypes } from 'react';
 import escape from 'html-escape';
+import {
+    TwoOperatorSwitcher
+} from 'components';
 
 import './MathFormSumRow.less';
 
@@ -17,9 +20,10 @@ class MathFormSumRow extends Component {
 
     constructor() {
         super();
-        this.handleNameBlur  = this.handleNameBlur.bind(this);
-        this.handleValueBlur = this.handleValueBlur.bind(this);
-        this.handleDelete    = this.handleDelete.bind(this);
+        this.handleOperatorClick = this.handleOperatorClick.bind(this);
+        this.handleNameBlur      = this.handleNameBlur.bind(this);
+        this.handleValueBlur     = this.handleValueBlur.bind(this);
+        this.handleDelete        = this.handleDelete.bind(this);
     }
 
     handleDelete() {
@@ -28,11 +32,12 @@ class MathFormSumRow extends Component {
     }
 
     callOnApply(applyOptions) {
-        const { value, index, name } = this.props;
+        const { value, index, name, culcOperator } = this.props;
         const options = Object.assign({
             index,
             value,
-            name
+            name,
+            culcOperator
         }, applyOptions);
         this.props.onApply(options);
     }
@@ -51,8 +56,15 @@ class MathFormSumRow extends Component {
         });
     }
 
+    handleOperatorClick(options) {
+        const { culcOperator } = options;
+        this.callOnApply({
+            culcOperator
+        });
+    }
+
     render() {
-        const { name, value, orderNumber, isCreateNew } = this.props;
+        const { name, value, orderNumber, isCreateNew, culcOperator } = this.props;
 
         return (
             <div className="MathFormSumRow">
@@ -77,6 +89,16 @@ class MathFormSumRow extends Component {
                      className="MathFormSumRow__value">
                     {escape(value)}
                 </div>
+                {
+                    isCreateNew ||
+                    <div className="MathFormSumRow__operator-box">
+                        <TwoOperatorSwitcher
+                            operator1="+"
+                            operator2="−"
+                            value={culcOperator === '+' ? 1 : 2}
+                            onClick={this.handleOperatorClick} />
+                    </div>
+                }
                 {
                     this.props.onDelete
                     &&

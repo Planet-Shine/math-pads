@@ -14,10 +14,24 @@ class TwoOperatorSwitcher extends Component {
         onClick: PropTypes.func
     };
 
+    constructor() {
+        super();
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        // Т.к. переключаем, то показываем, что хотим другой оператор, оносительно текущего.
+        const culcOperator = this.props.value === 1 ? '-' /*
+            this.props.operator2 не может записывать минус в хранилище почему-то.
+            Пишет unexpected token.
+        */ : this.props.operator1;
+        this.props.onClick({ culcOperator });
+    }
+
     render() {
         return (
             <div className="TwoOperatorSwitcher"
-                 onClick={this.props.onClick}>
+                 onClick={this.handleClick}>
                 <div className="TwoOperatorSwitcher__mask">
                     <div className={classNames(
                         "TwoOperatorSwitcher__switcher",
