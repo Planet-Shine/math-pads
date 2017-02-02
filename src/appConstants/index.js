@@ -18,5 +18,7 @@ export default keyMirror({
     DELETE_NOTE: null,
     NOTE_SUM_TYPE: null,
     NOTE_SUM_OF_PRODUCTS_TYPE: null,
-    NOTE_WAS_COME_LEAVE_BECOME_TYPE: null
+    NOTE_WAS_COME_LEAVE_BECOME_TYPE: null,
+    NOTE_PIE_CHART_TYPE: null,
+    NOTE_DIVISION_WITH_A_REMAINDER_TYPE: null
 });

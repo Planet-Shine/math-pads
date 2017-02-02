@@ -24,6 +24,7 @@ class TwoOperatorSwitcher extends Component {
         const culcOperator = this.props.value === 1 ? '-' /*
             this.props.operator2 не может записывать минус в хранилище почему-то.
             Пишет unexpected token.
+            Это глючило в eval.
         */ : this.props.operator1;
         this.props.onClick({ culcOperator });
     }

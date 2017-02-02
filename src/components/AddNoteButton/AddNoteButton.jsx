@@ -18,13 +18,16 @@ class AddNoteButton extends Component {
     }
 
     handleClick() {
-        this.props.onClick(this.props.name);
+        if (!this.props.disabled) {
+            this.props.onClick(this.props.name);
+        }
     }
 
     render() {
+        const { disabled } = this.props;
         var iconClass = 'AddNoteButton__icon_' + this.props.name;
         return (
-            <button className="AddNoteButton" onClick={this.handleClick}>
+            <button className={classNames('AddNoteButton', disabled && 'AddNoteButton_disabled' )} onClick={this.handleClick}>
                 <span className={classNames('AddNoteButton__icon', iconClass)}></span>
                 <span className="AddNoteButton__caption">
                     {this.props.caption}

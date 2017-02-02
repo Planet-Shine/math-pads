@@ -2,10 +2,11 @@
 @import '../../styles/palette';
 
 .AddNoteButton {
+  position: relative;
   display: inline-block;
   width: 200px;
   height: 150px;
-  background: white;
+  background: @white;
   border: 1px solid @hint-text-color;
   border-radius: 10px;
   outline: none;
@@ -16,6 +17,23 @@
   }
   &:active {
     background:@calendarOtherMonthDate;
+  }
+}
+
+.AddNoteButton_disabled {
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    content: '';
+    display: block;
+    width: 200px;
+    height: 150px;
+    background: @disabled-white;
+  }
+  &:hover {
+    background: @white;
   }
 }
 
@@ -43,4 +61,12 @@
 
 .AddNoteButton__icon_NOTE_WAS_COME_LEAVE_BECOME_TYPE {
   background-image: url('./was-come-leave-become.png');
+}
+
+.AddNoteButton__icon_NOTE_PIE_CHART_TYPE {
+  background-image: url('./pie-chart.png');
+}
+
+.AddNoteButton__icon_NOTE_DIVISION_WITH_A_REMAINDER_TYPE {
+  background-image: url('./division-with-a-remainder.png');
 }
