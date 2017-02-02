@@ -25,7 +25,7 @@ class NoteListDescription extends Component {
     render() {
         return (
             <div className="NoteListDescription">
-                <span tabIndex="2"
+                <span rows="3"
                       role="textbox"
                       contentEditable="true"
                       data-placeholder="Введите описание"

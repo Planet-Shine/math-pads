@@ -1,0 +1,84 @@
+
+@import '../../styles/palette';
+
+.MathFormSum {
+  position: relative;
+}
+
+.MathFormSum__optionsLine {
+  position: absolute;
+  z-index: 2;
+}
+
+.MathFormSum__fieldLine {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid @hint-text-color;
+}
+
+.MathFormSum__result-caption {
+  position: absolute;
+  top: 5px;
+  text-align: right;
+  left: 40px;
+  width: 40%;
+  color: @text-color;
+  line-height: 40px;
+  height: 40px;
+  box-sizing: border-box;
+  font-weight: bold;
+}
+
+.MathFormSum__result-value {
+  position: absolute;
+  top: 0;
+  padding-left: 10px;
+  font-weight: bold;
+  left : 58%;
+  width: 30%;
+  color: @text-color;
+  line-height: 50px;
+  height: 50px;
+  box-sizing: border-box;
+  border-left: 1px solid @hint-text-color;
+}
+
+.MathFormSum__header {
+  font-weight: bold;
+  color: @secondary-text-color;
+  font-size: 13px;
+}
+
+.MathFormSum__header-order-number {
+  position: absolute;
+  top : 5px;
+  left : 10px;
+  width: 30px;
+  line-height: 40px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+
+.MathFormSum__header-name {
+  position: absolute;
+  top : 5px;
+  left : 40px;
+  width: 45%;
+  line-height: 40px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.MathFormSum__header-value {
+  position: absolute;
+  border-left: 1px solid @hint-text-color;
+  top : 0;
+  padding-left: 10px;
+  left : 58%;
+  width: 30%;
+  line-height: 50px;
+  height: 50px;
+  box-sizing: border-box;
+}

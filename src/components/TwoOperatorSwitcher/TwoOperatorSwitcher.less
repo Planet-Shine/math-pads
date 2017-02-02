@@ -1,0 +1,76 @@
+
+@import '../../styles/palette';
+
+.TwoOperatorSwitcher {
+  cursor: pointer;
+  user-select: none;
+  width: 80px;
+  height: 30px;
+}
+
+.TwoOperatorSwitcher__mask {
+  position: relative;
+  width: 80px;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 15px;
+  box-sizing: border-box;
+  border: 1px solid @hint-text-color ;
+}
+
+.TwoOperatorSwitcher__switcher {
+  position: absolute;
+  width: 160px;
+  transition: left 0.1s 0s linear;
+}
+
+.TwoOperatorSwitcher__switcher_operator1 {
+  top: 0;
+  left: 0;
+}
+
+.TwoOperatorSwitcher__switcher_operator2 {
+  top: 0;
+  left: -50px;
+}
+
+.TwoOperatorSwitcher__operator1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 65px;
+  height: 30px;
+  background: @header-icon-hover-bg;
+  color: @header-icon;
+}
+
+.TwoOperatorSwitcher__handle {
+  position: absolute;
+  z-index: 2;
+  left: 50px;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 15px;
+  box-sizing: border-box;
+  background: @currentDatePickerColor;
+  box-shadow: 1px 1px 0 @shadow-color;
+}
+
+.TwoOperatorSwitcher__operator2 {
+  position: absolute;
+  left: 65px;
+  top: 0;
+  width: 65px;
+  height: 30px;
+  background: @light-red;
+  color: @dark-red;
+}
+
+.TwoOperatorSwitcher__operator1,
+.TwoOperatorSwitcher__operator2 {
+  line-height: 30px;
+  text-align: center;
+  font-size: 25px;
+}
+

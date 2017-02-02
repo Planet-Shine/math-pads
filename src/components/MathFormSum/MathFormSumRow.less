@@ -1,0 +1,61 @@
+
+@import '../../styles/palette';
+
+.MathFormSumRow {
+  position: relative;
+  height: 50px;
+  border-bottom: 1px solid @hint-text-color;
+  &:hover {
+    background: @divider-color;
+  }
+}
+
+.MathFormSumRow__orderNumber {
+  position: absolute;
+  top : 5px;
+  left : 10px;
+  width: 30px;
+  color: @placeholder-color;
+  line-height: 40px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.MathFormSumRow__name {
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+  outline: none;
+  text-overflow: ellipsis;
+  top : 0;
+  left : 40px;
+  width: 45%;
+  color: @text-color;
+  line-height: 50px;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.MathFormSumRow__value {
+  position: absolute;
+  white-space: nowrap;
+  border-left: 1px solid @hint-text-color;
+  overflow: hidden;
+  outline: none;
+  padding-left: 10px;
+  text-overflow: ellipsis;
+  top : 0;
+  left : 58%;
+  width: 30%;
+  color: @text-color;
+  line-height: 50px;
+  height: 50px;
+  box-sizing: border-box;
+}
+
+.MathFormSumRow__delete {
+  position: absolute;
+  outline: none;
+  top: 15px;
+  right: 0;
+}

@@ -26,8 +26,7 @@ class NoteListHeader extends Component {
     render() {
         return (
             <div>
-                <h1 tabIndex="1"
-                    rows="1"
+                <h1 rows="1"
                     role="textbox"
                     contentEditable="true"
                     data-placeholder="Введите заголовок"

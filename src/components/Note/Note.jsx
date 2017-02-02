@@ -7,8 +7,11 @@ import React, {
 import {
     NoteBox,
     NoteListHeader,
-    NoteListDescription
+    NoteListDescription,
+    MathFormSum
 } from 'components';
+
+import noteTypeCaptions from 'appConstants/noteTypeCaptions';
 
 import Immutable from 'immutable';
 
@@ -42,12 +45,31 @@ class Note extends Component {
         });
     }
 
+    renderMathForm() {
+        const data = this.getData();
+        const type = data.get('type');
+        // switch
+        return (
+            <MathFormSum data={data}
+                         onApply={this.handleApply} />
+        );
+    }
+
+    getData() {
+        return (this.props.data || Immutable.fromJS({}));
+    }
+
     render() {
-        const { header, description } = (this.props.data || Immutable.fromJS({})).toJS();
+        const data = this.getData();
+        const { header, description, type } = {
+            header: data.get('header'),
+            description: data.get('description'),
+            type: data.get('type')
+        };
         const { orderNumber } = this.props;
 
         return (
-            <NoteBox name={'Сумма'}
+            <NoteBox name={noteTypeCaptions[type]}
                      orderNumber={orderNumber + 1}
                      onDeleteClick={this.handleDeleteClick}>
                 <div className="Note">
@@ -57,7 +79,7 @@ class Note extends Component {
                     <NoteListDescription value={description}
                                          onBlur={this.handleApply}
                                          name={'description'} />
-                    Note
+                    {this.renderMathForm()}
                 </div>
             </NoteBox>
         );

@@ -1,7 +1,12 @@
 
 import React, { Component, PropTypes } from 'react';
-
+import { SortableHandle } from 'react-sortable-hoc';
 import './NoteBox.less';
+
+const DragHandle = SortableHandle(() =>
+    <div className="NoteBox__sortable-handle">
+    </div>
+); // This can be any component you want
 
 
 class NoteBox extends Component {
@@ -21,9 +26,8 @@ class NoteBox extends Component {
                     <div className="NoteBox__caption">
                         {this.props.name}
                     </div>
-                    <div className="NoteBox__ribbed-handle">
-                    </div>
-                    <button className="NoteBox__delete btn btn-danger btn-sm" onClick={this.props.onDeleteClick}>
+                    <DragHandle />
+                    <button tabIndex="-1" className="NoteBox__delete btn btn-danger btn-sm" onClick={this.props.onDeleteClick}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>

@@ -27,3 +27,6 @@ export NoteListDescription from './NoteListDescription/NoteListDescription';
 export NoteListHeader from './NoteListHeader/NoteListHeader';
 export PageErrorMessage from './PageErrorMessage/PageErrorMessage';
 export NoteBox from './NoteBox/NoteBox';
+export MathFormSum from './MathFormSum/MathFormSum';
+export MathFormSumRow from './MathFormSum/MathFormSumRow';
+export TwoOperatorSwitcher from './TwoOperatorSwitcher/TwoOperatorSwitcher';

@@ -1,6 +1,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import appConstants from 'appConstants';
+import noteTypeCaptions from 'appConstants/noteTypeCaptions';
 import {
     AddNoteButton
 } from 'components';
@@ -21,15 +22,15 @@ class AddNoteButtonList extends Component {
                 </span>
                 <AddNoteButton
                     name={appConstants.NOTE_SUM_TYPE}
-                    caption="Сумма"
+                    caption={noteTypeCaptions[appConstants.NOTE_SUM_TYPE]}
                     onClick={this.props.onAddNote} />
                 <AddNoteButton
                     name={appConstants.NOTE_SUM_OF_PRODUCTS_TYPE}
-                    caption="Сумма произведений"
+                    caption={noteTypeCaptions[appConstants.NOTE_SUM_OF_PRODUCTS_TYPE]}
                     onClick={this.props.onAddNote} />
                 <AddNoteButton
                     name={appConstants.NOTE_WAS_COME_LEAVE_BECOME_TYPE}
-                    caption="Было/Пришло/Ушло/Стало"
+                    caption={noteTypeCaptions[appConstants.NOTE_WAS_COME_LEAVE_BECOME_TYPE]}
                     onClick={this.props.onAddNote} />
             </div>
         );

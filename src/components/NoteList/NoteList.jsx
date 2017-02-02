@@ -8,6 +8,21 @@ import {
 import appConstants from 'appConstants';
 
 import Immutable from 'immutable';
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
+
+const SortableNoteItem = SortableElement(({ childProps }) => {
+    return <Note {...childProps} />;
+});
+
+const SortableList = SortableContainer(({items}) => {
+    return (
+        <div>
+            {items.map((childProps, index) =>
+                <SortableNoteItem key={`item-${index}`} index={index} childProps={childProps} />
+            )}
+        </div>
+    );
+});
 
 import './NoteList.less';
 
@@ -18,36 +33,58 @@ class NoteList extends Component {
         onHeaderBlur: PropTypes.func,
         onDescriptionBlur: PropTypes.func,
         onNoteApply: PropTypes.func,
+        onNoteReplace: PropTypes.func,
         onDelete: PropTypes.func
     };
 
+    constructor() {
+        super();
+        this.handleSortEnd = this.handleSortEnd.bind(this);
+    }
+
+    handleSortEnd({oldIndex, newIndex}) {
+        this.props.onNoteReplace({ oldIndex, newIndex });
+    }
+
+    /*
+
+     switch (item.get('type')) {
+     case appConstants.NOTE_SUM_TYPE:
+     case appConstants.NOTE_SUM_OF_PRODUCTS_TYPE:
+     case appConstants.NOTE_WAS_COME_LEAVE_BECOME_TYPE:
+     nodes.push(
+     <Note key={item.get('id')}
+     orderNumber={index}
+     data={item}
+     onApply={this.props.onNoteApply}
+     onDelete={this.props.onDelete}
+     />
+     );
+     return;
+     default :
+     return;
+     }
+
+    */
+
     renderNotes() {
-        var nodes = [];
+        var items = (this.props
+                .fileContent
+                .get('notes') || Immutable.fromJS([])),
+            childPropsList = [];
 
-        (this.props
-            .fileContent
-            .get('notes') || Immutable.fromJS([]))
-            .forEach((item, index) => {
-                switch (item.get('type')) {
-                    case appConstants.NOTE_SUM_TYPE:
-                    case appConstants.NOTE_SUM_OF_PRODUCTS_TYPE:
-                    case appConstants.NOTE_WAS_COME_LEAVE_BECOME_TYPE:
-                        nodes.push(
-                            <Note key={item.get('id')}
-                                  orderNumber={index}
-                                  data={item}
-                                  onApply={this.props.onNoteApply}
-                                  onDelete={this.props.onDelete}
-                            />
-                        );
-                        return;
-                    default :
-                        return;
-                }
-
+        items.forEach((item, index) => {
+            childPropsList.push({
+                onApply: this.props.onNoteApply,
+                onDelete: this.props.onDelete,
+                data: item,
+                orderNumber: index
             });
+        });
 
-        return nodes;
+        return <SortableList items={childPropsList}
+                             onSortEnd={this.handleSortEnd}
+                             useDragHandle={true} />;
     }
 
     render() {

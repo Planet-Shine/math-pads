@@ -7,7 +7,8 @@ import {
     MenuItem,
     Footer,
     ContentLayout,
-    PageErrorMessage
+    PageErrorMessage,
+    TwoOperatorSwitcher
 } from 'components';
 
 import {

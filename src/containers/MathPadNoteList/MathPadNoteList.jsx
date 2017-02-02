@@ -58,12 +58,40 @@ class MathPadNoteList extends Component {
         super();
         this.handleAddNode = this.handleAddNode.bind(this);
         this.handleDeleteNote = this.handleDeleteNote.bind(this);
+        this.handleNoteReplace = this.handleNoteReplace.bind(this);
     }
 
     handleDeleteNote({ orderNumber } = {}) {
         this.props.onDelete({
             orderNumber,
             fileContent : this.props.fileContent
+        });
+    }
+
+    handleNoteReplace({ oldIndex, newIndex }) {
+        function arrayMove(oldIndex, newIndex, notes) {
+            var oldNote = notes.get(oldIndex),
+                note;
+            if (oldIndex > newIndex) {
+                for (let index = oldIndex; index > newIndex; index--) {
+                    note = notes.get(index - 1);
+                    notes = notes.set(index, note);
+                }
+            } else {
+                for (let index = oldIndex; index < newIndex; index++) {
+                    note = notes.get(index + 1);
+                    notes = notes.set(index, note);
+                }
+            }
+            return notes.set(newIndex, oldNote);
+        }
+        const fileContent = this.props.fileContent;
+        const notes = fileContent.get('notes') || Immutable.fromJS([]);
+        const newNotes = arrayMove(oldIndex, newIndex, notes);
+        const keys = ['notes'];
+        this.props.onNoteApply({
+            keys,
+            newValue: newNotes
         });
     }
 
@@ -85,7 +113,8 @@ class MathPadNoteList extends Component {
                           onHeaderBlur={this.props.onFieldBlur}
                           onDescriptionBlur={this.props.onFieldBlur}
                           onNoteApply={this.props.onNoteApply}
-                          onDelete={this.handleDeleteNote} />
+                          onDelete={this.handleDeleteNote}
+                          onNoteReplace={this.handleNoteReplace} />
                 <AddNoteButtonList onAddNote={this.handleAddNode} />
             </div>
         );
