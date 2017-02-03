@@ -1,0 +1,87 @@
+
+@import '../../styles/palette';
+
+.Checkbox {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  box-sizing: border-box;
+  background: @currentDatePickerColor;
+  cursor: pointer;
+  &:hover {
+    .Checkbox__border {
+      background: @white;
+    }
+    .Checkbox__tick-line1-inner,
+    .Checkbox__tick-line2-inner {
+      background: @header-icon;
+    }
+  }
+}
+
+.Checkbox_checked {
+  .Checkbox__tick-line1 {
+    transform: rotate(45deg);
+  }
+  .Checkbox__tick-line2 {
+    transform: rotate(-45deg);
+  }
+  .Checkbox__tick-line1-inner {
+    width: 20px;
+    border-radius: 3px 0 0 3px;
+    transition: width 0.15s 0s linear;
+    box-shadow: 2px 2px 0 @currentDatePickerColor;
+  }
+  .Checkbox__tick-line2-inner {
+    width: 40px;
+    border-radius: 0 3px 3px 0;
+    transition: width 0.3s 0.13s linear;
+    box-shadow: -2px 2px 0 @currentDatePickerColor;
+  }
+}
+
+.Checkbox__border {
+  width: 26px;
+  height: 26px;
+  background: @calendarHeaderLine;
+  box-sizing: border-box;
+}
+.Checkbox__tick-line1 {
+  position: absolute;
+  left: -5px;
+  width: 20px;
+  transform: rotate(-135deg);
+  top: 15px;
+  z-index: 3;
+  height: 6px;
+}
+.Checkbox__tick-line1-inner {
+  border-radius: 0 3px 3px 0;
+  height: 6px;
+  width: 0px;
+  background: @header-background;
+  transition: width 0.15s 0s linear;
+  box-shadow: -2px -2px 0 @currentDatePickerColor;
+}
+
+.Checkbox__tick-line2{
+  position: absolute;
+  left: 5px;
+  width: 40px;
+  transform: rotate(135deg);
+  top: 5px;
+  border-radius: 2px;
+  z-index: 2;
+  height: 6px;
+}
+.Checkbox__tick-line2-inner {
+  height: 6px;
+  width: 0px;
+  background: @header-background;
+  transition: width 0.3s 0.13s linear;
+  border-radius: 3px 0 0 3px;
+  box-shadow: 2px -2px 0 @currentDatePickerColor;
+}
+
+

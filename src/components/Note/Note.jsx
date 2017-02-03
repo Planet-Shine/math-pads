@@ -8,10 +8,12 @@ import {
     NoteBox,
     NoteListHeader,
     NoteListDescription,
-    MathFormSum
+    MathFormSum,
+    MathFormDivision
 } from 'components';
 
 import noteTypeCaptions from 'appConstants/noteTypeCaptions';
+import appConstants from 'appConstants';
 
 import Immutable from 'immutable';
 
@@ -48,11 +50,22 @@ class Note extends Component {
     renderMathForm() {
         const data = this.getData();
         const type = data.get('type');
-        // switch
-        return (
-            <MathFormSum data={data}
-                         onApply={this.handleApply} />
-        );
+        switch (type) {
+            case appConstants.NOTE_SUM_TYPE:
+                return (
+                    <MathFormSum data={data}
+                                 onApply={this.handleApply} />
+                );
+            case appConstants.NOTE_DIVISION_WITH_A_REMAINDER_TYPE:
+                return (
+                    <MathFormDivision data={data}
+                                      onApply={this.handleApply} />
+                );
+            default:
+                return (
+                    <div>Несуществующая форма</div>
+                );
+        }
     }
 
     getData() {
