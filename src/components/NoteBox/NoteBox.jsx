@@ -4,7 +4,7 @@ import { SortableHandle } from 'react-sortable-hoc';
 import './NoteBox.less';
 
 const DragHandle = SortableHandle(() =>
-    <div className="NoteBox__sortable-handle">
+    <div className="note-box__sortable-handle">
     </div>
 ); // This can be any component you want
 

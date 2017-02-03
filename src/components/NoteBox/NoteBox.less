@@ -2,6 +2,7 @@
 @import '../../styles/palette';
 
 .note-box {
+  z-index: 1000; /* Большой z-index, т.к. заметка драгится по странице и может залазить на др элементы. */
   background: @calendarHeaderLine;
   border: 1px solid @divider-color;
   padding: 0;

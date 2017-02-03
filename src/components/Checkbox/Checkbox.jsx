@@ -54,15 +54,15 @@ class Checkbox extends Component {
         var { checked } = this.state;
 
         return (
-            <div className={classNames("checkbox", checked && "checkbox_checked")} onClick={this.handleClick}>
-                <div className="checkbox__border">
+            <div className={classNames("animate-checkbox", checked && "animate-checkbox_checked")} onClick={this.handleClick}>
+                <div className="animate-checkbox__border">
                 </div>
-                <div className="checkbox__tick-line1">
-                    <div className="checkbox__tick-line1-inner">
+                <div className="animate-checkbox__tick-line1">
+                    <div className="animate-checkbox__tick-line1-inner">
                     </div>
                 </div>
-                <div className="checkbox__tick-line2">
-                    <div className="checkbox__tick-line2-inner">
+                <div className="animate-checkbox__tick-line2">
+                    <div className="animate-checkbox__tick-line2-inner">
                     </div>
                 </div>
             </div>

@@ -88,7 +88,7 @@ class MathFormSum extends Component {
     }
 
     getResult() {
-        var result = 0,
+        var result = null,
             nextOperator = null,
             data = this.props.data,
             value;
@@ -96,15 +96,18 @@ class MathFormSum extends Component {
             let list = data.get('list') || Immutable.fromJS([]);
             list.forEach((item) => {
                 value = item.get('value');
-                if (nextOperator !== null) {
-                    if (isFinite(value)) {
+                if (isFinite(value)) {
+                    if (result !== null) {
                         result = eval(`${result}${nextOperator}${value}`);
+                    } else {
+                        result = value;
                     }
-                } else {
-                    result = value;
                 }
                 nextOperator = item.get('culcOperator');
             });
+        }
+        if (result === null) {
+            result = 0;
         }
         return result;
     }
