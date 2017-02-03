@@ -25,12 +25,13 @@ class AddNoteButtonList extends Component {
                     caption={noteTypeCaptions[appConstants.NOTE_SUM_TYPE]}
                     onClick={this.props.onAddNote} />
                 <AddNoteButton
-                    name={appConstants.NOTE_PIE_CHART_TYPE}
-                    caption={noteTypeCaptions[appConstants.NOTE_PIE_CHART_TYPE]}
-                    onClick={this.props.onAddNote} />
-                <AddNoteButton
                     name={appConstants.NOTE_DIVISION_WITH_A_REMAINDER_TYPE}
                     caption={noteTypeCaptions[appConstants.NOTE_DIVISION_WITH_A_REMAINDER_TYPE]}
+                    onClick={this.props.onAddNote} />
+                <AddNoteButton
+                    disabled={true}
+                    name={appConstants.NOTE_PIE_CHART_TYPE}
+                    caption={noteTypeCaptions[appConstants.NOTE_PIE_CHART_TYPE]}
                     onClick={this.props.onAddNote} />
                 <AddNoteButton
                     disabled={true}
