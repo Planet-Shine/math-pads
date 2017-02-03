@@ -116,7 +116,8 @@ class MathPadFileList extends Component {
                               onApply={this.props.onApplyFile} />
                     }
                 </FileList>
-                {!this.state.addFileFormDisplayed && <AddButton onClick={this.handleAddNewFile} />}
+                {!this.state.addFileFormDisplayed && 
+                    <AddButton onClick={this.handleAddNewFile} />}
             </div>
         );
     }

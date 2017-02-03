@@ -99,11 +99,14 @@ class File extends Component {
                                defaultValue={escape(name)}
                                ref={c => this.nameInput = c} />
                         <span className="File__buttons">
-                            <button className="File__button btn btn-default" type="button" onClick={this.handleApplyCancel}>
-                                Cancel
+                            <button className="File__button btn btn-default"
+                                    type="button"
+                                    onClick={this.handleApplyCancel}>
+                                <span className="glyphicon glyphicon-chevron-left"></span>
                             </button>
-                            <button className="File__button btn btn-success" type="submit">
-                                Apply
+                            <button className="File__button btn btn-success"
+                                    type="submit">
+                                <span className="glyphicon glyphicon-ok"></span>
                             </button>
                         </span>
                     </form>
@@ -117,10 +120,10 @@ class File extends Component {
                     </Link>
                     <span className="File__buttons">
                         <button className="File__button btn btn-default" onClick={this.handleEditClick}>
-                            Edit
+                            <span className="glyphicon glyphicon-pencil"></span>
                         </button>
                         <button className="File__button btn btn-danger" onClick={this.handleDelete}>
-                            Delete
+                            <span className="glyphicon glyphicon-remove"></span>
                         </button>
                     </span>
                 </li>

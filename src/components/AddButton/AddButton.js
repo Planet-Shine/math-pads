@@ -7,8 +7,8 @@ class AddButton extends Component {
     render() {
         return (
             <div className="AddButton__container">
-                <button className="AddButton btn btn-default" onClick={this.props.onClick}>
-                    Add
+                <button className="AddButton btn btn-success" onClick={this.props.onClick}>
+                    <span className="glyphicon glyphicon-plus"></span>
                 </button>
             </div>
         );
