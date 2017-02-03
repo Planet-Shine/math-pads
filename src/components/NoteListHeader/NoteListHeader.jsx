@@ -4,6 +4,9 @@ import escape from 'html-escape';
 
 import './NoteListHeader.less';
 
+const KEY_ENTER = 13;
+const KEY_ESCAPE = 27;
+
 class NoteListHeader extends Component {
 
     static propTypes = {
@@ -14,6 +17,14 @@ class NoteListHeader extends Component {
     constructor() {
         super();
         this.handleBlur = this.handleBlur.bind(this);
+        this.handleKeyDown       = this.handleKeyDown.bind(this);
+    }
+
+    handleKeyDown(event) {
+        if (~[KEY_ENTER, KEY_ESCAPE].indexOf(event.keyCode)) {
+            event.preventDefault();
+            return false;
+        }
     }
 
     handleBlur(event) {
@@ -31,6 +42,7 @@ class NoteListHeader extends Component {
                     contentEditable="true"
                     data-placeholder="Введите заголовок"
                     className="note-list-header"
+                    onKeyDown={this.handleKeyDown}
                     onBlur={this.handleBlur}>
                     {escape(this.props.value)}
                 </h1>

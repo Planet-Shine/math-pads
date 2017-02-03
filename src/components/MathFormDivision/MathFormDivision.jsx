@@ -11,6 +11,9 @@ import {
     MathFormDivisionValue
 } from 'components';
 
+const KEY_ENTER = 13;
+const KEY_ESCAPE = 27;
+
 var currentComputedOptions = null;
 
 class MathFormDivision extends Component {
@@ -26,6 +29,14 @@ class MathFormDivision extends Component {
         this.handleResultBlur = this.handleResultBlur.bind(this);
         this.handleRemainderBlur = this.handleRemainderBlur.bind(this);
         this.handleIntegerDevisionClick = this.handleIntegerDevisionClick.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
+    }
+
+    handleKeyDown(event) {
+        if (~[KEY_ENTER, KEY_ESCAPE].indexOf(event.keyCode)) {
+            event.preventDefault();
+            return false;
+        }
     }
 
     handleApply(applyOptions) {
@@ -215,6 +226,7 @@ class MathFormDivision extends Component {
                              contentEditable="true"
                              data-placeholder="Значение"
                              className={classNames("math-form-division__value", dividend.computed && "math-form-division__value_computed")}
+                             onKeyDown={this.handleKeyDown}
                              onBlur={this.handleDividendBlur}>
                             {escape(dividend.value)}
                         </div>
@@ -226,6 +238,7 @@ class MathFormDivision extends Component {
                              contentEditable="true"
                              data-placeholder="Значение"
                              className={classNames("math-form-division__value", divider.computed && "math-form-division__value_computed")}
+                             onKeyDown={this.handleKeyDown}
                              onBlur={this.handleDividerBlur}>
                             {escape(divider.value)}
                         </div>
@@ -237,6 +250,7 @@ class MathFormDivision extends Component {
                              contentEditable="true"
                              data-placeholder="Значение"
                              className={classNames("math-form-division__value", result.computed && "math-form-division__value_computed")}
+                             onKeyDown={this.handleKeyDown}
                              onBlur={this.handleResultBlur}>
                             {escape(result.value)}
                         </div>
@@ -248,6 +262,7 @@ class MathFormDivision extends Component {
                              contentEditable="true"
                              data-placeholder="Значение"
                              className={classNames("math-form-division__value", remainder.computed && "math-form-division__value_computed")}
+                             onKeyDown={this.handleKeyDown}
                              onBlur={this.handleRemainderBlur}>
                             {escape(remainder.value)}
                         </div>

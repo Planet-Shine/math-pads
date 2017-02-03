@@ -8,6 +8,9 @@ import {
 import './MathFormSumRow.less';
 
 
+const KEY_ENTER = 13;
+const KEY_ESCAPE = 27;
+
 class MathFormSumRow extends Component {
 
     propTypes = {
@@ -24,6 +27,14 @@ class MathFormSumRow extends Component {
         this.handleNameBlur      = this.handleNameBlur.bind(this);
         this.handleValueBlur     = this.handleValueBlur.bind(this);
         this.handleDelete        = this.handleDelete.bind(this);
+        this.handleKeyDown       = this.handleKeyDown.bind(this);
+    }
+
+    handleKeyDown(event) {
+        if (~[KEY_ENTER, KEY_ESCAPE].indexOf(event.keyCode)) {
+            event.preventDefault();
+            return false;
+        }
     }
 
     handleDelete() {
@@ -77,6 +88,7 @@ class MathFormSumRow extends Component {
                      data-placeholder="Наименование"
                      className="math-form-sum-row__name"
                      onBlur={this.handleNameBlur}
+                     onKeyDown={this.handleKeyDown}
                      onFocus={isCreateNew && this.handleNameBlur}>
                     {escape(name)}
                 </div>
@@ -85,6 +97,7 @@ class MathFormSumRow extends Component {
                      contentEditable="true"
                      data-placeholder="Значение"
                      onBlur={this.handleValueBlur}
+                     onKeyDown={this.handleKeyDown}
                      onFocus={isCreateNew && this.handleNameBlur}
                      className="math-form-sum-row__value">
                     {escape(value)}
