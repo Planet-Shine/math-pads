@@ -11,8 +11,8 @@ class CalendarClearButton extends Component {
 
     render() {
         return (
-            <button className="CalendarClearButton btn btn-default" onClick={this.props.onClick}>
-                <span className="CalendarClearButton__icon glyphicon glyphicon-remove"></span> Очистить
+            <button className="calendar-clear-button btn btn-default" onClick={this.props.onClick}>
+                <span className="calendar-clear-button__icon glyphicon glyphicon-remove"></span> Очистить
             </button>
         );
     }

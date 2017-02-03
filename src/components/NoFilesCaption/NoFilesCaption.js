@@ -6,7 +6,7 @@ class NoFilesCaption extends Component {
 
     render() {
         return (
-            <div className="NoFilesCaption">
+            <div className="no-files-caption">
                 Нет файлов
             </div>
         );

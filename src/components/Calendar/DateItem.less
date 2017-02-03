@@ -1,7 +1,7 @@
 
 @import '../../styles/palette';
 
-.Calendar__dates-item {
+.calendar__dates-item {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -12,17 +12,17 @@
   width: 43px;
   text-align: center;
 }
-.Calendar__dates-item:not(.Calendar__dates-item_other-month):hover {
-  .Calendar__dates-item-circle {
+.calendar__dates-item:not(.calendar__dates-item_other-month):hover {
+  .calendar__dates-item-circle {
     background-color: lighten(@currentDatePickerColor, 5%);
   }
 }
-.Calendar__dates-item:not(.Calendar__dates-item_other-month):active {
-  .Calendar__dates-item-circle {
+.calendar__dates-item:not(.calendar__dates-item_other-month):active {
+  .calendar__dates-item-circle {
     background-color: lighten(@currentDatePickerColor, -5%);
   }
 }
-.Calendar__dates-item-circle {
+.calendar__dates-item-circle {
   display: block;
   text-align: center;
   margin : 10px auto 0 auto;
@@ -31,7 +31,7 @@
   height : 24px;
   border-radius: 12px;
 }
-.Calendar__dates-item-indicator {
+.calendar__dates-item-indicator {
   position: absolute;
   top : 36px;
   left : 20px;
@@ -39,22 +39,22 @@
   height: 4px;
   border-radius : 2px;
 }
-.Calendar__dates-item_selected:not(.Calendar__dates-item_other-month) {
-  .Calendar__dates-item-circle {
+.calendar__dates-item_selected:not(.calendar__dates-item_other-month) {
+  .calendar__dates-item-circle {
     background-color: @currentDatePickerColor;
   }
 }
-.Calendar__dates-item_today:not(.Calendar__dates-item_other-month) {
-  .Calendar__dates-item-circle {
+.calendar__dates-item_today:not(.calendar__dates-item_other-month) {
+  .calendar__dates-item-circle {
     background-color: @secondThemeColor;
   }
 }
-.Calendar__dates-item_content:not(.Calendar__dates-item_other-month) {
-  .Calendar__dates-item-indicator {
+.calendar__dates-item_content:not(.calendar__dates-item_other-month) {
+  .calendar__dates-item-indicator {
     background-color: @existedIndicatorColor;
   }
 }
-.Calendar__dates-item_other-month {
+.calendar__dates-item_other-month {
   cursor: default;
   color : @otherMonthDateColor;
 }

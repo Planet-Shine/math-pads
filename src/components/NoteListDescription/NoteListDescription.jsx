@@ -24,16 +24,16 @@ class NoteListDescription extends Component {
 
     render() {
         return (
-            <div className="NoteListDescription">
+            <div className="note-list-description">
                 <span rows="3"
                       role="textbox"
                       contentEditable="true"
                       data-placeholder="Введите описание"
-                      className="NoteListDescription__field"
+                      className="note-list-description__field"
                       onBlur={this.handleBlur}>
                     {escape(this.props.value)}
                 </span>
-                <span className="NoteListDescription__edit-icon glyphicon glyphicon-pencil"></span>
+                <span className="note-list-description__edit-icon glyphicon glyphicon-pencil"></span>
             </div>
         );
     }

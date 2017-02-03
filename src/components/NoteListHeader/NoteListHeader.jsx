@@ -30,11 +30,11 @@ class NoteListHeader extends Component {
                     role="textbox"
                     contentEditable="true"
                     data-placeholder="Введите заголовок"
-                    className="NoteListHeader"
+                    className="note-list-header"
                     onBlur={this.handleBlur}>
                     {escape(this.props.value)}
                 </h1>
-                <span className="NoteListHeader__edit-icon glyphicon glyphicon-pencil"></span>
+                <span className="note-list-header__edit-icon glyphicon glyphicon-pencil"></span>
             </div>
         );
     }

@@ -85,7 +85,7 @@ class Note extends Component {
             <NoteBox name={noteTypeCaptions[type]}
                      orderNumber={orderNumber + 1}
                      onDeleteClick={this.handleDeleteClick}>
-                <div className="Note">
+                <div className="note">
                     <NoteListHeader value={header}
                                     onBlur={this.handleApply}
                                     name={'header'} />

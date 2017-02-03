@@ -199,55 +199,55 @@ class MathFormDivision extends Component {
         remainder = newValue.remainder;
         currentComputedOptions = newValue;
         return(
-            <div className="MathFormDivision">
-                <div className="MathFormDivision__checkbox-box">
+            <div className="math-form-division">
+                <div className="math-form-division__checkbox-box">
                     <Checkbox checked={isIntegerDivision}
                               onClick={this.handleIntegerDevisionClick} />
                 </div>
-                <div className="MathFormDivision__checkbox-hint">
+                <div className="math-form-division__checkbox-hint">
                     Использовать деление нацело
                 </div>
-                <div className="MathFormDivision__table">
-                    <div className="MathFormDivision__row">
-                        <div className="MathFormDivision__caption">Делимое</div>
+                <div className="math-form-division__table">
+                    <div className="math-form-division__row">
+                        <div className="math-form-division__caption">Делимое</div>
                         <div rows="1"
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
-                             className={classNames("MathFormDivision__value", dividend.computed && "MathFormDivision__value_computed")}
+                             className={classNames("math-form-division__value", dividend.computed && "math-form-division__value_computed")}
                              onBlur={this.handleDividendBlur}>
                             {escape(dividend.value)}
                         </div>
                     </div>
-                    <div className="MathFormDivision__row">
-                        <div className="MathFormDivision__caption">Делитель</div>
+                    <div className="math-form-division__row">
+                        <div className="math-form-division__caption">Делитель</div>
                         <div rows="1"
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
-                             className={classNames("MathFormDivision__value", divider.computed && "MathFormDivision__value_computed")}
+                             className={classNames("math-form-division__value", divider.computed && "math-form-division__value_computed")}
                              onBlur={this.handleDividerBlur}>
                             {escape(divider.value)}
                         </div>
                     </div>
-                    <div className="MathFormDivision__row">
-                        <div className="MathFormDivision__caption">Результат</div>
+                    <div className="math-form-division__row">
+                        <div className="math-form-division__caption">Результат</div>
                         <div rows="1"
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
-                             className={classNames("MathFormDivision__value", result.computed && "MathFormDivision__value_computed")}
+                             className={classNames("math-form-division__value", result.computed && "math-form-division__value_computed")}
                              onBlur={this.handleResultBlur}>
                             {escape(result.value)}
                         </div>
                     </div>
-                    <div className="MathFormDivision__row">
-                        <div className="MathFormDivision__caption">Остаток</div>
+                    <div className="math-form-division__row">
+                        <div className="math-form-division__caption">Остаток</div>
                         <div rows="1"
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
-                             className={classNames("MathFormDivision__value", remainder.computed && "MathFormDivision__value_computed")}
+                             className={classNames("math-form-division__value", remainder.computed && "math-form-division__value_computed")}
                              onBlur={this.handleRemainderBlur}>
                             {escape(remainder.value)}
                         </div>

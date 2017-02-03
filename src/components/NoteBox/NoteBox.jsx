@@ -18,16 +18,16 @@ class NoteBox extends Component {
 
    render() {
         return (
-            <div className="NoteBox">
-                <div className="NoteBox__header">
-                    <div className="NoteBox__order-number">
+            <div className="note-box">
+                <div className="note-box__header">
+                    <div className="note-box__order-number">
                         {this.props.orderNumber}
                     </div>
-                    <div className="NoteBox__caption">
+                    <div className="note-box__caption">
                         {this.props.name}
                     </div>
                     <DragHandle />
-                    <button tabIndex="-1" className="NoteBox__delete btn btn-danger btn-sm" onClick={this.props.onDeleteClick}>
+                    <button tabIndex="-1" className="note-box__delete btn btn-danger btn-sm" onClick={this.props.onDeleteClick}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>

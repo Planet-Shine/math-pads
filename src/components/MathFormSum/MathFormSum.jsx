@@ -111,24 +111,24 @@ class MathFormSum extends Component {
 
     render() {
         return (
-            <div className="MathFormSum">
-                <div className="MathFormSum__fieldLine MathFormSum__header">
-                    <div className="MathFormSum__header-order-number">
+            <div className="math-form-sum">
+                <div className="math-form-sum__fieldLine math-form-sum__header">
+                    <div className="math-form-sum__header-order-number">
                         №
                     </div>
-                    <div className="MathFormSum__header-name">
+                    <div className="math-form-sum__header-name">
                         Наименование
                     </div>
-                    <div className="MathFormSum__header-value">
+                    <div className="math-form-sum__header-value">
                         Значение
                     </div>
                 </div>
                 {this.renderFormRows()}
-                <div className="MathFormSum__fieldLine">
-                    <div className="MathFormSum__result-caption">
+                <div className="math-form-sum__fieldLine">
+                    <div className="math-form-sum__result-caption">
                         Результат:
                     </div>
-                    <div className="MathFormSum__result-value">
+                    <div className="math-form-sum__result-value">
                         {this.getResult()}
                     </div>
                 </div>

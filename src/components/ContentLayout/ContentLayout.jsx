@@ -7,7 +7,7 @@ class ContentLayout extends Component {
 
     render() {
         return (
-            <div className="ContentLayout">
+            <div className="content-layout">
                 {this.props.children}
             </div>
         );

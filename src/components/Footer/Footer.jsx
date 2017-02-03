@@ -6,7 +6,7 @@ class Footer extends Component {
 
     render() {
         return (
-            <div className="footer Footer">
+            <div className="footer math-pads-footer">
                 {this.props.children}
             </div>
         );

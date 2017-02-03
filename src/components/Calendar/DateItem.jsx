@@ -26,15 +26,15 @@ class DateItem extends Component {
     render() {
         return (
             <div className={classNames({
-                    'Calendar__dates-item'             : true,
-                    'Calendar__dates-item_selected'    : this.props.isCurrentDate,
-                    'Calendar__dates-item_today'       : this.props.isToday,
-                    'Calendar__dates-item_content'     : this.props.isThereContent,
-                    'Calendar__dates-item_other-month' : this.props.isOtherMonth
+                    'calendar__dates-item'             : true,
+                    'calendar__dates-item_selected'    : this.props.isCurrentDate,
+                    'calendar__dates-item_today'       : this.props.isToday,
+                    'calendar__dates-item_content'     : this.props.isThereContent,
+                    'calendar__dates-item_other-month' : this.props.isOtherMonth
                 })} onClick={this.handleClick}>
-                <div className="Calendar__dates-item-circle">
+                <div className="calendar__dates-item-circle">
                     {this.props.date.getDate()}
-                    <div className="Calendar__dates-item-indicator"></div>
+                    <div className="calendar__dates-item-indicator"></div>
                 </div>
             </div>
         );

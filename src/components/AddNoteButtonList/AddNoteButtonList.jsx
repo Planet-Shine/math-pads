@@ -17,7 +17,7 @@ class AddNoteButtonList extends Component {
     render() {
         return (
             <div>
-                <span className="AddNoteButtonList__caption">
+                <span className="add-note-button-list__caption">
                     — Выберите нужную вам форму расчета:
                 </span>
                 <AddNoteButton

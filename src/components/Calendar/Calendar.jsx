@@ -97,25 +97,25 @@ class Calendar extends Component {
 
         return (
             <div className="medium-col">
-                <div className="Calendar">
-                    <div className="Calendar__slider">
-                        <div className="Calendar__slider-previous glyphicon glyphicon-chevron-left" onClick={this.handlePreviousMonth}></div>
-                        <div className="Calendar__month-name">
+                <div className="calendar">
+                    <div className="calendar__slider">
+                        <div className="calendar__slider-previous glyphicon glyphicon-chevron-left" onClick={this.handlePreviousMonth}></div>
+                        <div className="calendar__month-name">
                             {this.monthShortCaptions[monthNumber]} {year}
                         </div>
-                        <div className="Calendar__slider-next glyphicon glyphicon-chevron-right" onClick={this.handleNextMonth}></div>
+                        <div className="calendar__slider-next glyphicon glyphicon-chevron-right" onClick={this.handleNextMonth}></div>
                     </div>
-                    <ul className="Calendar_header">
-                        <li className="Calendar__header-item">MON</li>
-                        <li className="Calendar__header-item">TUE</li>
-                        <li className="Calendar__header-item">WED</li>
-                        <li className="Calendar__header-item">THU</li>
-                        <li className="Calendar__header-item">FRI</li>
-                        <li className="Calendar__header-item">SAT</li>
-                        <li className="Calendar__header-item">SUN</li>
+                    <ul className="calendar_header">
+                        <li className="calendar__header-item">MON</li>
+                        <li className="calendar__header-item">TUE</li>
+                        <li className="calendar__header-item">WED</li>
+                        <li className="calendar__header-item">THU</li>
+                        <li className="calendar__header-item">FRI</li>
+                        <li className="calendar__header-item">SAT</li>
+                        <li className="calendar__header-item">SUN</li>
                     </ul>
-                    <div className="Calendar__header-separator"></div>
-                    <div className="Calendar__dates">
+                    <div className="calendar__header-separator"></div>
+                    <div className="calendar__dates">
                         {nodes}
                     </div>
                 </div>

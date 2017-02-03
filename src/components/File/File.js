@@ -92,19 +92,19 @@ class File extends Component {
         return (
                 isEditing
             ?
-                <li className="File__item">
+                <li className="file__item">
                     <form onSubmit={this.handleEditingApply}>
-                        <input className="File__input"
+                        <input className="file__input"
                                type="text"
                                defaultValue={escape(name)}
                                ref={c => this.nameInput = c} />
-                        <span className="File__buttons">
-                            <button className="File__button btn btn-default"
+                        <span className="file__buttons">
+                            <button className="file__button btn btn-default"
                                     type="button"
                                     onClick={this.handleApplyCancel}>
                                 <span className="glyphicon glyphicon-chevron-left"></span>
                             </button>
-                            <button className="File__button btn btn-success"
+                            <button className="file__button btn btn-success"
                                     type="submit">
                                 <span className="glyphicon glyphicon-ok"></span>
                             </button>
@@ -112,17 +112,17 @@ class File extends Component {
                     </form>
                 </li>
             :
-                <li className="File__item">
+                <li className="file__item">
                     <Link to={`${this.props.routeName}${id}`}>
-                        <span className="File__item-caption">
+                        <span className="file__item-caption">
                             {escape(name)}
                         </span>
                     </Link>
-                    <span className="File__buttons">
-                        <button className="File__button btn btn-default" onClick={this.handleEditClick}>
+                    <span className="file__buttons">
+                        <button className="file__button btn btn-default" onClick={this.handleEditClick}>
                             <span className="glyphicon glyphicon-pencil"></span>
                         </button>
-                        <button className="File__button btn btn-danger" onClick={this.handleDelete}>
+                        <button className="file__button btn btn-danger" onClick={this.handleDelete}>
                             <span className="glyphicon glyphicon-remove"></span>
                         </button>
                     </span>

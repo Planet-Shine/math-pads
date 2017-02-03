@@ -31,21 +31,21 @@ class TwoOperatorSwitcher extends Component {
 
     render() {
         return (
-            <div className="TwoOperatorSwitcher"
+            <div className="two-operator-switcher"
                  onClick={this.handleClick}>
-                <div className="TwoOperatorSwitcher__mask">
+                <div className="two-operator-switcher__mask">
                     <div className={classNames(
-                        "TwoOperatorSwitcher__switcher",
+                        "two-operator-switcher__switcher",
                         (this.props.value === 1 ?
-                            "TwoOperatorSwitcher__switcher_operator1" :
-                            "TwoOperatorSwitcher__switcher_operator2")
+                            "two-operator-switcher__switcher_operator1" :
+                            "two-operator-switcher__switcher_operator2")
                     )}>
-                        <div className="TwoOperatorSwitcher__operator1">
+                        <div className="two-operator-switcher__operator1">
                             {this.props.operator1}
                         </div>
-                        <div className="TwoOperatorSwitcher__handle">
+                        <div className="two-operator-switcher__handle">
                         </div>
-                        <div className="TwoOperatorSwitcher__operator2">
+                        <div className="two-operator-switcher__operator2">
                             {this.props.operator2}
                         </div>
                     </div>

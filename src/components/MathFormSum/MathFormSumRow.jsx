@@ -67,15 +67,15 @@ class MathFormSumRow extends Component {
         const { name, value, orderNumber, isCreateNew, culcOperator } = this.props;
 
         return (
-            <div className="MathFormSumRow">
-                <div className="MathFormSumRow__orderNumber">
+            <div className="math-form-sum-row">
+                <div className="math-form-sum-row__orderNumber">
                     {orderNumber}
                 </div>
                 <div rows="1"
                      role="textbox"
                      contentEditable="true"
                      data-placeholder="Наименование"
-                     className="MathFormSumRow__name"
+                     className="math-form-sum-row__name"
                      onBlur={this.handleNameBlur}
                      onFocus={isCreateNew && this.handleNameBlur}>
                     {escape(name)}
@@ -86,12 +86,12 @@ class MathFormSumRow extends Component {
                      data-placeholder="Значение"
                      onBlur={this.handleValueBlur}
                      onFocus={isCreateNew && this.handleNameBlur}
-                     className="MathFormSumRow__value">
+                     className="math-form-sum-row__value">
                     {escape(value)}
                 </div>
                 {
                     isCreateNew ||
-                    <div className="MathFormSumRow__operator-box">
+                    <div className="math-form-sum-row__operator-box">
                         <TwoOperatorSwitcher
                             operator1="+"
                             operator2="−"
@@ -102,7 +102,7 @@ class MathFormSumRow extends Component {
                 {
                     this.props.onDelete
                     &&
-                    <button className="MathFormSumRow__delete btn btn-danger btn-xs"
+                    <button className="math-form-sum-row__delete btn btn-danger btn-xs"
                             tabIndex="-1"
                             onClick={this.handleDelete}>
                         <span className="glyphicon glyphicon-remove"></span>

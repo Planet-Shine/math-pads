@@ -8,7 +8,7 @@ class Logo extends Component {
 
     render() {
         return (
-            <div className="navbar-brand Logo__caption">
+            <div className="navbar-brand logo__caption">
                 Math pads
             </div>
 

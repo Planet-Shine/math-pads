@@ -45,10 +45,10 @@ class Menu extends Component {
             <div className="nav navbar-nav navbar-right"
                  onMouseOut={this.handleMouseOut}
                  onMouseOver={this.handleMouseOver}>
-                <button className="Menu__button glyphicon glyphicon-align-justify"
+                <button className="menu__button glyphicon glyphicon-align-justify"
                         onClick={this.handleMenuClick}>
                 </button>
-                <div className="Menu__items" style={{display:'none'}} ref={c => this.items = c}>
+                <div className="menu__items" style={{display:'none'}} ref={c => this.items = c}>
                     {this.props.children}
                 </div>
             </div>

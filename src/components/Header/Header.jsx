@@ -9,7 +9,7 @@ class Header extends Component {
     */
     render() {
         return (
-            <div className="navbar navbar-default Header">
+            <div className="navbar navbar-default math-pads-header">
                 <div className="container-fluid">
                     {this.props.children}
                 </div>

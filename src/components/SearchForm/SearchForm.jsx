@@ -19,11 +19,11 @@ class SearchForm extends Component {
 
     render() {
         return (
-            <div className="SearchForm">
-                <div className="SearchForm__icon glyphicon glyphicon-search"></div>
-                <div className="SearchForm__input-box">
+            <div className="search-form">
+                <div className="search-form__icon glyphicon glyphicon-search"></div>
+                <div className="search-form__input-box">
                     <input placeholder="Поиск"
-                           className="SearchForm__input"
+                           className="search-form__input"
                            type="text"
                            onChange={this.handleChange}  />
                 </div>

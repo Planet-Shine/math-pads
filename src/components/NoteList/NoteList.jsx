@@ -89,7 +89,7 @@ class NoteList extends Component {
 
     render() {
         return (
-            <div className="NoteList">
+            <div className="note-list">
 
                 <NoteListHeader value={this.props.fileContent.get('header')}
                                 name={'header'}
@@ -99,7 +99,7 @@ class NoteList extends Component {
                                      name={'description'}
                                      onBlur={this.props.onDescriptionBlur} />
 
-                <div className="NoteList__items-box">
+                <div className="note-list__items-box">
                     {this.renderNotes()}
                 </div>
             </div>

@@ -25,11 +25,11 @@ class AddNoteButton extends Component {
 
     render() {
         const { disabled } = this.props;
-        var iconClass = 'AddNoteButton__icon_' + this.props.name;
+        var iconClass = 'add-note-button__icon_' + this.props.name;
         return (
-            <button className={classNames('AddNoteButton', disabled && 'AddNoteButton_disabled' )} onClick={this.handleClick}>
-                <span className={classNames('AddNoteButton__icon', iconClass)}></span>
-                <span className="AddNoteButton__caption">
+            <button className={classNames('add-note-button', disabled && 'add-note-button_disabled' )} onClick={this.handleClick}>
+                <span className={classNames('add-note-button__icon', iconClass)}></span>
+                <span className="add-note-button__caption">
                     {this.props.caption}
                 </span>
             </button>
