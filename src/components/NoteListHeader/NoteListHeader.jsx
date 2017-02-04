@@ -36,12 +36,12 @@ class NoteListHeader extends Component {
 
     render() {
         return (
-            <div>
+            <div className="note-list-header">
                 <h1 rows="1"
                     role="textbox"
                     contentEditable="true"
                     data-placeholder="Введите заголовок"
-                    className="note-list-header"
+                    className="note-list-header__input"
                     onKeyDown={this.handleKeyDown}
                     onBlur={this.handleBlur}>
                     {escape(this.props.value)}
