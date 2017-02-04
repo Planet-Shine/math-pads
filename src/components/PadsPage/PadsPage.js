@@ -22,7 +22,7 @@ class PadsPage extends Component {
 
     render() {
         return (
-            <div>
+            <div className="page-container">
                 <Header>
                     <NavbarHeader />
                     <div className="collapse navbar-collapse" id="navbar-collapse-1">

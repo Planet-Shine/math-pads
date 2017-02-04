@@ -11,7 +11,7 @@ class Header extends Component {
     render() {
         return (
             <div className="math-pads-header navbar navbar-default" role="navigation">
-                <div className="container-fluid">
+                <div className="container-fluid layout-container">
                     {this.props.children}
                 </div>
             </div>

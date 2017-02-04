@@ -24,7 +24,7 @@ class PadPage extends Component {
     render() {
         var id = parseInt(this.props.params.id, 10);
         return (
-            <div>
+            <div className="page-container">
                 <Header>
                     <NavbarHeader />
                     <div className="collapse navbar-collapse" id="navbar-collapse-1">
