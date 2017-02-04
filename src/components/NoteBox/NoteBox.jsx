@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { SortableHandle } from 'react-sortable-hoc';
 import './NoteBox.less';
+import classNames from 'classnames';
 
 const DragHandle = SortableHandle(() =>
     <div className="note-box__sortable-handle">
@@ -10,11 +11,27 @@ const DragHandle = SortableHandle(() =>
 
 
 class NoteBox extends Component {
+
+    state = {
+        collapsed: false
+    };
+
     static propTypes = {
         onDeleteClick: PropTypes.func,
         orderNumber: PropTypes.number,
         name: PropTypes.string
     };
+
+    constructor() {
+        super();
+        this.handleCollapseClick = this.handleCollapseClick.bind(this);
+    }
+
+    handleCollapseClick() {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    }
 
    render() {
         return (
@@ -31,8 +48,13 @@ class NoteBox extends Component {
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
-                <div>
+                <div className={classNames("note-box__content", this.state.collapsed && "note-box__content_collapsed")}>
                     {this.props.children}
+                </div>
+                <div className="note-box__footer-box">
+                    <button className="note-box__collapse btn btn-default btn-sm" onClick={this.handleCollapseClick}>
+                        <span className={classNames("glyphicon", this.state.collapsed ? "glyphicon-chevron-down" : "glyphicon-chevron-up")}></span>
+                    </button>
                 </div>
             </div>
         );
