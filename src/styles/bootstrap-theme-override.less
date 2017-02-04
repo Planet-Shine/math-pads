@@ -1,0 +1,35 @@
+
+@import './palette';
+
+.navbar-default .navbar-collapse {
+  border-width: 2px;
+  border-color: @header-icon-hover-bg;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: @logo-color;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+  color: @logo-color-hover;
+  background: @header-icon-hover-bg;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: @white;
+  background-color: transparent;
+  &:focus {
+    border-color: @white;
+    background-color: transparent;
+  }
+  &:hover {
+    background-color: @header-icon-hover-bg;
+    border-color: @logo-color-hover
+  }
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: @white;
+}
+
+

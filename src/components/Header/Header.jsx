@@ -6,10 +6,11 @@ class Header extends Component {
 
     /*
         {this.props.menu}
+        math-pads-header
     */
     render() {
         return (
-            <div className="navbar navbar-default math-pads-header">
+            <div className="math-pads-header navbar navbar-default" role="navigation">
                 <div className="container-fluid">
                     {this.props.children}
                 </div>
@@ -18,4 +19,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default Header;        

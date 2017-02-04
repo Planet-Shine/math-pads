@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 import './PadsPage.less';
 
+import { Link } from 'react-router';
+
 import {
     Header,
     Logo,
-    Menu,
-    MenuItem,
     Footer,
-    ContentLayout
+    ContentLayout,
+    NavbarHeader
 } from 'components';
 
 import {
@@ -23,14 +24,19 @@ class PadsPage extends Component {
         return (
             <div>
                 <Header>
-                    <div className="navbar-header">
-                        <Logo />
-                        <CalendarButton />
+                    <NavbarHeader />
+                    <div className="collapse navbar-collapse" id="navbar-collapse-1">
+                        <ul className="nav navbar-nav">
+                            <li>
+                                <CalendarButton />
+                            </li>
+                            <li>
+                                <Link className="menu-item" to="/about/">
+                                    About
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
-                    <Menu>
-                        <MenuItem to="/about/"
-                                  caption="About"  />
-                    </Menu>
                 </Header>
                 <ContentLayout>
                     <FileCalendar />

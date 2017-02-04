@@ -3,8 +3,10 @@
 @import '../../styles/palette.less';
 
 .header-button {
-  height: 50px;
-  width: 50px;
+  /*
+    height: 50px;
+    width: 50px;
+  */
   outline: none;
   background: transparent;
   border: none;
@@ -12,7 +14,9 @@
     background: @header-icon-hover-bg;
   }
   &:before {
+    display: block;
     font-size: 25px;
+    margin-bottom: -1px;
     color: @header-icon;
   }
 }

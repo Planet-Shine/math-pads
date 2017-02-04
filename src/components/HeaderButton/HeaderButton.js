@@ -13,9 +13,9 @@ class HeaderButton extends Component {
 
     render() {
         return (
-            <button onClick={this.props.onClick}
-                    className={classNames('header-button', this.props.decorClass)}>
-            </button>
+            <a href="javascript:void(0);" onClick={this.props.onClick}
+               className={classNames('header-button', this.props.decorClass)}>
+            </a>
         );
     }
 }

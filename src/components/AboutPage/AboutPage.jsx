@@ -2,12 +2,12 @@
 import React, { Component } from 'react';
 import {
     Header,
-    Logo,
-    Menu,
-    MenuItem,
+    NavbarHeader,
     Footer,
     ContentLayout
-} from '../';
+} from 'components';
+
+import { Link } from 'react-router';
 
 class AboutPage extends Component {
 
@@ -15,13 +15,16 @@ class AboutPage extends Component {
         return (
             <div>
                 <Header>
-                    <div className="navbar-header">
-                        <Logo />
+                    <NavbarHeader />
+                    <div className="collapse navbar-collapse" id="navbar-collapse-1">
+                        <ul className="nav navbar-nav">
+                            <li>
+                                <Link className="menu-item" to="/pads/">
+                                    Pads
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
-                    <Menu>
-                        <MenuItem to="/pads/"
-                                  caption="Pads"  />
-                    </Menu>
                 </Header>
                 <ContentLayout>
                     This is great application for quick calculations.

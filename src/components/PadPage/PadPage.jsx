@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
     Header,
-    Logo,
+    NavbarHeader,
     Menu,
     MenuItem,
     Footer,
@@ -15,6 +15,8 @@ import {
     MathPadNoteList
 } from 'containers';
 
+import { Link } from 'react-router';
+
 import './PadPage.less';
 
 class PadPage extends Component {
@@ -24,16 +26,23 @@ class PadPage extends Component {
         return (
             <div>
                 <Header>
-                    <div className="navbar-header">
-                        <Logo />
+                    <NavbarHeader />
+                    <div className="collapse navbar-collapse" id="navbar-collapse-1">
+                        <ul className="nav navbar-nav">
+                            <li>
+                                <Link to="/pads/">
+                                    Pads
+                                </Link>
+                            </li>
+                            <li>
+                                <Link className="menu-item" to="/about/">
+                                    About
+                                </Link>
+                            </li>
+                        </ul>
                     </div>
-                    <Menu>
-                        <MenuItem to="/about/"
-                                  caption="About"  />
-                        <MenuItem to="/pads/"
-                                  caption="Pads"  />
-                    </Menu>
                 </Header>
+
                 <ContentLayout>
                     {
                             isFinite(id)
