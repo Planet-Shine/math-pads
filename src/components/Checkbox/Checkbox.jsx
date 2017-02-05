@@ -6,8 +6,6 @@ import classNames from 'classnames';
 import './Checkbox.less';
 
 const TICK_ANIMATION_TIME = 500;
-var isAnimationFinished = true;
-var targetChecked = null;
 
 class Checkbox extends Component {
     state = {
@@ -20,6 +18,8 @@ class Checkbox extends Component {
 
     constructor() {
         super();
+        this.isAnimationFinished = true;
+        this.targetChecked = null;
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -29,16 +29,16 @@ class Checkbox extends Component {
         });
     }
     delayCheckedApply(checked) {
-        targetChecked = checked;
-        if (isAnimationFinished) {
+        this.targetChecked = checked;
+        if (this.isAnimationFinished) {
+            this.isAnimationFinished = false;
             this.setState({
-                checked: targetChecked
+                checked: this.targetChecked
             });
-            isAnimationFinished = false;
             setTimeout(() => {
-                isAnimationFinished = true;
-                if (targetChecked !== this.state.checked) {
-                    this.delayCheckedApply(targetChecked);
+                this.isAnimationFinished = true;
+                if (this.targetChecked !== this.state.checked) {
+                    this.delayCheckedApply(this.targetChecked);
                 }
             }, TICK_ANIMATION_TIME);
         }

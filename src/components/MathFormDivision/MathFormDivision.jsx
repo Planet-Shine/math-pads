@@ -122,6 +122,9 @@ class MathFormDivision extends Component {
             .map(x => x === '' ? '' : parseFloat(x));
 
         function formatValue(input) {
+            if (isNaN(input)) {
+                return '';
+            }
             return String(parseInt(input * 1E9, 10) / 1E9);
         }
         if (dividend === '' && isFinite(divider) && isFinite(result) && result !== '' && divider !== '') {
