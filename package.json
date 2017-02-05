@@ -1,7 +1,7 @@
 {
   "name": "math-pads",
   "version": "1.0.0",
-  "description": "This is great application for quick calculations.",
+  "description": "It is a great application for quick calculations.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
