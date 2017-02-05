@@ -6,6 +6,7 @@ import './NoteListHeader.less';
 
 const KEY_ENTER = 13;
 const KEY_ESCAPE = 27;
+var isExitViaEsc = false;
 
 class NoteListHeader extends Component {
 
@@ -22,16 +23,25 @@ class NoteListHeader extends Component {
 
     handleKeyDown(event) {
         if (~[KEY_ENTER, KEY_ESCAPE].indexOf(event.keyCode)) {
+            if (KEY_ESCAPE === event.keyCode) {
+                isExitViaEsc = true;
+            }
+            event.target.blur();
             event.preventDefault();
             return false;
         }
     }
 
     handleBlur(event) {
-        this.props.onBlur({
-            name: this.props.name,
-            newValue: event.target.innerText
-        });
+        if (isExitViaEsc) {
+            event.target.innerText = this.props.value;
+            isExitViaEsc = false;
+        } else {
+            this.props.onBlur({
+                name: this.props.name,
+                newValue: event.target.innerText
+            });
+        }
     }
 
     render() {

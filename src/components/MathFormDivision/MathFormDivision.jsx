@@ -13,6 +13,7 @@ import {
 
 const KEY_ENTER = 13;
 const KEY_ESCAPE = 27;
+var isExitViaEsc = false;
 
 var currentComputedOptions = null;
 
@@ -34,6 +35,10 @@ class MathFormDivision extends Component {
 
     handleKeyDown(event) {
         if (~[KEY_ENTER, KEY_ESCAPE].indexOf(event.keyCode)) {
+            if (KEY_ESCAPE === event.keyCode) {
+                isExitViaEsc = true;
+            }
+            event.target.blur();
             event.preventDefault();
             return false;
         }
@@ -59,8 +64,9 @@ class MathFormDivision extends Component {
 
     handleDividendBlur(event) {
         var dividend = event.target.innerText;
-        if (currentComputedOptions.dividend.computed && dividend === '') {
+        if (currentComputedOptions.dividend.computed && dividend === '' || isExitViaEsc) {
             event.target.innerText = currentComputedOptions.dividend.value;
+            isExitViaEsc = false;
         } else {
             this.handleApply({
                 dividend
@@ -70,8 +76,9 @@ class MathFormDivision extends Component {
 
     handleDividerBlur(event) {
         var divider = event.target.innerText;
-        if (currentComputedOptions.divider.computed && divider === '') {
+        if (currentComputedOptions.divider.computed && divider === '' || isExitViaEsc) {
             event.target.innerText = currentComputedOptions.divider.value;
+            isExitViaEsc = false;
         } else {
             this.handleApply({
                 divider
@@ -81,8 +88,9 @@ class MathFormDivision extends Component {
 
     handleResultBlur(event) {
         var result = event.target.innerText;
-        if (currentComputedOptions.result.computed && result === '') {
+        if (currentComputedOptions.result.computed && result === '' || isExitViaEsc) {
             event.target.innerText = currentComputedOptions.result.value;
+            isExitViaEsc = false;
         } else {
             this.handleApply({
                 result
@@ -92,8 +100,9 @@ class MathFormDivision extends Component {
 
     handleRemainderBlur(event) {
         var remainder = event.target.innerText;
-        if (currentComputedOptions.remainder.computed && remainder === '') {
+        if (currentComputedOptions.remainder.computed && remainder === '' || isExitViaEsc) {
             event.target.innerText = currentComputedOptions.remainder.value;
+            isExitViaEsc = false;
         } else {
             this.handleApply({
                 remainder

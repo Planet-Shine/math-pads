@@ -10,6 +10,7 @@ import './MathFormSumRow.less';
 
 const KEY_ENTER = 13;
 const KEY_ESCAPE = 27;
+var isExitViaEsc = false;
 
 class MathFormSumRow extends Component {
 
@@ -32,10 +33,15 @@ class MathFormSumRow extends Component {
 
     handleKeyDown(event) {
         if (~[KEY_ENTER, KEY_ESCAPE].indexOf(event.keyCode)) {
+            if (KEY_ESCAPE === event.keyCode) {
+                isExitViaEsc = true;
+            }
+            event.target.blur();
             event.preventDefault();
             return false;
         }
     }
+
 
     handleDelete() {
         const { index } = this.props;
@@ -55,16 +61,27 @@ class MathFormSumRow extends Component {
 
     handleNameBlur(event) {
         const { isCreateNew } = this.props;
-        this.callOnApply({
-            name: isCreateNew ? '' :  event.target.innerText
-        });
+        if (isExitViaEsc) {
+            event.target.innerText = this.props.name;
+            isExitViaEsc = false;
+        } else {
+            this.callOnApply({
+                name: isCreateNew ? '' :  event.target.innerText
+            });
+        }
+
     }
 
     handleValueBlur(event) {
         const { isCreateNew } = this.props;
-        this.callOnApply({
-            value: isCreateNew ? '' : event.target.innerText
-        });
+        if (isExitViaEsc) {
+            event.target.innerText = this.props.value;
+            isExitViaEsc = false;
+        } else {
+            this.callOnApply({
+                value: isCreateNew ? '' : event.target.innerText
+            });
+        }
     }
 
     handleOperatorClick(options) {
@@ -98,7 +115,7 @@ class MathFormSumRow extends Component {
                      data-placeholder="Значение"
                      onBlur={this.handleValueBlur}
                      onKeyDown={this.handleKeyDown}
-                     onFocus={isCreateNew && this.handleNameBlur}
+                     onFocus={isCreateNew && this.handleValueBlur}
                      className="math-form-sum-row__value">
                     {escape(value)}
                 </div>

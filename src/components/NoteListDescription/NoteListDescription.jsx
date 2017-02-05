@@ -4,6 +4,9 @@ import escape from 'html-escape';
 
 import './NoteListDescription.less';
 
+const KEY_ESCAPE = 27;
+var isExitViaEsc = false;
+
 class NoteListDescription extends Component {
     static propTypes = {
         name: PropTypes.string,
@@ -15,11 +18,27 @@ class NoteListDescription extends Component {
         this.handleBlur = this.handleBlur.bind(this);
     }
 
+    handleKeyDown(event) {
+        if (~[KEY_ESCAPE].indexOf(event.keyCode)) {
+            if (KEY_ESCAPE === event.keyCode) {
+                isExitViaEsc = true;
+            }
+            event.target.blur();
+            event.preventDefault();
+            return false;
+        }
+    }
+
     handleBlur(event) {
-        this.props.onBlur({
-            name: this.props.name,
-            newValue: event.target.innerText
-        });
+        if (isExitViaEsc) {
+            event.target.innerText = this.props.value;
+            isExitViaEsc = false;
+        } else {
+            this.props.onBlur({
+                name: this.props.name,
+                newValue: event.target.innerText
+            });
+        }
     }
 
     render() {
@@ -30,6 +49,7 @@ class NoteListDescription extends Component {
                       contentEditable="true"
                       data-placeholder="Введите описание"
                       className="note-list-description__field"
+                      onKeyDown={this.handleKeyDown}
                       onBlur={this.handleBlur}>
                     {escape(this.props.value)}
                 </span>
