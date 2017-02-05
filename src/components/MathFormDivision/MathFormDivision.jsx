@@ -247,6 +247,9 @@ class MathFormDivision extends Component {
     componentDidUpdate() {
         this.insertValuesIntoInputs();
     }
+    componentDidMount() {
+        this.insertValuesIntoInputs();
+    }
 
     render() {
         const { dividend, divider, result, remainder, isIntegerDivision } = this.state.currentComputedOptions;
