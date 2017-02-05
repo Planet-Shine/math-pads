@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var lifecycleEvent = process.env.npm_lifecycle_event;
 var isDev = lifecycleEvent === 'devserver';
 var isProd = lifecycleEvent === 'build';
+var isDemoBuild = lifecycleEvent === 'demo-build';
 
 var config = {
     entry: "./src/main.js",
@@ -72,7 +73,8 @@ if (isDev) {
         loader: "style-loader!css-loader!autoprefixer-loader!less",
         exclude: [/node_modules/, /public/]
     });
-} else if (isProd) {
+} else if (isProd || isDemoBuild) {
+    config.devtool = null;
     config.module.loaders.push({
         test: /\.css$/,
         loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer-loader'),
@@ -84,6 +86,14 @@ if (isDev) {
         exclude: [/node_modules/, /public/]
     });
     config.plugins = [new ExtractTextPlugin('style.css')];
+}
+
+if (isDemoBuild) {
+    config.output = {
+        path: __dirname + "/public/build/",
+        publicPath: "/experiences/math-pads/build/", // Обязательно для devserver, чтобы знал куда привязываться к bundle.js.
+        filename: "bundle.js"
+    };
 }
 
 module.exports = config;

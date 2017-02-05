@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "devserver": "webpack-dev-server --debug --hot --devtool inline-source-map --output-pathinfo --watch --colors --inline --content-base public --port 8090 --host 0.0.0.0",
-    "build": "webpack -p --display-error-details"
+    "build": "webpack -p --display-error-details",
+    "demo-build": "webpack -p --display-error-details"
   },
   "author": "Pavel Kondrik",
   "license": "ISC",
