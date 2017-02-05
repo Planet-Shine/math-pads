@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import './Checkbox.less';
 
-const TICK_ANIMATION_TIME = 500;
+const TICK_ANIMATION_TIME = 250;
 
 class Checkbox extends Component {
     state = {
