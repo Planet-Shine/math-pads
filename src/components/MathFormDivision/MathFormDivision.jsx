@@ -15,9 +15,13 @@ const KEY_ENTER = 13;
 const KEY_ESCAPE = 27;
 var isExitViaEsc = false;
 
-var currentComputedOptions = null;
 
 class MathFormDivision extends Component {
+
+    state = {
+        currentComputedOptions: null
+    };
+
     propTypes = {
         data: PropTypes.object,
         onApply: PropTypes.func
@@ -63,9 +67,10 @@ class MathFormDivision extends Component {
     }
 
     handleDividendBlur(event) {
-        var dividend = event.target.innerText;
-        if (currentComputedOptions.dividend.computed && dividend === '' || isExitViaEsc) {
-            event.target.innerText = currentComputedOptions.dividend.value;
+        var dividend = event.target.innerText,
+            cachedResult = this.state.currentComputedOptions.dividend;
+        if (cachedResult.computed && dividend === '' || isExitViaEsc) {
+            event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
             this.handleApply({
@@ -75,9 +80,10 @@ class MathFormDivision extends Component {
     }
 
     handleDividerBlur(event) {
-        var divider = event.target.innerText;
-        if (currentComputedOptions.divider.computed && divider === '' || isExitViaEsc) {
-            event.target.innerText = currentComputedOptions.divider.value;
+        var divider = event.target.innerText,
+            cachedResult = this.state.currentComputedOptions.divider;
+        if (cachedResult.computed && divider === '' || isExitViaEsc) {
+            event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
             this.handleApply({
@@ -87,9 +93,10 @@ class MathFormDivision extends Component {
     }
 
     handleResultBlur(event) {
-        var result = event.target.innerText;
-        if (currentComputedOptions.result.computed && result === '' || isExitViaEsc) {
-            event.target.innerText = currentComputedOptions.result.value;
+        var result = event.target.innerText,
+            cachedResult = this.state.currentComputedOptions.result;
+        if (cachedResult.computed && result === '' || isExitViaEsc) {
+            event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
             this.handleApply({
@@ -99,9 +106,10 @@ class MathFormDivision extends Component {
     }
 
     handleRemainderBlur(event) {
-        var remainder = event.target.innerText;
-        if (currentComputedOptions.remainder.computed && remainder === '' || isExitViaEsc) {
-            event.target.innerText = currentComputedOptions.remainder.value;
+        var remainder = event.target.innerText,
+            cachedResult = this.state.currentComputedOptions.remainder;
+        if (cachedResult.computed && remainder === '' || isExitViaEsc) {
+            event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
             this.handleApply({
@@ -119,11 +127,11 @@ class MathFormDivision extends Component {
     getCalculatedResult({ dividend, divider, result, remainder, isIntegerDivision }) {
         var dividendOutput, dividerOutput, resultOutput, remainderOutput;
         [dividend, divider, result, remainder] = [dividend, divider, result, remainder]
-            .map(x => x === '' ? '' : parseFloat(x));
+            .map(x =>(!isFinite(x) || x === '' ? x : parseFloat(x)));
 
         function formatValue(input) {
-            if (isNaN(input)) {
-                return '';
+            if (!isFinite(input) || input === '') {
+                return input;
             }
             return String(parseInt(input * 1E9, 10) / 1E9);
         }
@@ -209,18 +217,39 @@ class MathFormDivision extends Component {
             dividend: dividendOutput,
             divider: dividerOutput,
             result: resultOutput,
-            remainder: remainderOutput
+            remainder: remainderOutput,
+            isIntegerDivision: isIntegerDivision
         };
     }
 
-    render() {
-        var { dividend, divider, result, remainder, isIntegerDivision } = (this.props.data || Immutable.fromJS({})).toJS();
+    insertValuesIntoInputs() {
+        const { dividend, divider, result, remainder } = this.state.currentComputedOptions;
+        this.dividendInput.innerHTML = dividend.value;
+        this.dividerInput.innerHTML = divider.value;
+        this.resultInput.innerHTML = result.value;
+        this.remainderInput.innerHTML = remainder.value;
+    }
+
+    culcCurrentComputedOptions(nextProps) {
+        var { dividend, divider, result, remainder, isIntegerDivision } = ((nextProps || this.props).data || Immutable.fromJS({})).toJS();
         var newValue = this.getCalculatedResult({ dividend, divider, result, remainder, isIntegerDivision });
-        dividend = newValue.dividend;
-        divider = newValue.divider;
-        result = newValue.result;
-        remainder = newValue.remainder;
-        currentComputedOptions = newValue;
+        this.setState({
+            currentComputedOptions: newValue
+        });
+    }
+
+    componentWillMount() {
+        this.culcCurrentComputedOptions();
+    }
+    componentWillReceiveProps(nextProps) {
+        this.culcCurrentComputedOptions(nextProps);
+    }
+    componentDidUpdate() {
+        this.insertValuesIntoInputs();
+    }
+
+    render() {
+        const { dividend, divider, result, remainder, isIntegerDivision } = this.state.currentComputedOptions;
         return(
             <div className="math-form-division">
                 <div className="math-form-division__checkbox-box">
@@ -237,6 +266,7 @@ class MathFormDivision extends Component {
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
+                             ref={e => this.dividendInput = e}
                              className={classNames("math-form-division__value", dividend.computed && "math-form-division__value_computed")}
                              onKeyDown={this.handleKeyDown}
                              onBlur={this.handleDividendBlur}>
@@ -249,6 +279,7 @@ class MathFormDivision extends Component {
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
+                             ref={e => this.dividerInput = e}
                              className={classNames("math-form-division__value", divider.computed && "math-form-division__value_computed")}
                              onKeyDown={this.handleKeyDown}
                              onBlur={this.handleDividerBlur}>
@@ -261,6 +292,7 @@ class MathFormDivision extends Component {
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
+                             ref={e => this.resultInput = e}
                              className={classNames("math-form-division__value", result.computed && "math-form-division__value_computed")}
                              onKeyDown={this.handleKeyDown}
                              onBlur={this.handleResultBlur}>
@@ -273,6 +305,7 @@ class MathFormDivision extends Component {
                              role="textbox"
                              contentEditable="true"
                              data-placeholder="Значение"
+                             ref={e => this.remainderInput = e}
                              className={classNames("math-form-division__value", remainder.computed && "math-form-division__value_computed")}
                              onKeyDown={this.handleKeyDown}
                              onBlur={this.handleRemainderBlur}>
