@@ -96,7 +96,7 @@ class MathFormSum extends Component {
             let list = data.get('list') || Immutable.fromJS([]);
             list.forEach((item) => {
                 value = item.get('value');
-                if (isFinite(value)) {
+                if (isFinite(value) && value !== "") {
                     if (result !== null) {
                         result = eval(`${result}${nextOperator}${value}`);
                     } else {
