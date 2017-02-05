@@ -224,10 +224,10 @@ class MathFormDivision extends Component {
 
     insertValuesIntoInputs() {
         const { dividend, divider, result, remainder } = this.state.currentComputedOptions;
-        this.dividendInput.innerHTML = dividend.value;
-        this.dividerInput.innerHTML = divider.value;
-        this.resultInput.innerHTML = result.value;
-        this.remainderInput.innerHTML = remainder.value;
+        this.dividendInput.innerHTML = dividend.value !== undefined ? dividend.value : '';
+        this.dividerInput.innerHTML = divider.value !== undefined ? divider.value : '';
+        this.resultInput.innerHTML = result.value !== undefined ? result.value : '';
+        this.remainderInput.innerHTML = remainder.value !== undefined ? remainder.value : '';
     }
 
     culcCurrentComputedOptions(nextProps) {
