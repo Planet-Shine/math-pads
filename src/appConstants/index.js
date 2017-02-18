@@ -13,6 +13,7 @@ export default keyMirror({
     SET_SELECTED_DATE: null,
     SET_CALENDAR_DISPLAY: null,
     SET_EDITING_ID: null,
+    SET_IS_FILE_ADDING: null,
     NOTE_SUM_TYPE: null,
     NOTE_SUM_OF_PRODUCTS_TYPE: null,
     NOTE_WAS_COME_LEAVE_BECOME_TYPE: null,

@@ -8,9 +8,12 @@ import { connect } from 'react-redux';
 import {
     addFile,
     updateFile,
-    deleteFile,
-    edditingStart
-} from 'reducers/files';
+    deleteFile 
+} from 'actions/files';
+import {
+    setEditingId,
+    setIsFileAdding
+} from 'actions/fileList';
 import {
     File,
     FileList,
@@ -19,40 +22,50 @@ import {
     SearchForm
 } from 'components';
 
-const CREATE_NEW_FILE_ID = 0;
-
-function filterFiles(files=Immutable.formJS([]), fileVisibilityFilter=Immutable.formJS({})) {
-    const { selectedDate, searchQuery } = fileVisibilityFilter.toJS();
+const filterFiles = (files, { selectedDate, searchQuery }) => {
     const searchQueryRegExp = new RegExp(searchQuery);
     return files.filter(file =>
         ((!selectedDate || selectedDate === file.get('createDate')) &&
             (!searchQuery && searchQueryRegExp.test(file.get('name'))))
     );
-}
-
-const mapStateToProps = ({ fileList, files, fileVisibilityFilter }) => {
-    return {
-        addFormDisplayed: files.addFormDisplayed,
-        editingId: fileList && fileList.editingId,
-        list: filterFiles(files && files.get('files'), fileVisibilityFilter)
-    };
 };
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onEditingStart(id) {
-            dispatch(edditingStart(id));
-        },
+const mapStateToProps =
+    ({
+        fileList=Immutable.formJS({}),
+        files=Immutable.formJS({files:[]}),
+        fileVisibilityFilter=Immutable.formJS({})
+    }) =>
+    ({
+        addFormDisplayed: fileList.get('addFormDisplayed'),
+        editingId: fileList.get('editingId'),
+        list: filterFiles(files.get('files'), fileVisibilityFilter.toJS()).toJS(),
+        isFileAdding: fileList.get('isFileAdding')
+    });
+const mapDispatchToProps =
+    dispatch =>
+    ({
         onAddFile(file) {
             dispatch(addFile(file));
         },
+        onAddingStart() {
+            dispatch(setIsFileAdding(true));
+        },
+        onAddingCancel() {
+            dispatch(setIsFileAdding(false));
+        },
+        onEditFile(file) {
+            dispatch(updateFile(file));
+        },
+        onEditingCancel() {
+            dispatch(setEditingId(null));
+        },
+        onEditingStart(id) {
+            dispatch(setEditingId(id));
+        },
         onDeleteFile(id) {
             dispatch(deleteFile(id));
-        },
-        onUpdateFile() {
-            dispatch(updateFile(file));
         }
-    };
-};
+    });
 
 @connect(mapStateToProps, mapDispatchToProps)
 class MathPadFileList extends Component {
@@ -62,44 +75,57 @@ class MathPadFileList extends Component {
         list: PropTypes.object
     };
     renderFiles() {
-        const nodes = [];
-        this.props.list.forEach((item) => {
-            nodes.push(
-                <File key={item.get('id')}
-                      routeName={'/pads/'}
-                      id={item.get('id')}
-                      editingId={this.props.editingId}
-                      onEditingStart={this.props.onEditingStart}
-                      name={item.get('name')}
-                      isCreateNew={false}
-                      onEdit={this.props.onEdit}
-                      onDelete={this.props.onDeleteFile}
-                />
-            );
-        });
-        return nodes;
+        const {
+            editingId,
+            onEditingStart,
+            onEditingCancel,
+            onEditFile,
+            onDeleteFile,
+            list
+        } = this.props;
+        return list.map(
+            ({id, name}) =>
+            <File key={id}
+                  routeName="/pads/"
+                  id={id}
+                  name={name}
+                  isEditing={editingId === id}
+                  onEditingStart={onEditingStart}
+                  onEditingCancel={onEditingCancel}
+                  onEdit={onEditFile}
+                  onDelete={onDeleteFile}
+            />
+        );
     }
     render() {
+        const {
+            list,
+            addFormDisplayed,
+            onAddFile,
+            onAddingStart,
+            onAddingCancel,
+            addFileFormDisplayed
+        } = this.props;
         return (
             <div>
                 <FileList>
                     {
-                        this.props.list.count()
+                        list.length
                             ?
                         this.renderFiles()
                             :
                         <NoFilesCaption />
                     }
-                    {this.state.addFileFormDisplayed &&
+                    {addFormDisplayed &&
                         <File key={'createFileForm'}
-                              id={CREATE_NEW_FILE_ID}
-                              onCancelApply={this.handleCancelApply}
-                              isCreateNew={true}
-                              onApply={this.props.onApplyFile} />
+                              isEditing={true}
+                              onEditingStart={onAddingStart}
+                              onEditingCancel={onAddingCancel}
+                              onEdit={onAddFile} />
                     }
                 </FileList>
-                {!this.state.addFileFormDisplayed && 
-                    <AddButton onClick={this.handleAddNewFile} />}
+                {!addFileFormDisplayed &&
+                    <AddButton onClick={onAddingStart} />}
             </div>
         );
     }

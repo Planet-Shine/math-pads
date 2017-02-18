@@ -1,6 +1,9 @@
 
 import React, { Component, PropTypes } from 'react';
-import { Calendar, CalendarClearButton } from 'components';
+import {
+    Calendar,
+    CalendarClearButton
+} from 'components';
 import { connect } from 'react-redux';
 import timing from 'utils/timing';
 import {

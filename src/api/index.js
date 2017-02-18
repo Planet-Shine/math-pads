@@ -11,6 +11,8 @@ const api = {
         return file;
     },
     updateFile(file) {
+        var oldFile = fileStore.getItem(file.id);
+        file = Object.assign(oldFile, file);
         fileStore.setItem(file);
         return file;
     },

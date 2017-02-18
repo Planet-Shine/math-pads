@@ -7,59 +7,43 @@ import escape from 'html-escape';
 
 class File extends Component {
     static propTypes = {
-        routeName: PropTypes.string,
         id: PropTypes.number,
-        onApply: PropTypes.func,
-        onEdit: PropTypes.func,
+        name: PropTypes.string,
+        routeName: PropTypes.string,
         onDelete: PropTypes.func,
-        onCancelApply: PropTypes.func,
-        isCreateNew: PropTypes.bool,
-        onEditingStart: PropTypes.func
-    };
-    state = {
-        isEditing: false
+        onEdit: PropTypes.func,
+        onEditingStart: PropTypes.func,
+        onEditingCancel: PropTypes.func,
+        isEditing: PropTypes.bool
     };
     constructor() {
         super();
-        this.handleEditClick = this.handleEditClick.bind(this);
-        this.handleApplyCancel = this.handleApplyCancel.bind(this);
-        this.handleEditingApply = this.handleEditingApply.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleEditingCancel = this.handleEditingCancel.bind(this);
+        this.handleEditingStart = this.handleEditingStart .bind(this);
         this.handleDelete = this.handleDelete.bind(this);
     }
     selectIfNeeded() {
-        if (this.state.isEditing) {
+        if (this.props.isEditing) {
             this.nameInput.select();
         }
     }
     handleDelete() {
-        this.props.onDelete({
-            id: this.props.id
-        });
+        const { onDelete, id } = this.props;
+        onDelete(id);
     }
-    handleEditClick() {
-        this.setState({
-            isEditing: true
-        });
-        this.props.onEditingStart({
-            id: this.props.id
-        });
-    }
-    handleApplyCancel() {
-        if (this.props.isCreateNew) {
-            this.props.onCancelApply();
-        } else {
-            this.setState({
-                isEditing: false
-            });
-        }
-    }
-    handleEditingApply(event) {
-        var name = this.nameInput.value;
+    handleEdit(event) {
+        const { onEdit, id, name } = this.props;
         event.preventDefault();
-        this.props.onApply({
-            id: this.props.id,
-            name: name
-        });
+        onEdit({id, name});
+    }
+    handleEditingCancel() {
+        const { onEditingCancel } = this.props;
+        onEditingCancel();
+    }
+    handleEditingStart(event) {
+        const { onEditingStart, id } = this.props;
+        onEditingStart(id);
     }
     componentDidUpdate() {
         this.selectIfNeeded();
@@ -67,41 +51,33 @@ class File extends Component {
     componentDidMount() {
         this.selectIfNeeded();
     }
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.currentEditingId !== this.props.id) {
-            this.setState({
-                isEditing: false
-            });
-        }
-    }
-    componentWillMount() {
-        if (this.props.isCreateNew || this.props.id === this.props.currentEditingId) {
-            this.setState({
-                isEditing: true
-            });
-        }
-    }
     render() {
         const {
+            handleEdit,
+            handleEditingCancel,
+            handleEditingStart,
+            handleDelete
+        } = this;
+        const {
+            isEditing,
             routeName,
             name,
             id
         } = this.props;
-        const { isEditing } = this.state;
 
         return (
                 isEditing
             ?
                 <li className="file__item">
-                    <form onSubmit={this.handleEditingApply}>
+                    <form onSubmit={handleEdit}>
                         <input className="file__input"
                                type="text"
                                defaultValue={escape(name)}
-                               ref={c => this.nameInput = c} />
+                               ref={e => this.nameInput = e} />
                         <span className="file__buttons">
                             <button className="file__button btn btn-default"
                                     type="button"
-                                    onClick={this.handleApplyCancel}>
+                                    onClick={handleEditingCancel}>
                                 <span className="glyphicon glyphicon-chevron-left"></span>
                             </button>
                             <button className="file__button btn btn-success"
@@ -113,16 +89,18 @@ class File extends Component {
                 </li>
             :
                 <li className="file__item">
-                    <Link to={`${this.props.routeName}${id}`}>
+                    <Link to={`${routeName}${id}`}>
                         <span className="file__item-caption">
                             {escape(name)}
                         </span>
                     </Link>
                     <span className="file__buttons">
-                        <button className="file__button btn btn-default" onClick={this.handleEditClick}>
+                        <button className="file__button btn btn-default"
+                                onClick={handleEditingStart}>
                             <span className="glyphicon glyphicon-pencil"></span>
                         </button>
-                        <button className="file__button btn btn-danger" onClick={this.handleDelete}>
+                        <button className="file__button btn btn-danger"
+                                onClick={handleDelete}>
                             <span className="glyphicon glyphicon-remove"></span>
                         </button>
                     </span>
