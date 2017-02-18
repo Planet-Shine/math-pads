@@ -15,6 +15,7 @@ import api from 'api';
 import Immutable from 'immutable';
 import { syncHistoryWithStore } from 'react-router-redux';
 import clientMiddleware from 'redux/clientMiddleware';
+import timeMiddleware from 'redux/timeMiddleware';
 import fileStore from 'store/fileStore';
 import { getDefaultState } from 'reducers/file';
 
@@ -23,7 +24,7 @@ const preloadedState = {
     file: getDefaultState().set('files', Immutable.fromJS(fileStore.getAll()))
 };
 const reduxRouterMiddleware = routerMiddleware(hashHistory);
-const middleware = [reduxRouterMiddleware, thunk];
+const middleware = [reduxRouterMiddleware, thunk, timeMiddleware];
 const finalCreateStore = applyMiddleware(...middleware)(createStore);
 const store = finalCreateStore(reducers, preloadedState);
 

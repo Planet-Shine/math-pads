@@ -16,6 +16,6 @@ export default timeMiddleware =
             next(setToday(new Date()));
             _isInitialized = true;
         } else {
-           next();
+           next(action);
         }
     }
