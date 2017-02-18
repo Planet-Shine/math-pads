@@ -10,7 +10,7 @@ import {
     NoteListDescription,
     MathFormSum,
     MathFormDivision
-} from 'containers';
+} from 'components';
 
 import noteTypeCaptions from 'appConstants/noteTypeCaptions';
 import appConstants from 'appConstants';

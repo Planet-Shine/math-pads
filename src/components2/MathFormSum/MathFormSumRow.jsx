@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import escape from 'html-escape';
 import {
     TwoOperatorSwitcher
-} from 'containers';
+} from 'components';
 
 import './MathFormSumRow.less';
 

@@ -2,42 +2,24 @@
 import Immutable from 'immutable';
 import appConstants from 'appConstants';
 
+const defaultState = Immutable.fromJS({
+    'displaied': false,
+    'currentDate': '',
+    'currentMonth': new Date()
+});
+
 function fileCalendar (state, action) {
     switch (action.type) {
-        case appConstants.SWITCH_CALENDAR_DISPLAY:
-            return state.set('displaied', !state.get('displaied'));
+        case appConstants.SET_CALENDAR_DISPLAY:
+            return state.set('displaied', state.payload);
         case appConstants.SET_CURRENT_MONTH:
-            return state.set('currentMonth', action.value);
+            return state.set('currentMonth', action.payload);
         case appConstants.SET_CURRENT_DATE:
-            return state.set('currentDate', action.value);
+            return state.set('currentDate', action.payload);
         default:
-            return state || Immutable.fromJS({
-                'displaied': false,
-                'currentDate': '',
-                'currentMonth': new Date()
-            });
+            return state || defaultState;
     }
 }
-
 export default fileCalendar;
 
-export function currentDate(newValue) {
-    return {
-        type: appConstants.SET_CURRENT_DATE,
-        value: newValue
-    };
-}
 
-export function currentMonth(newValue) {
-    return {
-        type: appConstants.SET_CURRENT_MONTH,
-        value: newValue
-    };
-}
-
-export function switchCalendarDisplay(newValue) {
-    return {
-        type: appConstants.SWITCH_CALENDAR_DISPLAY,
-        value: newValue
-    };
-}

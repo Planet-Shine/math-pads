@@ -6,77 +6,61 @@ import React, {
 } from 'react';
 import { connect } from 'react-redux';
 import {
-    applyFile,
-    deleteFile
-} from 'reducers/file';
+    addFile,
+    updateFile,
+    deleteFile,
+    edditingStart
+} from 'reducers/files';
 import {
     File,
     FileList,
     AddButton,
     NoFilesCaption,
     SearchForm
-} from 'containers';
+} from 'components';
 
 const CREATE_NEW_FILE_ID = 0;
 
-function mapStateToProps(state) {
-    return {
-        sourceList: state.file.get('files'),
-        list: state.file.get('filteredFiles')
-    };
+function filterFiles(files=Immutable.formJS([]), fileVisibilityFilter=Immutable.formJS({})) {
+    const { selectedDate, searchQuery } = fileVisibilityFilter.toJS();
+    const searchQueryRegExp = new RegExp(searchQuery);
+    return files.filter(file =>
+        ((!selectedDate || selectedDate === file.get('createDate')) &&
+            (!searchQuery && searchQueryRegExp.test(file.get('name'))))
+    );
 }
-function mapDispatchToProps(dispatch) {
+
+const mapStateToProps = ({ fileList, files, fileVisibilityFilter }) => {
     return {
-        onApplyFile: function(fileOptions) {
-            dispatch(applyFile(fileOptions));
+        addFormDisplayed: files.addFormDisplayed,
+        editingId: fileList && fileList.editingId,
+        list: filterFiles(files && files.get('files'), fileVisibilityFilter)
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onEditingStart(id) {
+            dispatch(edditingStart(id));
         },
-        onDeleteFile: function(fileOptions) {
-            dispatch(deleteFile(fileOptions));
+        onAddFile(file) {
+            dispatch(addFile(file));
+        },
+        onDeleteFile(id) {
+            dispatch(deleteFile(id));
+        },
+        onUpdateFile() {
+            dispatch(updateFile(file));
         }
     };
-}
+};
+
 @connect(mapStateToProps, mapDispatchToProps)
 class MathPadFileList extends Component {
     static propTypes = {
+        addFormDisplayed: PropTypes.bool,
+        editingId: PropTypes.number,
         list: PropTypes.object
     };
-    state = {
-        addFileFormDisplayed: false,
-        list: Immutable.fromJS([]),
-        currentEditingId: null
-    };
-    constructor() {
-        super();
-        this.handleAddNewFile   = this.handleAddNewFile.bind(this);
-        this.handleCancelApply  = this.handleCancelApply.bind(this);
-        this.handleEditingStart = this.handleEditingStart.bind(this);
-    }
-    handleAddNewFile() {
-        this.setState({
-            currentEditingId: CREATE_NEW_FILE_ID,
-            addFileFormDisplayed: true
-        });
-    }
-    handleEditingStart(fileOptions) {
-        this.setState({
-            currentEditingId: fileOptions.id
-        });
-    }
-    resetState() {
-        this.setState({
-            currentEditingId: CREATE_NEW_FILE_ID,
-            addFileFormDisplayed: false
-        });
-    }
-    componentWillReceiveProps() {
-        this.resetState();
-    }
-    componentWillMount() {
-        this.resetState();
-    }
-    handleCancelApply() {
-        this.resetState();
-    }
     renderFiles() {
         const nodes = [];
         this.props.list.forEach((item) => {
@@ -84,11 +68,11 @@ class MathPadFileList extends Component {
                 <File key={item.get('id')}
                       routeName={'/pads/'}
                       id={item.get('id')}
-                      currentEditingId={this.state.currentEditingId}
-                      onEditingStart={this.handleEditingStart}
+                      editingId={this.props.editingId}
+                      onEditingStart={this.props.onEditingStart}
                       name={item.get('name')}
                       isCreateNew={false}
-                      onApply={this.props.onApplyFile}
+                      onEdit={this.props.onEdit}
                       onDelete={this.props.onDeleteFile}
                 />
             );

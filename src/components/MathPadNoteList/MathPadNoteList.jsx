@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import {
     NoteList,
     AddNoteButtonList
-} from 'containers';
+} from 'components';
 import { connect } from 'react-redux';
 import { applyFileContent } from 'reducers/file';
 import Immutable from 'immutable';

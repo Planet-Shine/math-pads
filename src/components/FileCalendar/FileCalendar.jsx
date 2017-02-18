@@ -1,6 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
-import { Calendar, CalendarClearButton } from 'containers';
+import { Calendar, CalendarClearButton } from 'components';
 import { connect } from 'react-redux';
 import timing from 'utils/timing';
 import {
@@ -8,9 +8,6 @@ import {
     currentMonth
 } from 'reducers/fileCalendar';
 
-import {
-    selectedDate
-} from 'reducers/file';
 
 const mapStateToProps = (state) => {
     var result = {};
@@ -18,25 +15,14 @@ const mapStateToProps = (state) => {
         result = {
             date: state.fileCalendar.get('currentDate'),
             month: state.fileCalendar.get('currentMonth'),
-            displaied : state.fileCalendar.get('displaied')
+            displaied : state.fileCalendar.get('displaied'),
+            contentMarks: state.files
+                    ?
+                state.files.get('files').map(file => file.get('createDate')).toJS()
+                    :
+                [],
+            today: state.time.get('today')
         };
-    }
-    if (state.file) {
-        let contentMarks = [];
-        state.file
-            .get('files')
-            .map(file => {
-                contentMarks.push(file.get('createDate'))
-            });
-        result = Object.assign({
-            contentMarks: contentMarks
-        }, result);
-        let date = timing.toDate(state.file.get('files').get('selectedDate'));
-        if (date) {
-            result = Object.assign({
-                date: date
-            }, result);
-        }
     }
     return result;
 };
@@ -44,7 +30,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onNewDate(date) {
             dispatch(currentDate(date));
-            dispatch(selectedDate(timing.toDateString(date)));
         },
         onNextMonth(month) {
             dispatch(currentMonth(timing.addMonths(month, 1)));
@@ -63,28 +48,10 @@ class FileCalendar extends Component {
             PropTypes.string
         ]),
         month: PropTypes.object,
-        displaied: PropTypes.bool
+        displaied: PropTypes.bool,
+        contentMarks: PropTypes.array,
+        today: PropTypes.object
     };
-
-    state = {
-        today: new Date()
-    };
-
-    updateTodayIntervalDescriptor = null;
-
-    componentWillUnmount() {
-        clearTimeout(this.updateTodayIntervalDescriptor);
-    }
-
-    componentDidMount() {
-        this.updateTodayIntervalDescriptor = setInterval(() => {
-            this.setState({
-                today : new Date()
-            });
-        }, timing.getMilliseconds({
-            minutes: 1
-        }));
-    }
 
     constructor() {
         super();
@@ -118,7 +85,7 @@ class FileCalendar extends Component {
                           onDateClick={this.handleDateClick}
                           date={this.props.date}
                           month={this.props.month}
-                          today={this.state.today}
+                          today={this.props.today}
                           contentMarks={this.props.contentMarks}
                           onClear={this.handleClear} />
             </div>

@@ -1,28 +1,26 @@
 import React, { Component } from 'react';
 
-import {
-    Header,
-    NavbarHeader,
-    Menu,
-    MenuItem,
-    Footer,
-    ContentLayout,
-    PageErrorMessage,
-    TwoOperatorSwitcher
-} from 'containers';
-
-import {
-    MathPadNoteList
-} from 'components';
+import './PadsPage.less';
 
 import { Link } from 'react-router';
 
-import './PadPage.less';
+import {
+    Header,
+    Logo,
+    Footer,
+    ContentLayout,
+    NavbarHeader
+} from 'components';
 
-class PadPage extends Component {
+import {
+    CalendarButton,
+    FileCalendar,
+    MathPadFileList
+} from 'components';
+
+class PadsPage extends Component {
 
     render() {
-        var id = parseInt(this.props.params.id, 10);
         return (
             <div className="page-container">
                 <Header>
@@ -30,9 +28,7 @@ class PadPage extends Component {
                     <div className="collapse navbar-collapse" id="navbar-collapse-1">
                         <ul className="nav navbar-nav">
                             <li>
-                                <Link to="/pads/">
-                                    Pads
-                                </Link>
+                                <CalendarButton />
                             </li>
                             <li>
                                 <Link className="menu-item" to="/about/">
@@ -42,17 +38,9 @@ class PadPage extends Component {
                         </ul>
                     </div>
                 </Header>
-
                 <ContentLayout>
-                    {
-                            isFinite(id)
-                        ?
-                            <MathPadNoteList id={id} />
-                        :
-                            <PageErrorMessage>
-                                 Идентификатор файла должен быть числом.
-                            </PageErrorMessage>
-                    }
+                    <FileCalendar />
+                    <MathPadFileList />
                 </ContentLayout>
                 <Footer>
                     © 2017-today
@@ -62,4 +50,4 @@ class PadPage extends Component {
     }
 }
 
-export default PadPage;
+export default PadsPage;

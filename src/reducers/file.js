@@ -1,4 +1,12 @@
 
+/*
+    Рефакторинг redux store.
+
+    filteredList формируется в сторадже, но отдельно в отдельном сторадже.
+    Откликается на изменение поискового запроса.
+*/
+
+
 import appConstants from 'appConstants';
 import Immutable from 'immutable';
 

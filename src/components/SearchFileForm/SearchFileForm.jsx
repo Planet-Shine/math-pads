@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { searchQuery } from 'reducers/file';
-import { SearchForm } from 'containers';
+import { SearchForm } from 'components';
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -11,11 +11,4 @@ function mapDispatchToProps(dispatch) {
         }
     };
 }
-@connect(null, mapDispatchToProps)
-class SearchFileForm extends Component {
-    render() {
-        return (<SearchForm onSearchChange={this.props.onSearchChange} />);
-    }
-}
-
-export default SearchFileForm;
+export default connect(null, mapDispatchToProps)(SearchForm);

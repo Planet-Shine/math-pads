@@ -4,7 +4,7 @@ import {
     Note,
     NoteListDescription,
     NoteListHeader
-}  from 'containers';
+}  from 'components';
 import appConstants from 'appConstants';
 
 import Immutable from 'immutable';

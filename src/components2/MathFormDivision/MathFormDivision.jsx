@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import {
     Checkbox,
     MathFormDivisionValue
-} from 'containers';
+} from 'components';
 
 const KEY_ENTER = 13;
 const KEY_ESCAPE = 27;

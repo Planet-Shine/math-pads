@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import DateItem from './DateItem';
 import timing from 'utils/timing';
-import { CalendarClearButton } from 'containers';
+import { CalendarClearButton } from 'components';
 
 import './Calendar.less';
 

@@ -4,7 +4,7 @@ import appConstants from 'appConstants';
 import noteTypeCaptions from 'appConstants/noteTypeCaptions';
 import {
     AddNoteButton
-} from 'containers';
+} from 'components';
 
 import './AddNoteButtonList.less'
 

@@ -5,7 +5,7 @@ import {
     NavbarHeader,
     Footer,
     ContentLayout
-} from 'containers';
+} from 'components';
 
 import { Link } from 'react-router';
 
