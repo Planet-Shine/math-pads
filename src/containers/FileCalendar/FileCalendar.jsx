@@ -19,9 +19,13 @@ const mapStateToProps = (state) => {
             date: state.fileCalendar.get('currentDate'),
             month: state.fileCalendar.get('currentMonth'),
             displaied : state.fileCalendar.get('displaied'),
-            contentMarks: state.files
+            contentMarks:
+                state.files
                     ?
-                state.files.get('files').map(file => file.get('createDate')).toJS()
+                state.files.get('files').map(
+                    file =>
+                    timing.toDate(file.get('createDate'))
+                ).toJS()
                     :
                 [],
             today: state.time.get('today')

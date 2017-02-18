@@ -3,8 +3,8 @@ import Immutable from 'immutable';
 import appConstants from 'appConstants';
 
 const defaultState = Immutable.fromJS({
-    'isFileAdding',
-    'edditingId'
+    'isFileAdding': false,
+    'edditingId':  null
 });
 
 const fileList = (state=defaultState, action) => {

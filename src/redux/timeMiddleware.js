@@ -7,7 +7,7 @@ const TODAY_REFRESH_TIMEOUT = timing.getMilliseconds({
     minutes: 1
 });
 
-export default timeMiddleware =
+const timeMiddleware =
     store =>
     next =>
     action => {
@@ -18,4 +18,6 @@ export default timeMiddleware =
         } else {
            next(action);
         }
-    }
+    };
+
+export default timeMiddleware

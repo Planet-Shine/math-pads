@@ -37,7 +37,7 @@ class AboutPage extends Component {
                     <p>
                         Math Pads — хорошая замена электронным таблицам.
                         Во многих случаях работать удобнее и проще.
-                </p>
+                    </p>
                 </ContentLayout>
                 <Footer>
                     © 2017-today
