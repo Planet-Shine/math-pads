@@ -15,6 +15,10 @@ import Immutable from 'immutable';
 import fileStore from 'store/fileStore';
 import timing from 'utils/Timing';
 
+// Подключение библиотек bootstrap.
+require('imports?jQuery=jquery!bootstrap/dist/js/bootstrap');
+require('imports?jQuery=jquery!bootstrap/js/collapse');
+
 // Создание хранилища и истории.
 const preloadedState = {
     time: Immutable.fromJS({

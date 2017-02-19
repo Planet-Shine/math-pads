@@ -85,7 +85,9 @@ if (isDev) {
         loader: ExtractTextPlugin.extract('style', 'css-loader!autoprefixer-loader!less-loader'),
         exclude: [/node_modules/, /public/]
     });
-    config.plugins = [new ExtractTextPlugin('style.css')];
+    config.plugins = [
+        new ExtractTextPlugin('style.css')
+    ];
 }
 
 if (isDemoBuild) {
