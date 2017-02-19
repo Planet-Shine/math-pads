@@ -6,6 +6,7 @@ import {
 } from 'components';
 import { connect } from 'react-redux';
 import { updateFileTitle, updateFileDescription } from 'actions/files';
+import { addNote } from 'actions/notes';
 import Immutable from 'immutable';
 
 const getFile = (files=Immutable.fromJS([]), id) => {
@@ -13,37 +14,29 @@ const getFile = (files=Immutable.fromJS([]), id) => {
     return currentFile.toJS();
 };
 
-function mapStateToProps(state, ownProps) {
-    const file = getFile(state.files, ownProps.id);
+const getNotes = (notes=Immutable.fromJS([]), fileId) => {
+    return notes.filter(
+        note =>
+        note.get('fileId') === fileId
+    ).toJS();
+};
+
+function mapStateToProps({ files, notes }, { id }) {
+    const file = getFile(files, id);
     const { title, description } = file;
+    notes = getNotes(notes, id);
     return {
-        file: file,
-        title: title,
-        description: description
+        file,
+        title,
+        description,
+        notes
     };
 }
 function mapDispatchToProps(dispatch, { id }) {
     return {
-        /*
-
-            onFieldBlur(targetOptions) {
-                var keys = [targetOptions.name],
-                    value = targetOptions.newValue;
-                dispatch(applyFileContent(id, keys, value));
-            },
-            onNoteApply({ keys, newValue } = {}) {
-                dispatch(applyFileContent(id, keys, newValue));
-            },
-            onDelete({ orderNumber, fileContent }) {
-                if (isFinite(orderNumber)) {
-                    let keys = ['notes'];
-                    let notes = fileContent.get('notes');
-                    notes = notes.splice(orderNumber, 1);
-                    dispatch(applyFileContent(id, keys, notes));
-                }
-            },
-
-        */
+        onAddNote(note) {
+            dispatch(addNote(note));
+        },
         onTitleBlur({ value }) {
             dispatch(updateFileTitle({ title: value, id }));
         },
@@ -104,14 +97,16 @@ class MathPad extends Component {
         });
     }
 
-    handleAddNode(nodeType) {
-        const fileContent = this.props.fileContent;
-        const notes = fileContent.get('notes') || Immutable.fromJS([]);
-        const keys = ['notes', notes.count()];
-        const newValue = Immutable.fromJS({ type: nodeType });
-        this.props.onNoteApply({
-            keys,
-            newValue
+    handleAddNode(type) {
+        const {
+            onAddNote,
+            notes : { length : order},
+            file: { id: fileId }
+        } = this.props;
+        onAddNote({
+            type,
+            fileId,
+            order
         });
     }
 

@@ -1,5 +1,6 @@
 
 import fileStore from 'store/fileStore';
+import noteStore from 'store/noteStore';
 import timing from 'utils/timing';
 
 const api = {
@@ -19,6 +20,31 @@ const api = {
     },
     deleteFile(id) {
         fileStore.removeItem(id);
+    },
+    addNote(note) {
+        note.id = noteStore.getNextId();
+        note.title = '';
+        note.description = '';
+        noteStore.setItem(note);
+        return note;
+    },
+    updateNote(note) {
+        const oldNote = noteStore.getItem(note.id);
+        const newNote = Object.assign({}, oldNote, note);
+        noteStore.setItem(newNote);
+        return newNote;
+    },
+    transposeNotes(from, to) {
+        const fromNote = noteStore.getItem(from);
+        const toNote = noteStore.getItem(to);
+        const fromOrder = fromNote.order;
+        fromNote.order = toNote.order;
+        toNote.order = fromOrder;
+        noteStore.setItem(fromNote);
+        noteStore.setItem(toNote);
+    },
+    deleteNote(id) {
+        noteStore.removeItem(id);
     }
     /*
     ,
