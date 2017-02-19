@@ -2,12 +2,12 @@
 import React, { Component,  PropTypes } from 'react';
 import escape from 'html-escape';
 
-import './NoteListDescription.less';
+import './PadDescription.less';
 
 const KEY_ESCAPE = 27;
 var isExitViaEsc = false;
 
-class NoteListDescription extends Component {
+class PadDescription extends Component {
     static propTypes = {
         name: PropTypes.string,
         value: PropTypes.string
@@ -35,8 +35,7 @@ class NoteListDescription extends Component {
             isExitViaEsc = false;
         } else {
             this.props.onBlur({
-                name: this.props.name,
-                newValue: event.target.innerText
+                value: event.target.innerText
             });
         }
     }
@@ -60,4 +59,4 @@ class NoteListDescription extends Component {
 
 }
 
-export default NoteListDescription;
+export default PadDescription;

@@ -22,6 +22,26 @@ export const updateFile = (file) => {
     };
 };
 
+export const updateFileTitle = (file) => {
+    return (dispatch) => {
+        var newFile = api.updateFile(file);
+        dispatch({
+            type: appConstants.UPDATE_FILE_TITLE,
+            payload: newFile
+        });
+    };
+};
+
+export const updateFileDescription = (file) => {
+    return (dispatch) => {
+        var newFile = api.updateFile(file);
+        dispatch({
+            type: appConstants.UPDATE_FILE_DESCRIPTION,
+            payload: newFile
+        });
+    };
+};
+
 export const deleteFile = (id) => {
     return (dispatch) => {
         api.deleteFile(id);

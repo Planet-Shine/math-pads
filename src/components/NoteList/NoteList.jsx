@@ -2,10 +2,9 @@
 import React, { Component, PropTypes } from 'react';
 import {
     Note,
-    NoteListDescription,
-    NoteListHeader
+    PadDescription,
+    PadHeader
 }  from 'components';
-import appConstants from 'appConstants';
 
 import Immutable from 'immutable';
 import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc';
@@ -29,12 +28,11 @@ import './NoteList.less';
 class NoteList extends Component {
 
     static propTypes = {
+        title: PropTypes.string,
+        description: PropTypes.string,
         fileContent: PropTypes.object,
-        onHeaderBlur: PropTypes.func,
-        onDescriptionBlur: PropTypes.func,
-        onNoteApply: PropTypes.func,
-        onNoteReplace: PropTypes.func,
-        onDelete: PropTypes.func
+        onTitleBlur: PropTypes.func,
+        onDescriptionBlur: PropTypes.func
     };
 
     constructor() {
@@ -45,27 +43,6 @@ class NoteList extends Component {
     handleSortEnd({oldIndex, newIndex}) {
         this.props.onNoteReplace({ oldIndex, newIndex });
     }
-
-    /*
-
-     switch (item.get('type')) {
-     case appConstants.NOTE_SUM_TYPE:
-     case appConstants.NOTE_SUM_OF_PRODUCTS_TYPE:
-     case appConstants.NOTE_WAS_COME_LEAVE_BECOME_TYPE:
-     nodes.push(
-     <Note key={item.get('id')}
-     orderNumber={index}
-     data={item}
-     onApply={this.props.onNoteApply}
-     onDelete={this.props.onDelete}
-     />
-     );
-     return;
-     default :
-     return;
-     }
-
-    */
 
     renderNotes() {
         var items = (this.props
@@ -88,19 +65,15 @@ class NoteList extends Component {
     }
 
     render() {
+        const { title, description, onDescriptionBlur, onTitleBlur } = this.props;
+        // {this.renderNotes()}
         return (
             <div className="note-list">
-
-                <NoteListHeader value={this.props.fileContent.get('header')}
-                                name={'header'}
-                                onBlur={this.props.onHeaderBlur} />
-
-                <NoteListDescription value={this.props.fileContent.get('description')}
-                                     name={'description'}
-                                     onBlur={this.props.onDescriptionBlur} />
-
+                <PadHeader value={title}
+                           onBlur={onTitleBlur} />
+                <PadDescription value={description}
+                                onBlur={onDescriptionBlur} />
                 <div className="note-list__items-box">
-                    {this.renderNotes()}
                 </div>
             </div>
         );

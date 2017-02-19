@@ -54,7 +54,7 @@ class FileCalendar extends Component {
         month: PropTypes.object,
         displaied: PropTypes.bool,
         contentMarks: PropTypes.array,
-        today: PropTypes.object
+        today: PropTypes.string
     };
 
     constructor() {

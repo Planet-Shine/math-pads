@@ -5,51 +5,60 @@ import {
     AddNoteButtonList
 } from 'components';
 import { connect } from 'react-redux';
-import { applyFileContent } from 'reducers/file';
+import { updateFileTitle, updateFileDescription } from 'actions/files';
 import Immutable from 'immutable';
 
+const getFile = (files=Immutable.fromJS([]), id) => {
+    const currentFile = files.find(item => item.get('id') === id);
+    return currentFile.toJS();
+};
+
 function mapStateToProps(state, ownProps) {
-    var content;
-    if (state.file) {
-        let files = state.file.get('files');
-        let id = ownProps.id;
-        let currentFile = files.find(function (item) {
-            return item.get('id') === id;
-        });
-        if (currentFile) {
-            content = currentFile.get('content');
-        }
-    }
+    const file = getFile(state.files, ownProps.id);
+    const { title, description } = file;
     return {
-        fileContent: content || Immutable.fromJS({})
+        file: file,
+        title: title,
+        description: description
     };
 }
-function mapDispatchToProps(dispatch, ownProps) {
-
+function mapDispatchToProps(dispatch, { id }) {
     return {
-        onFieldBlur(targetOptions) {
-            var keys = [targetOptions.name],
-                value = targetOptions.newValue;
-            dispatch(applyFileContent(ownProps.id, keys, value));
+        /*
+
+            onFieldBlur(targetOptions) {
+                var keys = [targetOptions.name],
+                    value = targetOptions.newValue;
+                dispatch(applyFileContent(id, keys, value));
+            },
+            onNoteApply({ keys, newValue } = {}) {
+                dispatch(applyFileContent(id, keys, newValue));
+            },
+            onDelete({ orderNumber, fileContent }) {
+                if (isFinite(orderNumber)) {
+                    let keys = ['notes'];
+                    let notes = fileContent.get('notes');
+                    notes = notes.splice(orderNumber, 1);
+                    dispatch(applyFileContent(id, keys, notes));
+                }
+            },
+
+        */
+        onTitleBlur({ value }) {
+            dispatch(updateFileTitle({ title: value, id }));
         },
-        onNoteApply({ keys, newValue } = {}) {
-            dispatch(applyFileContent(ownProps.id, keys, newValue));
-        },
-        onDelete({ orderNumber, fileContent }) {
-            if (isFinite(orderNumber)) {
-                let keys = ['notes'];
-                let notes = fileContent.get('notes');
-                notes = notes.splice(orderNumber, 1);
-                dispatch(applyFileContent(ownProps.id, keys, notes));
-            }
+        onDescriptionBlur({ value }) {
+            dispatch(updateFileDescription({ description: value, id }));
         }
     };
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-class MathPadNoteList extends Component {
+class MathPad extends Component {
 
     static propTypes = {
+        onTitleBlur: PropTypes.func,
+        onDescriptionBlur: PropTypes.func,
         onFieldBlur : PropTypes.func,
         onNoteApply : PropTypes.func
     };
@@ -107,18 +116,26 @@ class MathPadNoteList extends Component {
     }
 
     render() {
+        const { title, description, onTitleBlur, onDescriptionBlur } = this.props;
+
+        /*
+
+             onNoteApply={this.props.onNoteApply}
+             onDelete={this.handleDeleteNote}
+             onNoteReplace={this.handleNoteReplace}
+
+         */
+
         return (
             <div>
-                <NoteList fileContent={this.props.fileContent}
-                          onHeaderBlur={this.props.onFieldBlur}
-                          onDescriptionBlur={this.props.onFieldBlur}
-                          onNoteApply={this.props.onNoteApply}
-                          onDelete={this.handleDeleteNote}
-                          onNoteReplace={this.handleNoteReplace} />
+                <NoteList title={title}
+                          description={description}
+                          onTitleBlur={onTitleBlur}
+                          onDescriptionBlur={onDescriptionBlur} />
                 <AddNoteButtonList onAddNote={this.handleAddNode} />
             </div>
         );
     }
 }
 
-export default MathPadNoteList;
+export default MathPad;

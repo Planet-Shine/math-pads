@@ -2,13 +2,13 @@
 import React, { Component,  PropTypes } from 'react';
 import escape from 'html-escape';
 
-import './NoteListHeader.less';
+import './PadHeader.less';
 
 const KEY_ENTER = 13;
 const KEY_ESCAPE = 27;
 var isExitViaEsc = false;
 
-class NoteListHeader extends Component {
+class PadHeader extends Component {
 
     static propTypes = {
         name: PropTypes.string,
@@ -38,8 +38,7 @@ class NoteListHeader extends Component {
             isExitViaEsc = false;
         } else {
             this.props.onBlur({
-                name: this.props.name,
-                newValue: event.target.innerText
+                value: event.target.innerText
             });
         }
     }
@@ -63,4 +62,4 @@ class NoteListHeader extends Component {
 
 }
 
-export default NoteListHeader;
+export default PadHeader;

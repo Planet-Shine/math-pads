@@ -6,15 +6,16 @@ const api = {
     addFile(file) {
         file.id = fileStore.getNextId();
         file.createDate = timing.toDateString(new Date());
-        file.content = {};
+        file.title = '';
+        file.description = '';
         fileStore.setItem(file);
         return file;
     },
     updateFile(file) {
-        var oldFile = fileStore.getItem(file.id);
-        file = Object.assign(oldFile, file);
-        fileStore.setItem(file);
-        return file;
+        const oldFile = fileStore.getItem(file.id);
+        const newFile = Object.assign({}, oldFile, file);
+        fileStore.setItem(newFile);
+        return newFile;
     },
     deleteFile(id) {
         fileStore.removeItem(id);

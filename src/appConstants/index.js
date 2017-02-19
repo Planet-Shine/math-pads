@@ -14,6 +14,8 @@ export default keyMirror({
     SET_CALENDAR_DISPLAY: null,
     SET_EDITING_ID: null,
     SET_IS_FILE_ADDING: null,
+    UPDATE_FILE_TITLE: null,
+    UPDATE_FILE_DESCRIPTION: null,
     NOTE_SUM_TYPE: null,
     NOTE_SUM_OF_PRODUCTS_TYPE: null,
     NOTE_WAS_COME_LEAVE_BECOME_TYPE: null,

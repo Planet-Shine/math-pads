@@ -12,8 +12,8 @@ import {
 } from 'components';
 
 import {
-    MathPadNoteList
-} from 'components';
+    MathPad
+} from 'containers';
 
 import { Link } from 'react-router';
 
@@ -47,7 +47,7 @@ class PadPage extends Component {
                     {
                             isFinite(id)
                         ?
-                            <MathPadNoteList id={id} />
+                            <MathPad id={id} />
                         :
                             <PageErrorMessage>
                                  Идентификатор файла должен быть числом.
