@@ -32,13 +32,13 @@ const filterFiles = (files, { selectedDate, searchQuery }) => {
 const mapStateToProps =
     ({
         fileList=Immutable.formJS({}),
-        files=Immutable.formJS({files:[]}),
+        files=Immutable.formJS([]),
         fileVisibilityFilter=Immutable.formJS({})
     }) =>
     ({
         addFormDisplayed: fileList.get('addFormDisplayed'),
         editingId: fileList.get('editingId'),
-        list: filterFiles(files.get('files'), fileVisibilityFilter.toJS()).toJS(),
+        list: filterFiles(files, fileVisibilityFilter.toJS()).toJS(),
         isFileAdding: fileList.get('isFileAdding')
     });
 const mapDispatchToProps =
@@ -100,11 +100,10 @@ class MathPadFileList extends Component {
     render() {
         const {
             list,
-            addFormDisplayed,
+            isFileAdding,
             onAddFile,
             onAddingStart,
-            onAddingCancel,
-            addFileFormDisplayed
+            onAddingCancel
         } = this.props;
         return (
             <div>
@@ -116,7 +115,7 @@ class MathPadFileList extends Component {
                             :
                         <NoFilesCaption />
                     }
-                    {addFormDisplayed &&
+                    {isFileAdding &&
                         <File key={'createFileForm'}
                               isEditing={true}
                               onEditingStart={onAddingStart}
@@ -124,7 +123,7 @@ class MathPadFileList extends Component {
                               onEdit={onAddFile} />
                     }
                 </FileList>
-                {!addFileFormDisplayed &&
+                {!isFileAdding &&
                     <AddButton onClick={onAddingStart} />}
             </div>
         );

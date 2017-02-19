@@ -24,7 +24,7 @@ function mapStateToProps(state, ownProps) {
         fileContent: content || Immutable.fromJS({})
     };
 }
-function mapDispatchToProps(dispatch, ownProps, newProps, goodProps) {
+function mapDispatchToProps(dispatch, ownProps) {
 
     return {
         onFieldBlur(targetOptions) {

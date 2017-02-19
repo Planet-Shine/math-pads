@@ -33,9 +33,10 @@ class File extends Component {
         onDelete(id);
     }
     handleEdit(event) {
-        const { onEdit, id, name } = this.props;
+        const { onEdit, id } = this.props;
+        const { value } = this.nameInput;
         event.preventDefault();
-        onEdit({id, name});
+        onEdit({id, name: value});
     }
     handleEditingCancel() {
         const { onEditingCancel } = this.props;

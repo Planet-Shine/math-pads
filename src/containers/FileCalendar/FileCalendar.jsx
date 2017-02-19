@@ -22,10 +22,7 @@ const mapStateToProps = (state) => {
             contentMarks:
                 state.files
                     ?
-                state.files.get('files').map(
-                    file =>
-                    timing.toDate(file.get('createDate'))
-                ).toJS()
+                state.files.map(file => file.get('createDate')).toJS()
                     :
                 [],
             today: state.time.get('today')

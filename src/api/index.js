@@ -4,9 +4,9 @@ import timing from 'utils/timing';
 
 const api = {
     addFile(file) {
-        file.set('id', fileStore.getNextId());
-        file.set('createDate', timing.toDateString(new Date()));
-        file.set('content', {});
+        file.id = fileStore.getNextId();
+        file.createDate = timing.toDateString(new Date());
+        file.content = {};
         fileStore.setItem(file);
         return file;
     },

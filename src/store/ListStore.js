@@ -1,6 +1,4 @@
 
-import Immutable from 'immutable';
-
 class ListStore {
     constructor(storePrefix) {
         this.STORE_PREFIX = storePrefix;
@@ -32,7 +30,7 @@ class ListStore {
     setItem(item) {
         const id = item.id;
         try {
-            localStorage.setItem(this.getName(id), JSON.stringify(item.toJS()));
+            localStorage.setItem(this.getName(id), JSON.stringify(item));
         } catch (error) {
             this.jsStore.push(item);
         }
@@ -52,13 +50,12 @@ class ListStore {
         if (!result) {
             result = this.jsStore.find(item => item.id === id);
         }
-        return Immutable.fromJS(result);
+        return result;
     }
     getAll() {
         const ids = this.getIds().filter(id => id);
         const items = ids.map(id => this.getItem(id));
-        items.concat(this.jsStore);
-        return items;
+        return items.concat(this.jsStore);
     }
 }
 

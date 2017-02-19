@@ -8,7 +8,7 @@ const defaultState = Immutable.fromJS({
     'currentMonth': new Date()
 });
 
-function fileCalendar (state, action) {
+function fileCalendar (state=defaultState, action) {
     switch (action.type) {
         case appConstants.SET_CALENDAR_DISPLAY:
             return state.set('displaied', action.payload);
@@ -17,7 +17,7 @@ function fileCalendar (state, action) {
         case appConstants.SET_CURRENT_DATE:
             return state.set('currentDate', action.payload);
         default:
-            return state || defaultState;
+            return state;
     }
 }
 export default fileCalendar;

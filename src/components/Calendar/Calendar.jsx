@@ -63,10 +63,7 @@ class Calendar extends Component {
     }
 
     render () {
-        var currentMonth = this.props.month,
-            currentDate = this.props.date,
-            today = this.props.today,
-            contentMarks = this.props.contentMarks,
+        var { month: currentMonth, date: currentDate, today, contentMarks } = this.props,
             nodes = [],
             dates,
             monthNumber,
@@ -77,10 +74,11 @@ class Calendar extends Component {
             year = currentMonth.getFullYear();
             dates = this.getMonthDates(currentMonth);
             nodes = dates.map((date, index) => {
-                var isOtherMonth = !timing.isEqualMonths(date, currentMonth),
-                    isCurrentDate = !!currentDate && timing.isEqualDates(date, currentDate),
-                    isToday = timing.isEqualDates(date, today),
-                    isThereContent = !!contentMarks && !!~contentMarks.indexOf(timing.toDateString(date));
+                var dateString = timing.toDateString(date),
+                    isOtherMonth = !timing.isEqualMonths(date, currentMonth),
+                    isCurrentDate = !!currentDate && dateString === currentDate,
+                    isToday = dateString === today,
+                    isThereContent = !!contentMarks && !!~contentMarks.indexOf(dateString);
                 return (
                     <DateItem key={index}
                               date={date}
@@ -88,7 +86,7 @@ class Calendar extends Component {
                               isToday={isToday}
                               isThereContent={isThereContent}
                               onClick={(event) => {
-                                this.handleDateClick(event, date);
+                                this.handleDateClick(event, dateString);
                               }}
                               isOtherMonth={isOtherMonth} />
                 );
