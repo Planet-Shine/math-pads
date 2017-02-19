@@ -1,9 +1,9 @@
 
 import appConstants from 'appConstants';
 
-export const setSearchQuery = (searchQuery) => {
+export const setSearchQuery = (newSearchQuery) => {
     return {
         type: appConstants.SET_SEARCH_QUERY,
-        payload: searchQuery
+        payload: newSearchQuery
     };
 };

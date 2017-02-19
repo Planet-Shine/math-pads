@@ -1,6 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
-import { SearchFileForm } from 'components';
+import { SearchFileForm } from 'containers';
 
 import './FileList.less';
 

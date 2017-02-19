@@ -21,6 +21,9 @@ import { getDefaultState } from 'reducers/file';
 
 // Создание хранилища и истории.
 const preloadedState = {
+    time: Immutable.fromJS({
+        today: new Date()
+    }),
     files: Immutable.fromJS({}).set('files', Immutable.fromJS(fileStore.getAll()))
 };
 const reduxRouterMiddleware = routerMiddleware(hashHistory);

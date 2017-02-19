@@ -9,7 +9,7 @@ import timing from 'utils/timing';
 import {
     currentDate,
     currentMonth
-} from 'reducers/fileCalendar';
+} from 'actions/fileCalendar';
 
 
 const mapStateToProps = (state) => {

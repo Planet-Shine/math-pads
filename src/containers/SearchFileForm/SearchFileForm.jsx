@@ -1,14 +1,24 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { searchQuery } from 'reducers/file';
+import { setSearchQuery } from 'actions/fileVisibilityFilter';
 import { SearchForm } from 'components';
 
 function mapDispatchToProps(dispatch) {
     return {
         onSearchChange(newSearchQuery) {
-            dispatch(searchQuery(newSearchQuery));
+            dispatch(setSearchQuery(newSearchQuery));
         }
     };
 }
-export default connect(null, mapDispatchToProps)(SearchForm);
+
+@connect(null, mapDispatchToProps)
+class SearchFileForm extends Component {
+    render() {
+        return (
+            <SearchForm {...this.props} />
+        );
+    }
+}
+
+export default SearchFileForm;

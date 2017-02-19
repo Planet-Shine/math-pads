@@ -72,7 +72,7 @@ class MathPadFileList extends Component {
     static propTypes = {
         addFormDisplayed: PropTypes.bool,
         editingId: PropTypes.number,
-        list: PropTypes.object
+        list: PropTypes.array
     };
     renderFiles() {
         const {

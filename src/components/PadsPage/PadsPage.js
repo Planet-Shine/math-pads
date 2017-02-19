@@ -16,7 +16,7 @@ import {
     CalendarButton,
     FileCalendar,
     MathPadFileList
-} from 'components';
+} from 'containers';
 
 class PadsPage extends Component {
 

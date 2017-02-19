@@ -6,7 +6,7 @@ import {
     AboutPage,
     PadsPage,
     PadPage
-} from 'containers';
+} from 'components';
 
 export default () => {
     return (
