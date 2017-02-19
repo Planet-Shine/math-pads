@@ -9,8 +9,8 @@ var isExitViaEsc = false;
 
 class PadDescription extends Component {
     static propTypes = {
-        name: PropTypes.string,
-        value: PropTypes.string
+        value: PropTypes.string,
+        onBlur: PropTypes.func
     };
 
     constructor() {

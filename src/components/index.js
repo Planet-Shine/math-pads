@@ -8,7 +8,6 @@ export Header from './Header/Header';
 export MathPadsLayout from './MathPadsLayout/MathPadsLayout';
 export Menu from './Menu/Menu';
 export MenuItem from './MenuItem/MenuItem';
-export Note from './Note/Note';
 export NoteList from './NoteList/NoteList';
 export SearchForm from './SearchForm/SearchForm';
 export PadsPage from './PadsPage/PadsPage';

@@ -100,18 +100,19 @@ class MathPad extends Component {
     handleAddNode(type) {
         const {
             onAddNote,
-            notes : { length : order},
+            notes : notes,
             file: { id: fileId }
         } = this.props;
+        const maxOrder = Math.max.apply(null, notes.map(note => note.order));
         onAddNote({
             type,
             fileId,
-            order
+            order: maxOrder + 1
         });
     }
 
     render() {
-        const { title, description, onTitleBlur, onDescriptionBlur } = this.props;
+        const { title, description, onTitleBlur, onDescriptionBlur, notes } = this.props;
 
         /*
 
@@ -126,7 +127,8 @@ class MathPad extends Component {
                 <NoteList title={title}
                           description={description}
                           onTitleBlur={onTitleBlur}
-                          onDescriptionBlur={onDescriptionBlur} />
+                          onDescriptionBlur={onDescriptionBlur}
+                          notes={notes} />
                 <AddNoteButtonList onAddNote={this.handleAddNode} />
             </div>
         );

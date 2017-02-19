@@ -11,8 +11,8 @@ var isExitViaEsc = false;
 class PadHeader extends Component {
 
     static propTypes = {
-        name: PropTypes.string,
-        value: PropTypes.string
+        value: PropTypes.string,
+        onBlur: PropTypes.func
     };
 
     constructor() {

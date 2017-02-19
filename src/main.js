@@ -13,6 +13,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from 'reducers';
 import Immutable from 'immutable';
 import fileStore from 'store/fileStore';
+import noteStore from 'store/noteStore';
 import timing from 'utils/Timing';
 
 // Подключение библиотек bootstrap.
@@ -24,7 +25,8 @@ const preloadedState = {
     time: Immutable.fromJS({
         today: timing.toDateString(new Date())
     }),
-    files: Immutable.fromJS(fileStore.getAll())
+    files: Immutable.fromJS(fileStore.getAll()),
+    notes: Immutable.fromJS(noteStore.getAll())
 };
 const reduxRouterMiddleware = routerMiddleware(hashHistory);
 const middleware = [reduxRouterMiddleware, thunk];
