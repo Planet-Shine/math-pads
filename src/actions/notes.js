@@ -56,6 +56,15 @@ export const transposeNotes = (from, to) => {
     };
 };
 
+export const updateNoteCollapsed = (collapsed) => {
+    return dispatch => {
+        dispatch({
+            type: appConstants.UPDATE_NOTE_COLLAPSED,
+            payload: collapsed
+        });
+    };
+};
+
 export const deleteNote = (id) => {
     return dispatch => {
         api.deleteNote(id);

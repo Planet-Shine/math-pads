@@ -12,11 +12,8 @@ const DragHandle = SortableHandle(() =>
 
 class NoteBox extends Component {
 
-    state = {
-        collapsed: false
-    };
-
     static propTypes = {
+        onCollapsedChange: PropTypes.func,
         onDeleteClick: PropTypes.func,
         orderNumber: PropTypes.number,
         name: PropTypes.string
@@ -28,38 +25,43 @@ class NoteBox extends Component {
     }
 
     handleCollapseClick() {
-        this.setState({
-            collapsed: !this.state.collapsed
-        });
+        const { onCollapsedChange, collapsed } = this.props;
+        onCollapsedChange(!collapsed);
     }
 
    render() {
-        return (
-            <div className="note-box">
-                <div className="note-box__header">
-                    <div className="note-box__order-number">
-                        {this.props.orderNumber}
-                    </div>
-                    <div className="note-box__caption">
-                        {this.props.name}
-                    </div>
-                    <DragHandle />
-                    <button tabIndex="-1" className="note-box__delete btn btn-danger btn-sm" onClick={this.props.onDeleteClick}>
-                        <span className="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
-                <div className={classNames("note-box__content", this.state.collapsed && "note-box__content_collapsed")}>
-                    <div className="note-box__note">
-                        {this.props.children}
-                    </div>
-                </div>
-                <div className="note-box__footer-box">
-                    <button className="note-box__collapse btn btn-default btn-sm" onClick={this.handleCollapseClick}>
-                        <span className={classNames("glyphicon", this.state.collapsed ? "glyphicon-chevron-down" : "glyphicon-chevron-up")}></span>
-                    </button>
-                </div>
-            </div>
-        );
+       const {
+           orderNumber,
+           name,
+           onDeleteClick,
+           collapsed
+       } = this.props;
+       return (
+           <div className="note-box">
+               <div className="note-box__header">
+                   <div className="note-box__order-number">
+                       {orderNumber}
+                   </div>
+                   <div className="note-box__caption">
+                       {name}
+                   </div>
+                   <DragHandle />
+                   <button tabIndex="-1" className="note-box__delete btn btn-danger btn-sm" onClick={onDeleteClick}>
+                       <span className="glyphicon glyphicon-remove"></span>
+                   </button>
+               </div>
+               <div className={classNames("note-box__content", collapsed && "note-box__content_collapsed")}>
+                   <div className="note-box__note">
+                       {this.props.children}
+                   </div>
+               </div>
+               <div className="note-box__footer-box">
+                   <button className="note-box__collapse btn btn-default btn-sm" onClick={this.handleCollapseClick}>
+                       <span className={classNames("glyphicon", collapsed ? "glyphicon-chevron-down" : "glyphicon-chevron-up")}></span>
+                   </button>
+               </div>
+           </div>
+       );
     }
 }
 

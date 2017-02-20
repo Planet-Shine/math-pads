@@ -32,6 +32,17 @@ const notes = (state=defaultState, action) => {
                     note.set('description', action.payload.description)
                 );
             }());
+        case appConstants.UPDATE_NOTE_COLLAPSED:
+            return (function () {
+                const index = state.findIndex(
+                    note =>
+                    note.get('id') === action.payload.id
+                );
+                return state.update(index,
+                    note =>
+                    note.set('collapsed', action.payload.collapsed)
+                );
+            }());
         case appConstants.DELETE_NOTE:
             return (function () {
                 const index = state.findIndex(

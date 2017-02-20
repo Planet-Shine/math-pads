@@ -19,6 +19,7 @@ export default keyMirror({
     ADD_NOTE: null,
     UPDATE_NOTE_TITLE: null,
     UPDATE_NOTE_DESCRIPTION: null,
+    UPDATE_NOTE_COLLAPSED: null,
     DELETE_NOTE: null,
     SET_DIVISIONS: null,
     ADD_DIVISION: null,

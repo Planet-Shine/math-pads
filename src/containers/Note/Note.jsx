@@ -16,7 +16,8 @@ import {
 import {
     deleteNote,
     updateNoteTitle,
-    updateNoteDescription
+    updateNoteDescription,
+    updateNoteCollapsed
 } from 'actions/notes';
 
 import { connect } from 'react-redux';
@@ -28,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps =
-    dispatch =>
+    (dispatch, ownProps) =>
     ({
         onDelete(id) {
             dispatch(deleteNote(id));
@@ -38,6 +39,9 @@ const mapDispatchToProps =
         },
         onDescriptionBlur(note) {
             dispatch(updateNoteDescription(note));
+        },
+        onCollapsedChange(collapsed) {
+            dispatch(updateNoteCollapsed({collapsed, id: ownProps.id}));
         }
     });
 
@@ -94,7 +98,9 @@ class Note extends Component {
             title,
             description,
             type,
-            index
+            index,
+            collapsed,
+            onCollapsedChange
         } = this.props;
         const {
             handleDeleteClick,
@@ -105,7 +111,9 @@ class Note extends Component {
         return (
             <NoteBox name={noteTypeCaptions[type]}
                      orderNumber={index + 1}
-                     onDeleteClick={handleDeleteClick}>
+                     onDeleteClick={handleDeleteClick}
+                     collapsed={collapsed}
+                     onCollapsedChange={onCollapsedChange}>
                 <PadHeader value={title}
                            onBlur={handleTitleBlur} />
                 <PadDescription value={description}
