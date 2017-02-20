@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 
 import './MathFormDivision.less';
-import Immutable from 'immutable';
 import escape from 'html-escape';
 import classNames from 'classnames';
 
@@ -18,13 +17,21 @@ var isExitViaEsc = false;
 
 class MathFormDivision extends Component {
 
-    state = {
-        currentComputedOptions: null
+    static propTypes = {
+        dividend: PropTypes.string,
+        divider: PropTypes.string,
+        result: PropTypes.string,
+        remainder: PropTypes.string,
+        isIntegerDivision: PropTypes.bool,
+        onDividendBlur: PropTypes.func,
+        onDividerBlur: PropTypes.func,
+        onResultBlur: PropTypes.func,
+        onRemainderBlur: PropTypes.func,
+        onIsIntegerDivisionChange: PropTypes.func
     };
 
-    propTypes = {
-        data: PropTypes.object,
-        onApply: PropTypes.func
+    state = {
+        currentComputedOptions: null
     };
 
     constructor() {
@@ -33,7 +40,7 @@ class MathFormDivision extends Component {
         this.handleDividerBlur = this.handleDividerBlur.bind(this);
         this.handleResultBlur = this.handleResultBlur.bind(this);
         this.handleRemainderBlur = this.handleRemainderBlur.bind(this);
-        this.handleIntegerDevisionClick = this.handleIntegerDevisionClick.bind(this);
+        this.handleIsIntegerDivisionClick = this.handleIsIntegerDivisionClick.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
@@ -48,23 +55,6 @@ class MathFormDivision extends Component {
         }
     }
 
-    handleApply(applyOptions) {
-        const data = this.props.data;
-        const { dividend, divider, result, remainder, isIntegerDivision } = (this.props.data || Immutable.fromJS({})).toJS();
-        var newValue = Object.assign({
-            dividend,
-            divider,
-            result,
-            remainder,
-            isIntegerDivision
-        }, applyOptions);
-        newValue = Immutable.fromJS(newValue);
-        newValue = data.merge(newValue);
-        this.props.onApply({
-            name: [],
-            newValue
-        });
-    }
 
     handleDividendBlur(event) {
         var dividend = event.target.innerText,
@@ -73,8 +63,9 @@ class MathFormDivision extends Component {
             event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
-            this.handleApply({
-                dividend
+            this.props.onDividendBlur({
+                id: this.props.id,
+                value: dividend
             });
         }
     }
@@ -86,8 +77,9 @@ class MathFormDivision extends Component {
             event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
-            this.handleApply({
-                divider
+            this.props.onDividerBlur({
+                id: this.props.id,
+                value: divider
             });
         }
     }
@@ -99,8 +91,9 @@ class MathFormDivision extends Component {
             event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
-            this.handleApply({
-                result
+            this.props.onResultBlur({
+                id: this.props.id,
+                value: result
             });
         }
     }
@@ -112,15 +105,17 @@ class MathFormDivision extends Component {
             event.target.innerText = cachedResult.value;
             isExitViaEsc = false;
         } else {
-            this.handleApply({
-                remainder
+            this.props.onRemainderBlur({
+                id: this.props.id,
+                value: remainder
             });
         }
     }
 
-    handleIntegerDevisionClick({ checked }) {
-        this.handleApply({
-            isIntegerDivision: checked
+    handleIsIntegerDivisionClick({ checked }) {
+        this.props.onIsIntegerDivisionChange({
+            id: this.props.id,
+            value: checked
         });
     }
 
@@ -231,7 +226,13 @@ class MathFormDivision extends Component {
     }
 
     culcCurrentComputedOptions(nextProps) {
-        var { dividend, divider, result, remainder, isIntegerDivision } = ((nextProps || this.props).data || Immutable.fromJS({})).toJS();
+        var {
+            dividend,
+            divider,
+            result,
+            remainder,
+            isIntegerDivision
+        } = nextProps || this.props;
         var newValue = this.getCalculatedResult({ dividend, divider, result, remainder, isIntegerDivision });
         this.setState({
             currentComputedOptions: newValue
@@ -252,12 +253,18 @@ class MathFormDivision extends Component {
     }
 
     render() {
-        const { dividend, divider, result, remainder, isIntegerDivision } = this.state.currentComputedOptions;
+        const {
+            dividend,
+            divider,
+            result,
+            remainder,
+            isIntegerDivision
+        } = this.state.currentComputedOptions;
         return(
             <div className="math-form-division">
                 <div className="math-form-division__checkbox-box">
                     <Checkbox checked={isIntegerDivision}
-                              onClick={this.handleIntegerDevisionClick} />
+                              onClick={this.handleIsIntegerDivisionClick} />
                 </div>
                 <div className="math-form-division__checkbox-hint">
                     Использовать деление нацело

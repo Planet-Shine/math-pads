@@ -7,6 +7,7 @@ import fileVisibilityFilter from './fileVisabilityFilter.js';
 import time from './time';
 import fileList from './fileList';
 import notes from './notes';
+import divisions from './divisions';
 
 export default combineReducers({
     routing : routerReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
     fileVisibilityFilter,
     fileList,
     time,
-    notes
+    notes,
+    divisions
 });

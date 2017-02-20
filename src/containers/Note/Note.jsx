@@ -7,9 +7,11 @@ import {
     NoteBox,
     PadHeader,
     PadDescription,
-    MathFormSum,
-    MathFormDivision
+    MathFormSum
 } from 'components';
+import {
+    MathNoteFormDivision
+} from 'containers';
 import {
     deleteNote,
     updateNoteTitle,
@@ -71,7 +73,7 @@ class Note extends Component {
     }
 
     renderMathForm() {
-        const { type } = this.props;
+        const { id, type } = this.props;
         switch (type) {
             case appConstants.NOTE_SUM_TYPE:
                 return (
@@ -80,8 +82,7 @@ class Note extends Component {
                 );
             case appConstants.NOTE_DIVISION_WITH_A_REMAINDER_TYPE:
                 return (
-                    <MathFormDivision data={data}
-                                      onApply={this.handleApply} />
+                    <MathNoteFormDivision noteId={id} />
                 );
             default:
                 return (
@@ -103,7 +104,6 @@ class Note extends Component {
             handleDescriptionBlur
         } = this;
 
-        // {this.renderMathForm()}
 
         return (
             <NoteBox name={noteTypeCaptions[type]}
@@ -114,6 +114,7 @@ class Note extends Component {
                                onBlur={handleTitleBlur} />
                     <PadDescription value={description}
                                     onBlur={handleDescriptionBlur} />
+                    {this.renderMathForm()}
                 </div>
             </NoteBox>
         );

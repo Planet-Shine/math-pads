@@ -26,6 +26,6 @@ export NoteBox from './NoteBox/NoteBox';
 export MathFormSum from './MathFormSum/MathFormSum';
 export MathFormSumRow from './MathFormSum/MathFormSumRow';
 export TwoOperatorSwitcher from './TwoOperatorSwitcher/TwoOperatorSwitcher';
-export MathFormDivision from './MathFormDivision/MathFormDivision';
 export Checkbox from './Checkbox/Checkbox';
 export NavbarHeader from './NavbarHeader/NavbarHeader';
+export MathFormDivision from './MathFormDivision/MathFormDivision';

@@ -1,6 +1,7 @@
 
 import fileStore from 'store/fileStore';
 import noteStore from 'store/noteStore';
+import divisionStore from 'store/divisionStore';
 import timing from 'utils/timing';
 
 const api = {
@@ -74,26 +75,51 @@ const api = {
     },
     deleteNote(id) {
         noteStore.removeItem(id);
+        api.deleteAllFormsByNoteId(id);
         // todo : Удяляем связанные формы.
+    },
+    deleteAllFormsByNoteId(noteId) {
+        const divisions = api.getAllDivisionsByNoteId(noteId);
+        divisions.forEach(
+            division =>
+            api.deleteDivision(division.id)
+        );
+        // todo: sumItem
+    },
+    getAllDivisionsByNoteId(noteId) {
+        return divisionStore
+            .getAll()
+            .filter(
+                division =>
+                division.noteId === noteId
+            );
+    },
+    addDivision(division) {
+        division.id = divisionStore.getNextId();
+        division.dividend = '';
+        division.divider = '';
+        division.result = '';
+        division.remainder = '';
+        division.isIntegerDivision  = false;
+        divisionStore.setItem(division);
+        return division;
+    },
+    updateDivision(division) {
+        const oldDivision = divisionStore.getItem(division.id);
+        const newDivision = Object.assign({}, oldDivision, division);
+        divisionStore.setItem(newDivision);
+        return newDivision;
+    },
+    deleteDivision(id) {
+        divisionStore.removeItem(id);
+    },
+    getAllDivisionsByFileId(fileId) {
+        const divisions = api.getAllOrderedNotesByFileId(fileId)
+            .reduce((result, note) => {
+                return result.concat(api.getAllDivisionsByNoteId(note.id));
+            }, []);
+        return divisions;
     }
-    /*
-    ,
-    applyFileContent(id, keys, value) {
-        var oldItem = fileStore.getItem(id),
-            fileOptions = {};
-        if (oldItem) {
-            if (value instanceof Immutable.Map || value instanceof Immutable.List) {
-                value = value.toJS();
-            }
-            keyAssigner.assignTo(oldItem.content, keys, value);
-            fileOptions = Object.assign({}, oldItem, fileOptions);
-            fileStore.setItem(fileOptions);
-            return Promise.resolve(fileOptions);
-        } else {
-            return Promise.reject(new Error('File not found'));
-        }
-    }
-    */
 };
 
 export default api;

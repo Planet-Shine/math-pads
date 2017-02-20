@@ -5,3 +5,4 @@ export MathPadFileList from './MathPadFileList/MathPadFileList';
 export SearchFileForm from './SearchFileForm/SearchFileForm';
 export MathPad from './MathPad/MathPad';
 export Note from './Note/Note';
+export MathNoteFormDivision from './MathNoteFormDivision/MathNoteFormDivision';

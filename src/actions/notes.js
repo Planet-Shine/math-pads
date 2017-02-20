@@ -1,10 +1,12 @@
 
 import appConstants from 'appConstants';
 import api from 'api';
+import { setDivisions } from 'actions/divisions';
 
 
 export const setNotes = (fileId) => {
     return dispatch => {
+        dispatch(setDivisions(fileId));
         var notes = api.getAllOrderedNotesByFileId(fileId);
         dispatch({
             type: appConstants.SET_NOTES,
