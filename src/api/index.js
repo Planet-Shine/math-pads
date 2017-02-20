@@ -20,6 +20,8 @@ const api = {
     },
     deleteFile(id) {
         fileStore.removeItem(id);
+        api.getAllOrderedNotesByFileId(id)
+           .forEach(note => api.deleteNote(note.id));
     },
     addNote(note) {
         note.id = noteStore.getNextId();
@@ -39,7 +41,8 @@ const api = {
         const fileId = fromNote.fileId;
         const notes = api.getAllOrderedNotesByFileId(fileId);
         function arrayMove(oldIndex, newIndex, notes) {
-            var oldNote = notes[oldIndex];
+            const oldNote = notes[oldIndex];
+            const newOrder = notes[newIndex].order;
             if (oldIndex > newIndex) {
                 for (let index = newIndex; index < oldIndex; index++) {
                     notes[index].order = notes[index+1].order;
@@ -51,7 +54,7 @@ const api = {
                     noteStore.setItem(notes[index]);
                 }
             }
-            oldNote.order = notes[newIndex].order;
+            oldNote.order = newOrder;
             noteStore.setItem(oldNote);
         }
         arrayMove(from.index, to.index, notes);
@@ -59,10 +62,19 @@ const api = {
     getAllOrderedNotesByFileId(fileId) {
         return noteStore.getAll()
             .filter(note => note.fileId === fileId)
-            .sort(note => note.order);
+            .sort((note1, note2) => {
+                if (note1.order < note2.order) {
+                    return -1;
+                }
+                if (note1.order > note2.order) {
+                    return 1;
+                }
+                return 0;
+            });
     },
     deleteNote(id) {
         noteStore.removeItem(id);
+        // todo : Удяляем связанные формы.
     }
     /*
     ,

@@ -95,11 +95,17 @@ class MathPad extends Component {
             notes : notes,
             file: { id: fileId }
         } = this.props;
-        const maxOrder = Math.max.apply(null, notes.map(note => note.order));
+        var nextOrder = Math.max.apply(null, notes.map(note => note.order));
+        if (!isFinite(nextOrder)) {
+            nextOrder = 0;
+        } else {
+            nextOrder++;
+        }
+        console.log(nextOrder);
         onAddNote({
             type,
             fileId,
-            order: maxOrder + 1
+            order: nextOrder
         });
     }
 

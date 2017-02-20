@@ -45,6 +45,10 @@ const notes = (state=defaultState, action) => {
                 function arrayMove(oldIndex, newIndex, notes) {
                     var oldNote = notes.get(oldIndex),
                         note;
+                    oldNote = oldNote.set(
+                        'order',
+                        notes.get(newIndex).get('order')
+                    );
                     if (oldIndex > newIndex) {
                         for (let index = oldIndex; index > newIndex; index--) {
                             note = notes.get(index - 1);
@@ -76,10 +80,6 @@ const notes = (state=defaultState, action) => {
                             );
                         }
                     }
-                    oldNote = oldNote.set(
-                        'order',
-                        notes.get(newIndex).get('order')
-                    );
                     return notes.set(newIndex, oldNote);
                 }
                 return arrayMove(action.payload.from.index, action.payload.to.index, state);
