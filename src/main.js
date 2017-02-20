@@ -25,8 +25,7 @@ const preloadedState = {
     time: Immutable.fromJS({
         today: timing.toDateString(new Date())
     }),
-    files: Immutable.fromJS(fileStore.getAll()),
-    notes: Immutable.fromJS(noteStore.getAll())
+    files: Immutable.fromJS(fileStore.getAll())
 };
 const reduxRouterMiddleware = routerMiddleware(hashHistory);
 const middleware = [reduxRouterMiddleware, thunk];

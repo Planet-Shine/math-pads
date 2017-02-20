@@ -15,6 +15,7 @@ export default keyMirror({
     SET_IS_FILE_ADDING: null,
     UPDATE_FILE_TITLE: null,
     UPDATE_FILE_DESCRIPTION: null,
+    SET_NOTES: null,
     ADD_NOTE: null,
     UPDATE_NOTE_TITLE: null,
     UPDATE_NOTE_DESCRIPTION: null,

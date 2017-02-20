@@ -6,6 +6,8 @@ const defaultState = Immutable.fromJS([]);
 
 const notes = (state=defaultState, action) => {
     switch (action.type) {
+        case appConstants.SET_NOTES:
+            return Immutable.fromJS(action.payload);
         case appConstants.ADD_NOTE:
             return state.push(Immutable.fromJS(action.payload));
         case appConstants.UPDATE_NOTE_TITLE:
@@ -40,17 +42,47 @@ const notes = (state=defaultState, action) => {
             }());
         case appConstants.TRANSPOSE_NOTES:
             return (function () {
-                const from = state.findIndex(
-                    note =>
-                    note.get('id') === action.payload.from
-                );
-                const to = state.findIndex(
-                    note =>
-                    note.get('id') === action.payload.to
-                );
-                const fromValue = state.get(from);
-                state = state.set(from, state.get(to));
-                return state.set(to, fromValue);
+                function arrayMove(oldIndex, newIndex, notes) {
+                    var oldNote = notes.get(oldIndex),
+                        note;
+                    if (oldIndex > newIndex) {
+                        for (let index = oldIndex; index > newIndex; index--) {
+                            note = notes.get(index - 1);
+                            notes = notes.set(index, note);
+                        }
+                        for (let index = newIndex; index < oldIndex; index++) {
+                            notes.set(
+                                index,
+                                note.set(
+                                    'order',
+                                    notes.get(index + 1)
+                                        .get('order')
+                                )
+                            );
+                        }
+                    } else {
+                        for (let index = oldIndex; index < newIndex; index++) {
+                            note = notes.get(index + 1);
+                            notes = notes.set(index, note);
+                        }
+                        for (let index = newIndex; index > oldIndex; index--) {
+                            notes.set(
+                                index,
+                                note.set(
+                                    'order',
+                                    notes.get(index - 1)
+                                        .get('order')
+                                )
+                            );
+                        }
+                    }
+                    oldNote = oldNote.set(
+                        'order',
+                        notes.get(newIndex).get('order')
+                    );
+                    return notes.set(newIndex, oldNote);
+                }
+                return arrayMove(action.payload.from.index, action.payload.to.index, state);
             }());
         default:
             return state

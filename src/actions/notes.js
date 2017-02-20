@@ -3,6 +3,16 @@ import appConstants from 'appConstants';
 import api from 'api';
 
 
+export const setNotes = (fileId) => {
+    return dispatch => {
+        var notes = api.getAllOrderedNotesByFileId(fileId);
+        dispatch({
+            type: appConstants.SET_NOTES,
+            payload: notes
+        });
+    };
+};
+
 export const addNote = (note) => {
     return dispatch => {
         var newNote = api.addNote(note);
@@ -32,7 +42,7 @@ export const updateNoteDescription = (note) => {
         });
     }
 };
-export const transposeNote = (from, to) => {
+export const transposeNotes = (from, to) => {
     return dispatch => {
         api.transposeNotes(from, to);
         dispatch({

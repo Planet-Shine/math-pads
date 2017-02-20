@@ -35,13 +35,31 @@ const api = {
         return newNote;
     },
     transposeNotes(from, to) {
-        const fromNote = noteStore.getItem(from);
-        const toNote = noteStore.getItem(to);
-        const fromOrder = fromNote.order;
-        fromNote.order = toNote.order;
-        toNote.order = fromOrder;
-        noteStore.setItem(fromNote);
-        noteStore.setItem(toNote);
+        const fromNote = noteStore.getItem(from.id);
+        const fileId = fromNote.fileId;
+        const notes = api.getAllOrderedNotesByFileId(fileId);
+        function arrayMove(oldIndex, newIndex, notes) {
+            var oldNote = notes[oldIndex];
+            if (oldIndex > newIndex) {
+                for (let index = newIndex; index < oldIndex; index++) {
+                    notes[index].order = notes[index+1].order;
+                    noteStore.setItem(notes[index]);
+                }
+            } else {
+                for (let index = newIndex; index > oldIndex; index--) {
+                    notes[index].order = notes[index-1].order;
+                    noteStore.setItem(notes[index]);
+                }
+            }
+            oldNote.order = notes[newIndex].order;
+            noteStore.setItem(oldNote);
+        }
+        arrayMove(from.index, to.index, notes);
+    },
+    getAllOrderedNotesByFileId(fileId) {
+        return noteStore.getAll()
+            .filter(note => note.fileId === fileId)
+            .sort(note => note.order);
     },
     deleteNote(id) {
         noteStore.removeItem(id);

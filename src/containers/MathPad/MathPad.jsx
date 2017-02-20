@@ -1,12 +1,22 @@
 
-import React, { Component, PropTypes } from 'react';
+import React, {
+    Component,
+    PropTypes
+} from 'react';
 import {
     NoteList,
     AddNoteButtonList
 } from 'components';
 import { connect } from 'react-redux';
-import { updateFileTitle, updateFileDescription } from 'actions/files';
-import { addNote } from 'actions/notes';
+import {
+    updateFileTitle,
+    updateFileDescription
+} from 'actions/files';
+import {
+    addNote,
+    setNotes,
+    transposeNotes
+} from 'actions/notes';
 import Immutable from 'immutable';
 
 const getFile = (files=Immutable.fromJS([]), id) => {
@@ -42,6 +52,12 @@ function mapDispatchToProps(dispatch, { id }) {
         },
         onDescriptionBlur({ value }) {
             dispatch(updateFileDescription({ description: value, id }));
+        },
+        onNoteReplace(fromId, toId) {
+            dispatch(transposeNotes(fromId, toId));
+        },
+        onMount(id) {
+            dispatch(setNotes(id));
         }
     };
 }
@@ -53,7 +69,9 @@ class MathPad extends Component {
         onTitleBlur: PropTypes.func,
         onDescriptionBlur: PropTypes.func,
         onFieldBlur : PropTypes.func,
-        onNoteApply : PropTypes.func
+        onNoteApply : PropTypes.func,
+        onNoteReplace : PropTypes.func,
+        onMount : PropTypes.func
     };
 
     constructor() {
@@ -69,33 +87,7 @@ class MathPad extends Component {
             fileContent : this.props.fileContent
         });
     }
-
-    handleNoteReplace({ oldIndex, newIndex }) {
-        function arrayMove(oldIndex, newIndex, notes) {
-            var oldNote = notes.get(oldIndex),
-                note;
-            if (oldIndex > newIndex) {
-                for (let index = oldIndex; index > newIndex; index--) {
-                    note = notes.get(index - 1);
-                    notes = notes.set(index, note);
-                }
-            } else {
-                for (let index = oldIndex; index < newIndex; index++) {
-                    note = notes.get(index + 1);
-                    notes = notes.set(index, note);
-                }
-            }
-            return notes.set(newIndex, oldNote);
-        }
-        const fileContent = this.props.fileContent;
-        const notes = fileContent.get('notes') || Immutable.fromJS([]);
-        const newNotes = arrayMove(oldIndex, newIndex, notes);
-        const keys = ['notes'];
-        this.props.onNoteApply({
-            keys,
-            newValue: newNotes
-        });
-    }
+    
 
     handleAddNode(type) {
         const {
@@ -111,15 +103,34 @@ class MathPad extends Component {
         });
     }
 
+    handleNoteReplace({ oldIndex, newIndex }) {
+        const { notes } = this.props;
+        this.props.onNoteReplace({
+            index: oldIndex,
+            id: notes[oldIndex].id
+        }, {
+            index: newIndex,
+            id: notes[newIndex].id
+        });
+    }
+
+    componentWillMount() {
+        this.props.onMount(this.props.id);
+    }
+
     render() {
-        const { title, description, onTitleBlur, onDescriptionBlur, notes } = this.props;
+        const {
+            title,
+            description,
+            onTitleBlur,
+            onDescriptionBlur,
+            notes
+        } = this.props;
 
         /*
-
              onNoteApply={this.props.onNoteApply}
              onDelete={this.handleDeleteNote}
              onNoteReplace={this.handleNoteReplace}
-
          */
 
         return (
@@ -128,6 +139,7 @@ class MathPad extends Component {
                           description={description}
                           onTitleBlur={onTitleBlur}
                           onDescriptionBlur={onDescriptionBlur}
+                          onNoteReplace={this.handleNoteReplace}
                           notes={notes} />
                 <AddNoteButtonList onAddNote={this.handleAddNode} />
             </div>
