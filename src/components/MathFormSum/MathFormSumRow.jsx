@@ -62,7 +62,7 @@ class MathFormSumRow extends Component {
             event.target.innerText = this.props.name;
             isExitViaEsc = false;
         } else {
-            onNameBlur({ id, value: event.target.innerText });
+            onNameBlur && onNameBlur({ id, value: event.target.innerText });
         }
     }
 
@@ -76,7 +76,7 @@ class MathFormSumRow extends Component {
             event.target.innerText = this.props.value;
             isExitViaEsc = false;
         } else {
-            onValueBlur({ id, value: event.target.innerText });
+            onValueBlur && onValueBlur({ id, value: event.target.innerText });
         }
     }
 

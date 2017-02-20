@@ -2,7 +2,7 @@
 import Immutable from 'immutable';
 
 import {
-    setSumItems,
+    addSumItem,
     updateSumItem,
     deleteSumItem
 } from 'actions/sumItems';
@@ -20,7 +20,7 @@ const getSumItems =
         sumItems.filter(
             sumItem =>
             sumItem.get('noteId') === noteId
-        );
+        ).toJS();
 
 const mapStateToProps =
     (state, { noteId }) =>
@@ -34,7 +34,7 @@ const mapStateToProps =
 const mapDispatchToProps = (dispatch, { noteId }) =>
     ({
         onAdd() {
-            dispatch(setSumItems(noteId));
+            dispatch(addSumItem({ noteId }));
         },
         onNameBlur({ id, value }) {
             dispatch(updateSumItem({ id, name: value }));

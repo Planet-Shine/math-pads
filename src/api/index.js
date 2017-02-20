@@ -80,12 +80,14 @@ const api = {
         // todo : Удяляем связанные формы.
     },
     deleteAllFormsByNoteId(noteId) {
-        const divisions = api.getAllDivisionsByNoteId(noteId);
-        divisions.forEach(
+        api.getAllDivisionsByNoteId(noteId).forEach(
             division =>
             api.deleteDivision(division.id)
         );
-        // todo: sumItem
+        api.getAllSumItemsByNoteId(noteId).forEach(
+            sumItem =>
+            api.deleteSumItem(sumItem.id)
+        );
     },
     getAllDivisionsByNoteId(noteId) {
         return divisionStore
@@ -132,6 +134,7 @@ const api = {
         sumItem.id = sumItemsStore.getNextId();
         sumItem.name = '';
         sumItem.value = '';
+        sumItem.culcOperator = '+';
         sumItemsStore.setItem(sumItem);
         return sumItem;
     },

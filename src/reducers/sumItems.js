@@ -31,15 +31,10 @@ const sumItemsReducer = (state=defaultState, action) => {
             }());
         case appConstants.DELETE_NOTE:
             return (function () {
-                const index = state.findIndex(
+                return state.filter(
                     sumItem =>
-                    sumItem.get('noteId') === action.payload
+                    sumItem.get('noteId') !== action.payload
                 );
-                if (~index) {
-                    return state.delete(index);
-                } else {
-                    return state;
-                }
             }());
         default :
             return state;

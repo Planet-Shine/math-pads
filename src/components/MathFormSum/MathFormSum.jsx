@@ -26,10 +26,11 @@ class MathFormSum extends Component {
             onDelete
         } = this.props;
         const nodes = sumItems.map(
-            ({ name, value, culcOperator }, index) =>
+            ({ name, value, culcOperator, id }, index) =>
                 <MathFormSumRow
                     key={index}
                     index={index}
+                    id={id}
                     name={name}
                     value={value}
                     culcOperator={culcOperator}
@@ -68,7 +69,7 @@ class MathFormSum extends Component {
                     result = value;
                 }
             }
-            nextOperator = item.get('culcOperator');
+            nextOperator = item.culcOperator;
         });
         if (result === null) {
             result = 0;
