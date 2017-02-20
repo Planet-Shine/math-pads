@@ -2,11 +2,11 @@
 import appConstants from 'appConstants';
 import api from 'api';
 
-export const setSumItem = (fileId) => {
+export const setSumItems = (fileId) => {
     return dispatch => {
         const sumItems = api.getAllSumItemsByFileId(fileId);
         dispatch({
-            type: appConstants.SET_SUM_ITEM,
+            type: appConstants.SET_SUM_ITEMS,
             payload: sumItems
         });
     };

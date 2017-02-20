@@ -10,6 +10,7 @@ import {
     MathFormSum
 } from 'components';
 import {
+    MathNoteFormSum,
     MathNoteFormDivision
 } from 'containers';
 import {
@@ -17,12 +18,10 @@ import {
     updateNoteTitle,
     updateNoteDescription
 } from 'actions/notes';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import noteTypeCaptions from 'appConstants/noteTypeCaptions';
 import appConstants from 'appConstants';
-
-import './Note.less';
 
 const mapStateToProps = (state, ownProps) => {
     return {};
@@ -77,8 +76,7 @@ class Note extends Component {
         switch (type) {
             case appConstants.NOTE_SUM_TYPE:
                 return (
-                    <MathFormSum data={data}
-                                 onApply={this.handleApply} />
+                    <MathNoteFormSum noteId={id} />
                 );
             case appConstants.NOTE_DIVISION_WITH_A_REMAINDER_TYPE:
                 return (
@@ -104,18 +102,15 @@ class Note extends Component {
             handleDescriptionBlur
         } = this;
 
-
         return (
             <NoteBox name={noteTypeCaptions[type]}
                      orderNumber={index + 1}
                      onDeleteClick={handleDeleteClick}>
-                <div className="note">
-                    <PadHeader value={title}
-                               onBlur={handleTitleBlur} />
-                    <PadDescription value={description}
-                                    onBlur={handleDescriptionBlur} />
-                    {this.renderMathForm()}
-                </div>
+                <PadHeader value={title}
+                           onBlur={handleTitleBlur} />
+                <PadDescription value={description}
+                                onBlur={handleDescriptionBlur} />
+                {this.renderMathForm()}
             </NoteBox>
         );
     }

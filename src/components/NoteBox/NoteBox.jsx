@@ -49,7 +49,9 @@ class NoteBox extends Component {
                     </button>
                 </div>
                 <div className={classNames("note-box__content", this.state.collapsed && "note-box__content_collapsed")}>
-                    {this.props.children}
+                    <div className="note-box__note">
+                        {this.props.children}
+                    </div>
                 </div>
                 <div className="note-box__footer-box">
                     <button className="note-box__collapse btn btn-default btn-sm" onClick={this.handleCollapseClick}>

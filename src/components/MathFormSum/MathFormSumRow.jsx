@@ -15,11 +15,17 @@ var isExitViaEsc = false;
 class MathFormSumRow extends Component {
 
     propTypes = {
-        orderNumber: PropTypes.number,
+        id: PropTypes.number,
+        order: PropTypes.number,
         name: PropTypes.string,
         value: PropTypes.number,
-        onApply: PropTypes.func,
-        onDelete: PropTypes.func
+        culcOperator: PropTypes.string,
+        isCreateNew: PropTypes.bool,
+        onNameBlur: PropTypes.func,
+        onValueBlur: PropTypes.func,
+        onCulcOperatorChange: PropTypes.func,
+        onDelete: PropTypes.func,
+        onAdd: PropTypes.func
     };
 
     constructor() {
@@ -42,80 +48,86 @@ class MathFormSumRow extends Component {
         }
     }
 
-
     handleDelete() {
-        const { index } = this.props;
-        this.props.onDelete({ index });
-    }
-
-    callOnApply(applyOptions) {
-        const { value, index, name, culcOperator } = this.props;
-        const options = Object.assign({
-            index,
-            value,
-            name,
-            culcOperator
-        }, applyOptions);
-        this.props.onApply(options);
+        const { id } = this.props;
+        this.props.onDelete({ id });
     }
 
     handleNameBlur(event) {
-        const { isCreateNew } = this.props;
+        const {
+            id,
+            onNameBlur
+        } = this.props;
         if (isExitViaEsc) {
             event.target.innerText = this.props.name;
             isExitViaEsc = false;
         } else {
-            this.callOnApply({
-                name: isCreateNew ? '' :  event.target.innerText
-            });
+            onNameBlur({ id, value: event.target.innerText });
         }
-
     }
 
     handleValueBlur(event) {
-        const { isCreateNew } = this.props;
+        const {
+            onValueBlur,
+            id
+        } = this.props;
+
         if (isExitViaEsc) {
             event.target.innerText = this.props.value;
             isExitViaEsc = false;
         } else {
-            this.callOnApply({
-                value: isCreateNew ? '' : event.target.innerText
-            });
+            onValueBlur({ id, value: event.target.innerText });
         }
     }
 
-    handleOperatorClick(options) {
-        const { culcOperator } = options;
-        this.callOnApply({
-            culcOperator
+    handleOperatorClick({ culcOperator }) {
+        const { id, onCulcOperatorChange } = this.props;
+        onCulcOperatorChange({
+            id,
+            value: culcOperator
         });
     }
 
     render() {
-        const { name, value, orderNumber, isCreateNew, culcOperator } = this.props;
+        const {
+            handleNameBlur,
+            handleKeyDown,
+            handleValueBlur,
+            handleOperatorClick,
+            handleDelete
+        } = this;
+        const {
+            name,
+            value,
+            order,
+            isCreateNew,
+            culcOperator,
+            onDelete,
+            onAdd
+        } = this.props;
 
         return (
             <div className="math-form-sum-row">
                 <div className="math-form-sum-row__orderNumber">
-                    {orderNumber}
+                    {order}
                 </div>
                 <div rows="1"
                      role="textbox"
                      contentEditable="true"
                      data-placeholder="Наименование"
                      className="math-form-sum-row__name"
-                     onBlur={this.handleNameBlur}
-                     onKeyDown={this.handleKeyDown}
-                     onFocus={isCreateNew && this.handleNameBlur}>
+                     onBlur={handleNameBlur}
+                     onKeyDown={handleKeyDown}
+                     onFocus={isCreateNew && onAdd}>
                     {escape(name)}
                 </div>
                 <div rows="1"
                      role="textbox"
                      contentEditable="true"
                      data-placeholder="Значение"
-                     onBlur={this.handleValueBlur}
-                     onKeyDown={this.handleKeyDown}
-                     onFocus={isCreateNew && this.handleValueBlur}
+                     onBlur={handleValueBlur}
+                     onKeyDown={handleKeyDown}
+                     onFocus={isCreateNew && onAdd}
                      className="math-form-sum-row__value">
                     {escape(value)}
                 </div>
@@ -126,15 +138,15 @@ class MathFormSumRow extends Component {
                             operator1="+"
                             operator2="−"
                             value={culcOperator === '+' ? 1 : 2}
-                            onClick={this.handleOperatorClick} />
+                            onClick={handleOperatorClick} />
                     </div>
                 }
                 {
-                    this.props.onDelete
+                    onDelete
                     &&
                     <button className="math-form-sum-row__delete btn btn-danger btn-xs"
                             tabIndex="-1"
-                            onClick={this.handleDelete}>
+                            onClick={handleDelete}>
                         <span className="glyphicon glyphicon-remove"></span>
                     </button>
                 }

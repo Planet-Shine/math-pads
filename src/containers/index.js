@@ -6,3 +6,4 @@ export SearchFileForm from './SearchFileForm/SearchFileForm';
 export MathPad from './MathPad/MathPad';
 export Note from './Note/Note';
 export MathNoteFormDivision from './MathNoteFormDivision/MathNoteFormDivision';
+export MathNoteFormSum from './MathNoteFormSum/MathNoteFormSum';

@@ -1,111 +1,75 @@
 
 import React, { Component, PropTypes } from 'react';
-import Immutable from 'immutable';
 
 import { MathFormSumRow } from 'components';
-
 
 import './MathFormSum.less';
 
 class MathFormSum extends Component {
 
     propTypes = {
-        data: PropTypes.object,
-        onApply: PropTypes.func
+        sumItems: PropTypes.array,
+        onAdd: PropTypes.func,
+        onNameBlur: PropTypes.func,
+        onValueBlur: PropTypes.func,
+        onCulcOperatorChange: PropTypes.func,
+        onDelete: PropTypes.func
     };
 
-    constructor() {
-        super();
-        this.handleRowApply = this.handleRowApply.bind(this);
-        this.handleRowDelete = this.handleRowDelete.bind(this);
-    }
-
-    handleRowDelete(options) {
-        const { index } = options;
-        const data = this.props.data;
-        const list = data.get('list') || Immutable.fromJS([]);
-        const newList = list.splice(index, 1);
-        const newData = data.set('list', newList);
-        this.props.onApply({
-            name: [],
-            newValue: newData
-        });
-    }
-
-    handleRowApply(options) {
-        const { name, value, index, culcOperator } = options;
-        const data = this.props.data;
-        const list = data.get('list') || Immutable.fromJS([]);
-        const newList = list.set(index, Immutable.fromJS({
-            name,
-            value,
-            culcOperator
-        }));
-        const newData = data.set('list', newList);
-
-        this.props.onApply({
-            name: [],
-            newValue: newData
-        });
-    }
-
     renderFormRows() {
-        const data = this.props.data;
-        const nodes = [];
-
-        if (data) {
-            let list = data.get('list') || Immutable.fromJS([]);
-            list.forEach((item, index) => {
-                const name = item.get('name');
-                const value = item.get('value');
-                const culcOperator = item.get('culcOperator');
-                nodes.push(
-                    <MathFormSumRow
-                        key={index}
-                        index={index}
-                        name={name}
-                        value={value}
-                        culcOperator={culcOperator}
-                        orderNumber={index + 1}
-                        onApply={this.handleRowApply}
-                        onDelete={this.handleRowDelete} />
-                );
-            });
-            // Добавляем одну пустышку, чтобы через нее добавлять новые записи.
-            nodes.push(
+        const {
+            sumItems,
+            onNameBlur,
+            onValueBlur,
+            onCulcOperatorChange,
+            onAdd,
+            onDelete
+        } = this.props;
+        const nodes = sumItems.map(
+            ({ name, value, culcOperator }, index) =>
                 <MathFormSumRow
-                    key={list.count()}
-                    index={list.count()}
-                    name={''}
-                    value={0}
-                    culcOperator={'+'}
-                    orderNumber={list.count() + 1}
-                    onApply={this.handleRowApply}
-                    isCreateNew={true} />
-            );
-        }
+                    key={index}
+                    index={index}
+                    name={name}
+                    value={value}
+                    culcOperator={culcOperator}
+                    order={index + 1}
+                    onNameBlur={onNameBlur}
+                    onValueBlur={onValueBlur}
+                    onCulcOperatorChange={onCulcOperatorChange}
+                    onDelete={onDelete} />
+        );
+        // Добавляем одну пустышку, чтобы через нее добавлять новые записи.
+        nodes.push(
+            <MathFormSumRow
+                key={sumItems.length}
+                index={sumItems.length}
+                name={''}
+                value={0}
+                culcOperator={'+'}
+                orderNumber={sumItems.length + 1}
+                onAdd={onAdd}
+                isCreateNew={true} />
+        );
         return nodes;
     }
 
     getResult() {
         var result = null,
             nextOperator = null,
-            data = this.props.data,
+            { sumItems } = this.props,
             value;
-        if (data) {
-            let list = data.get('list') || Immutable.fromJS([]);
-            list.forEach((item) => {
-                value = item.get('value');
-                if (isFinite(value) && value !== "") {
-                    if (result !== null) {
-                        result = eval(`${result}${nextOperator}${value}`);
-                    } else {
-                        result = value;
-                    }
+        sumItems.forEach((item) => {
+            value = item.value;
+            if (isFinite(value) && value !== "") {
+                if (result !== null) {
+                    result = eval(`${result}${nextOperator}${value}`);
+                } else {
+                    result = value;
                 }
-                nextOperator = item.get('culcOperator');
-            });
-        }
+            }
+            nextOperator = item.get('culcOperator');
+        });
         if (result === null) {
             result = 0;
         }

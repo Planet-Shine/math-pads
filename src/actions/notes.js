@@ -2,11 +2,13 @@
 import appConstants from 'appConstants';
 import api from 'api';
 import { setDivisions } from 'actions/divisions';
+import { setSumItems } from 'actions/sumItems';
 
 
 export const setNotes = (fileId) => {
     return dispatch => {
         dispatch(setDivisions(fileId));
+        dispatch(setSumItems(fileId));
         var notes = api.getAllOrderedNotesByFileId(fileId);
         dispatch({
             type: appConstants.SET_NOTES,
