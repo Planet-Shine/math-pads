@@ -8,6 +8,7 @@ import time from './time';
 import fileList from './fileList';
 import notes from './notes';
 import divisions from './divisions';
+import sumItems from './sumItems';
 
 export default combineReducers({
     routing : routerReducer,
@@ -17,5 +18,6 @@ export default combineReducers({
     fileList,
     time,
     notes,
-    divisions
+    divisions,
+    sumItems
 });

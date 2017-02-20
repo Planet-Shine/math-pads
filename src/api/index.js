@@ -2,6 +2,7 @@
 import fileStore from 'store/fileStore';
 import noteStore from 'store/noteStore';
 import divisionStore from 'store/divisionStore';
+import sumItemsStore from 'store/sumItems';
 import timing from 'utils/timing';
 
 const api = {
@@ -119,6 +120,37 @@ const api = {
                 return result.concat(api.getAllDivisionsByNoteId(note.id));
             }, []);
         return divisions;
+    },
+    getAllSumItemsByFileId(fileId) {
+        const subItems = api.getAllOrderedNotesByFileId(fileId)
+            .reduce((result, note) => {
+                return result.concat(api.getAllSumItemsByNoteId(note.id));
+            }, []);
+        return subItems;
+    },
+    addSumItem(sumItem) {
+        sumItem.id = sumItemsStore.getNextId();
+        sumItem.name = '';
+        sumItem.value = '';
+        sumItemsStore.setItem(sumItem);
+        return sumItem;
+    },
+    updateSumItem(sumItem) {
+        const oldSumItem = sumItemsStore.getItem(sumItem.id);
+        const newSumItem = Object.assign({}, oldSumItem, sumItem);
+        sumItemsStore.setItem(newSumItem);
+        return newSumItem;
+    },
+    deleteSumItem(id) {
+        sumItemsStore.removeItem(id);
+    },
+    getAllSumItemsByNoteId(noteId) {
+        return sumItemsStore
+            .getAll()
+            .filter(
+                sumItem =>
+                sumItem.noteId === noteId
+            );
     }
 };
 
